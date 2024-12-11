@@ -22,8 +22,14 @@ export default function IndexLayout() {
                 backgroundColor: "transparent",
               },
             }),
-        title: "Shopping List",
+        title: "Shopping Lists",
       }}
-    />
+    >
+      <Stack.Screen name="index" options={{ title: "Shopping Lists" }} />
+      <Stack.Screen
+        name="new-list/index"
+        options={{ title: "New List", presentation: "modal" }}
+      />
+    </Stack>
   );
 }

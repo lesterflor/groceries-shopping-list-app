@@ -6,7 +6,6 @@ import {
 import { useFonts } from "expo-font";
 import { Tabs } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -16,7 +15,7 @@ import { Colors } from "@/constants/Colors";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { Platform } from "react-native";
+import { Platform, StatusBar } from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -64,7 +63,7 @@ export default function RootLayout() {
           }}
         />
       </Tabs>
-      <StatusBar style="auto" />
+      <StatusBar barStyle={"default"} />
     </ThemeProvider>
   );
 }
