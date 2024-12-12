@@ -2,7 +2,7 @@ import React from "react";
 import { Stack } from "expo-router";
 
 export const unstable_settings = {
-  initialRouteName: "(index)/index",
+  initialRouteName: "/(index)",
 };
 
 export default function AppIndexLayout() {
@@ -24,6 +24,10 @@ export default function AppIndexLayout() {
             }),
         title: "Shopping Lists",
       }}
-    />
+    >
+      <Stack.Screen name="index" />
+      <Stack.Screen name="new-list/index" options={{ presentation: "modal" }} />
+      <Stack.Screen name="list-item/index" />
+    </Stack>
   );
 }

@@ -5,7 +5,13 @@ import { Stack } from "expo-router";
 export default function ListItemScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: "List Item", headerLargeTitle: false }} />
+      <Stack.Screen
+        options={{
+          title: "List Item",
+          headerLargeTitle: false,
+          presentation: "modal",
+        }}
+      />
       <BodyScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
         <ThemedText>List Item</ThemedText>
       </BodyScrollView>
