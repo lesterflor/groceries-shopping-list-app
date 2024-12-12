@@ -1,3 +1,4 @@
+import "react-native-reanimated";
 import { tokenCache } from "@/cache";
 import {
   DarkTheme,
@@ -8,8 +9,6 @@ import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import "react-native-reanimated";
-
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { StatusBar } from "react-native";
 import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
