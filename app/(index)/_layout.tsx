@@ -26,7 +26,15 @@ export default function AppIndexLayout() {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="new-list/index" options={{ presentation: "modal" }} />
+      <Stack.Screen
+        name="new-list/index"
+        options={{
+          presentation: "formSheet",
+          sheetAllowedDetents: [0.25, 0.5],
+          sheetGrabberVisible: true,
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="list-item/index" />
     </Stack>
   );
