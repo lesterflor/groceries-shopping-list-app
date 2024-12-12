@@ -1,10 +1,10 @@
+import "react-native-reanimated";
+
 import { Redirect, Tabs } from "expo-router";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
-
-import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Platform } from "react-native";
