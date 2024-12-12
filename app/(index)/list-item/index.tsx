@@ -1,19 +1,14 @@
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 export default function ListItemScreen() {
+  const { listId } = useLocalSearchParams();
   return (
     <>
-      <Stack.Screen
-        options={{
-          title: "List Item",
-          headerLargeTitle: false,
-          presentation: "modal",
-        }}
-      />
+      <Stack.Screen options={{ headerTitle: "[list title]" }} />
       <BodyScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
-        <ThemedText>List Item</ThemedText>
+        <ThemedText>List ID: {listId}</ThemedText>
       </BodyScrollView>
     </>
   );

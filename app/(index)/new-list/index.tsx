@@ -2,8 +2,8 @@ import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { Href, Link, useRouter } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Href, useRouter } from "expo-router";
+import { View } from "react-native";
 
 export default function NewListScreen() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function NewListScreen() {
           type="subtitle"
           style={{ textAlign: "center", marginTop: 16 }}
         >
-          Create or Join a List
+          Create or join a list
         </ThemedText>
         <View
           style={{
@@ -63,7 +63,7 @@ export default function NewListScreen() {
               variant="outline"
               onPress={() => handleDismissTo("/(index)/new-list/join-list")}
             >
-              Join List
+              Join list
             </Button>
           </View>
         </View>
