@@ -1,7 +1,12 @@
+import { IconCircle } from "@/components/IconCircle";
 import ShoppingListItem from "@/components/ShoppingListItem";
+import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
+import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { backgroundColors } from "@/constants/Colors";
 import { Link, Stack } from "expo-router";
+import { View } from "react-native";
 import Animated from "react-native-reanimated";
 import { useSortedRowIds } from "tinybase/ui-react";
 
@@ -31,6 +36,27 @@ export default function HomeScreen() {
           contentContainerStyle={{
             paddingTop: 8,
           }}
+          ListEmptyComponent={() => (
+            <BodyScrollView
+              contentContainerStyle={{
+                alignItems: "center",
+                gap: 8,
+                paddingTop: 100,
+              }}
+            >
+              <IconCircle
+                emoji="🛒"
+                backgroundColor={
+                  backgroundColors[
+                    Math.floor(Math.random() * backgroundColors.length)
+                  ]
+                }
+              />
+              <Link href="/new-list" asChild>
+                <Button variant="ghost">Create your first list</Button>
+              </Link>
+            </BodyScrollView>
+          )}
         />
       </BodyScrollView>
     </>

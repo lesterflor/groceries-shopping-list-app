@@ -15,7 +15,7 @@ import { useRow, useStore } from "tinybase/ui-react";
 import { ThemedText } from "./ThemedText";
 import { Link } from "expo-router";
 import { IconSymbol } from "./ui/IconSymbol";
-import { appleRed } from "@/constants/Colors";
+import { appleRed, backgroundColors, emojies } from "@/constants/Colors";
 import { IconCircle } from "./IconCircle";
 import Animated from "react-native-reanimated";
 
@@ -88,8 +88,18 @@ export default function ShoppingListItem({ id }: { id: string }) {
                 }}
               >
                 <IconCircle
-                  emoji={listItem.emoji === "" ? "🛒" : listItem.emoji}
-                  backgroundColor="lightblue"
+                  emoji={
+                    listItem.emoji === ""
+                      ? emojies[Math.floor(Math.random() * emojies.length)]
+                      : listItem.emoji
+                  }
+                  backgroundColor={
+                    listItem.color
+                      ? listItem.color
+                      : backgroundColors[
+                          Math.floor(Math.random() * backgroundColors.length)
+                        ]
+                  }
                 />
                 <ThemedText type="defaultSemiBold">{listItem.name}</ThemedText>
               </View>

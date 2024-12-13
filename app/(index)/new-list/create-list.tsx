@@ -17,13 +17,16 @@ import {
   SHOPPING_LIST_UPDATED_AT_CELL,
 } from "../_layout";
 import { randomUUID } from "expo-crypto";
+import { backgroundColors } from "@/constants/Colors";
 
 export default function CreateListScreen() {
   const store = useStore();
   const [listName, setListName] = useState("");
   const [listDescription, setListDescription] = useState("");
   const [listEmoji, setListEmoji] = useState("");
-  const [listColor, setListColor] = useState("");
+  const [listColor, setListColor] = useState(
+    backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
+  );
 
   const router = useRouter();
 
