@@ -28,6 +28,9 @@ export default function HomeScreen() {
           renderItem={({ item }) => {
             return <ShoppingListItem id={item} />;
           }}
+          contentContainerStyle={{
+            paddingTop: 8,
+          }}
         />
       </BodyScrollView>
     </>

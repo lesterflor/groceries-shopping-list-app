@@ -1,7 +1,6 @@
 import React from "react";
 import { SHOPPING_LIST_TABLE } from "@/app/(index)/_layout";
-import { StyleSheet, Pressable, View, useColorScheme } from "react-native";
-
+import { StyleSheet, Pressable, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Reanimated, {
@@ -45,11 +44,20 @@ export default function ShoppingListItem({ id }: { id: string }) {
       >
         <Link href={`/(index)/list-item?listId=${id}`}>
           <View style={styles.swipeable}>
-            <IconCircle
-              emoji={listItem.emoji === "" ? "🛒" : listItem.emoji}
-              backgroundColor="lightblue"
-            />
-            <ThemedText type="defaultSemiBold">{listItem.name}</ThemedText>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <IconCircle
+                emoji={listItem.emoji === "" ? "🛒" : listItem.emoji}
+                backgroundColor="lightblue"
+              />
+              <ThemedText type="defaultSemiBold">{listItem.name}</ThemedText>
+            </View>
+            <IconSymbol name="chevron.right" size={14} color="#A1A1AA" />
           </View>
         </Link>
       </ReanimatedSwipeable>
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "#A1A1AA80",
     gap: 8,
