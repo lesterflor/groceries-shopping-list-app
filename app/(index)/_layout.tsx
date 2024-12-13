@@ -8,6 +8,26 @@ import {
 import { createStore } from "tinybase";
 import { useAndStartPersister } from "@/tinybase/useAndStartPersister";
 
+export const SHOPPING_LIST_TABLE = "shoppingLists";
+export const SHOPPING_LIST_ID_CELL = "id";
+export const SHOPPING_LIST_NAME_CELL = "name";
+export const SHOPPING_LIST_DESCRIPTION_CELL = "description";
+export const SHOPPING_LIST_EMOJI_CELL = "emoji";
+export const SHOPPING_LIST_COLOR_CELL = "color";
+export const SHOPPING_LIST_CREATED_AT_CELL = "createdAt";
+export const SHOPPING_LIST_UPDATED_AT_CELL = "updatedAt";
+
+export const SHOPPING_LIST_ITEM_TABLE = "shoppingListItems";
+export const SHOPPING_LIST_ITEM_ID_CELL = "id";
+export const SHOPPING_LIST_ITEM_NAME_CELL = "name";
+export const SHOPPING_LIST_ITEM_QUANTITY_CELL = "quantity";
+export const SHOPPING_LIST_ITEM_UNIT_CELL = "unit";
+export const SHOPPING_LIST_ITEM_IS_PURCHASED_CELL = "isPurchased";
+export const SHOPPING_LIST_ITEM_CATEGORY_CELL = "category";
+export const SHOPPING_LIST_ITEM_NOTES_CELL = "notes";
+export const SHOPPING_LIST_ITEM_CREATED_AT_CELL = "createdAt";
+export const SHOPPING_LIST_ITEM_UPDATED_AT_CELL = "updatedAt";
+
 export const unstable_settings = {
   initialRouteName: "/(index)",
 };
@@ -16,80 +36,80 @@ export default function AppIndexLayout() {
   const { user } = useUser();
   const store = useCreateStore(createStore);
 
-  console.log(JSON.stringify(user?.emailAddresses[0].emailAddress, null, 2));
+  // console.log(JSON.stringify(user?.primaryEmailAddress?.emailAddress));
 
   store.setTablesSchema({
     shoppingLists: {
-      id: {
+      [SHOPPING_LIST_ID_CELL]: {
         type: "string",
       },
-      name: {
+      [SHOPPING_LIST_NAME_CELL]: {
         type: "string",
       },
-      description: {
+      [SHOPPING_LIST_DESCRIPTION_CELL]: {
         type: "string",
       },
-      emoji: {
+      [SHOPPING_LIST_EMOJI_CELL]: {
         type: "string",
       },
-      color: {
+      [SHOPPING_LIST_COLOR_CELL]: {
         type: "string",
       },
-      createdAt: {
+      [SHOPPING_LIST_CREATED_AT_CELL]: {
         type: "string",
       },
-      updatedAt: {
+      [SHOPPING_LIST_UPDATED_AT_CELL]: {
         type: "string",
       },
     },
     shoppingListItems: {
-      id: {
+      [SHOPPING_LIST_ITEM_ID_CELL]: {
         type: "string",
       },
-      name: {
+      [SHOPPING_LIST_ITEM_NAME_CELL]: {
         type: "string",
       },
-      quantity: {
+      [SHOPPING_LIST_ITEM_QUANTITY_CELL]: {
         type: "number",
       },
-      unit: {
+      [SHOPPING_LIST_ITEM_UNIT_CELL]: {
         type: "string",
       },
-      is_purchased: {
+      [SHOPPING_LIST_ITEM_IS_PURCHASED_CELL]: {
         type: "boolean",
       },
-      category: {
+      [SHOPPING_LIST_ITEM_CATEGORY_CELL]: {
         type: "string",
       },
-      notes: {
+      [SHOPPING_LIST_ITEM_NOTES_CELL]: {
         type: "string",
       },
-      createdAt: {
+      [SHOPPING_LIST_ITEM_CREATED_AT_CELL]: {
         type: "string",
       },
-      updatedAt: {
+      [SHOPPING_LIST_ITEM_UPDATED_AT_CELL]: {
         type: "string",
       },
     },
   });
 
-  store.setTables({
-    shoppingLists: {
-      "1": {
-        id: "1",
-        name: "My first shopping list",
-        description: "This is my first shopping list",
-        emoji: "🛒",
-        color: "lightblue",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    },
-  });
+  // store.setTables({
+  //   shoppingLists: {
+  //     "1": {
+  //       id: "1",
+  //       name: "My first shopping list",
+  //       description: "This is my first shopping list",
+  //       emoji: "🛒",
+  //       color: "lightblue",
+  //       createdAt: new Date().toISOString(),
+  //       updatedAt: new Date().toISOString(),
+  //     },
+  //   },
+  // });
 
   useAndStartPersister(store);
 
-  console.log(store.getRow("shoppingLists", "1"));
+  // console.log(store.getRow("shoppingLists", "1").n);
 
   return (
     <SignedIn>
@@ -114,7 +134,7 @@ export default function AppIndexLayout() {
           <Stack.Screen
             name="index"
             options={{
-              title: "Shopping Lists",
+              title: "Shopping lists",
             }}
           />
           <Stack.Screen
