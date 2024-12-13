@@ -1,7 +1,12 @@
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
-import { Text, TextInput, Button, View } from "react-native";
+import { Text, View } from "react-native";
 import React from "react";
+import TextInput from "@/components/ui/text-input";
+import Button from "@/components/ui/button";
+import { BodyScrollView } from "@/components/ui/BodyScrollView";
+import { appleBlue } from "@/constants/Colors";
+import { ThemedText } from "@/components/ThemedText";
 
 export default function SignIn() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -39,24 +44,30 @@ export default function SignIn() {
   }, [isLoaded, emailAddress, password]);
 
   return (
-    <View>
+    <BodyScrollView contentContainerStyle={{ padding: 16 }}>
       <TextInput
         autoCapitalize="none"
         value={emailAddress}
+        label="Email"
         placeholder="Enter email"
         onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
       />
       <TextInput
         value={password}
+        label="Password"
         placeholder="Enter password"
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button title="Sign in" onPress={onSignInPress} />
-      <View>
-        <Text>Don't have an account?</Text>
-        <Link href={"/sign-up"}>Sign up</Link>
+      <Button onPress={onSignInPress} disabled={!emailAddress || !password}>
+        Sign in
+      </Button>
+      <View style={{ marginTop: 16, alignItems: "center" }}>
+        <ThemedText>Don't have an account?</ThemedText>
+        <Button onPress={() => router.push("/sign-up")} variant="ghost">
+          Sign up
+        </Button>
       </View>
-    </View>
+    </BodyScrollView>
   );
 }

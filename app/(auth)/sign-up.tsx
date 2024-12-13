@@ -1,7 +1,11 @@
 import * as React from "react";
-import { Text, TextInput, Button, View } from "react-native";
-import { useSignUp } from "@clerk/clerk-expo";
+import { isClerkAPIResponseError, useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
+import { BodyScrollView } from "@/components/ui/BodyScrollView";
+import TextInput from "@/components/ui/text-input";
+import Button from "@/components/ui/button";
+import { ThemedText } from "@/components/ThemedText";
+import { ClerkAPIError } from "@clerk/types";
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -11,10 +15,11 @@ export default function SignUpScreen() {
   const [password, setPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
+  const [errors, setErrors] = React.useState<ClerkAPIError[]>([]);
 
-  // Handle submission of sign-up form
   const onSignUpPress = async () => {
     if (!isLoaded) return;
+    setErrors([]);
 
     // Start sign-up process using email and password provided
     try {
@@ -30,8 +35,7 @@ export default function SignUpScreen() {
       // and capture OTP code
       setPendingVerification(true);
     } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
+      if (isClerkAPIResponseError(err)) setErrors(err.errors);
       console.error(JSON.stringify(err, null, 2));
     }
   };
@@ -66,35 +70,46 @@ export default function SignUpScreen() {
   if (pendingVerification) {
     return (
       <>
-        <Text>Verify your email</Text>
+        <ThemedText>Verify your email</ThemedText>
         <TextInput
           value={code}
           placeholder="Enter your verification code"
           onChangeText={(code) => setCode(code)}
         />
-        <Button title="Verify" onPress={onVerifyPress} />
+        {errors.map((error) => (
+          <ThemedText key={error.longMessage} style={{ color: "red" }}>
+            {error.longMessage}
+          </ThemedText>
+        ))}
+        <Button onPress={onVerifyPress} disabled={!code}>
+          Verify
+        </Button>
       </>
     );
   }
 
   return (
-    <View>
-      <>
-        <Text>Sign up</Text>
-        <TextInput
-          autoCapitalize="none"
-          value={emailAddress}
-          placeholder="Enter email"
-          onChangeText={(email) => setEmailAddress(email)}
-        />
-        <TextInput
-          value={password}
-          placeholder="Enter password"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-        <Button title="Continue" onPress={onSignUpPress} />
-      </>
-    </View>
+    <BodyScrollView contentContainerStyle={{ padding: 16 }}>
+      <TextInput
+        autoCapitalize="none"
+        value={emailAddress}
+        placeholder="Enter email"
+        onChangeText={(email) => setEmailAddress(email)}
+      />
+      <TextInput
+        value={password}
+        placeholder="Enter password"
+        secureTextEntry={true}
+        onChangeText={(password) => setPassword(password)}
+      />
+      <Button onPress={onSignUpPress} disabled={!emailAddress || !password}>
+        Continue
+      </Button>
+      {errors.map((error) => (
+        <ThemedText key={error.longMessage} style={{ color: "red" }}>
+          {error.longMessage}
+        </ThemedText>
+      ))}
+    </BodyScrollView>
   );
 }
