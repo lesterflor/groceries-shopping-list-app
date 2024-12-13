@@ -21,6 +21,7 @@ export const zincColors = {
 };
 
 export const appleBlue = "#007AFF";
+export const appleRed = "#FF3B30";
 
 export const Colors = {
   light: {

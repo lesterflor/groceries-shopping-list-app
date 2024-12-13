@@ -4,6 +4,7 @@ import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
 import { Href, useRouter } from "expo-router";
 import { View } from "react-native";
+import { IconCircle } from "@/components/IconCircle";
 
 export default function NewListScreen() {
   const router = useRouter();
@@ -25,20 +26,7 @@ export default function NewListScreen() {
         >
           Create or join a list
         </ThemedText>
-        <View
-          style={{
-            backgroundColor: "lightblue",
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            alignItems: "center",
-            justifyContent: "center",
-            alignSelf: "center",
-            marginVertical: 16,
-          }}
-        >
-          <ThemedText style={{ fontSize: 24 }}>🛒</ThemedText>
-        </View>
+        <IconCircle emoji="🛒" backgroundColor="lightblue" />
 
         <View style={{ gap: 8 }}>
           <Button

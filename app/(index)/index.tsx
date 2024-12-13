@@ -1,11 +1,9 @@
-import { ThemedText } from "@/components/ThemedText";
+import ShoppingListItem from "@/components/ShoppingListItem";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import { useClerk, useUser } from "@clerk/clerk-expo";
-import { Link, Stack, useRouter } from "expo-router";
-import { Button, Pressable } from "react-native";
+import { Link, Stack } from "expo-router";
 import Animated from "react-native-reanimated";
-import { useRow, useSortedRowIds } from "tinybase/ui-react";
+import { useSortedRowIds } from "tinybase/ui-react";
 
 export default function HomeScreen() {
   return (
@@ -24,26 +22,14 @@ export default function HomeScreen() {
           ),
         }}
       />
-      <BodyScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
+      <BodyScrollView contentContainerStyle={{}}>
         <Animated.FlatList
           data={useSortedRowIds("shoppingLists", "createdAt")}
           renderItem={({ item }) => {
-            return <ListItem id={item} />;
+            return <ShoppingListItem id={item} />;
           }}
         />
       </BodyScrollView>
     </>
   );
 }
-
-const ListItem = ({ id }: { id: string }) => {
-  const list = useRow("shoppingLists", id);
-  return (
-    <Link href={`/(index)/list-item?listId=${id}`} asChild>
-      <Pressable>
-        <ThemedText>{list.name}</ThemedText>
-        <ThemedText>{list.description}</ThemedText>
-      </Pressable>
-    </Link>
-  );
-};

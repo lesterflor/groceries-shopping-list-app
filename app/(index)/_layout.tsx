@@ -80,7 +80,7 @@ export default function AppIndexLayout() {
   //   },
   // });
 
-  // console.log(store.getRow("shoppingLists", "1").n);
+  // console.log(store.getRow("shoppingLists", "1"));
 
   return (
     <SignedIn>

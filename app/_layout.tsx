@@ -3,6 +3,7 @@ import { tokenCache } from "@/cache";
 import {
   DarkTheme,
   DefaultTheme,
+  Theme,
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -38,11 +39,24 @@ export default function RootLayout() {
     throw new Error("EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY is not set");
   }
 
+  const CustomDefaultTheme: Theme = {
+    ...DefaultTheme,
+    dark: false,
+    colors: {
+      primary: "rgb(0, 122, 255)",
+      background: "white",
+      card: "white",
+      text: "rgb(28, 28, 30)",
+      border: "rgb(216, 216, 216)",
+      notification: "rgb(255, 59, 48)",
+    },
+  };
+
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
         <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          value={colorScheme === "dark" ? DarkTheme : CustomDefaultTheme}
         >
           <Slot />
           <StatusBar barStyle={"default"} />
