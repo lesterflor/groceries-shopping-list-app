@@ -69,10 +69,10 @@ export default function SignUpScreen() {
 
   if (pendingVerification) {
     return (
-      <>
-        <ThemedText>Verify your email</ThemedText>
+      <BodyScrollView contentContainerStyle={{ padding: 16 }}>
         <TextInput
           value={code}
+          label={`Enter the verification code we sent to ${emailAddress}`}
           placeholder="Enter your verification code"
           onChangeText={(code) => setCode(code)}
         />
@@ -84,7 +84,7 @@ export default function SignUpScreen() {
         <Button onPress={onVerifyPress} disabled={!code}>
           Verify
         </Button>
-      </>
+      </BodyScrollView>
     );
   }
 
