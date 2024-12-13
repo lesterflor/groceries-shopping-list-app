@@ -59,9 +59,10 @@ export default function AppIndexLayout() {
   const { user } = useUser();
   const store = useCreateStore(() => {
     const store = createStore().setTablesSchema(TABLES_SCHEMA);
-    useAndStartPersister(store as any);
     return store;
   });
+
+  useAndStartPersister(store as any);
 
   // console.log(JSON.stringify(user?.primaryEmailAddress?.emailAddress));
 
