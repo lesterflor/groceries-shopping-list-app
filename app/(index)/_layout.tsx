@@ -1,11 +1,8 @@
 import React from "react";
 import { Stack } from "expo-router";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
-import {
-  useCreateStore,
-  Provider as TinyBaseProvider,
-} from "tinybase/ui-react";
-import { createStore } from "tinybase";
+import * as UiReact from "tinybase/ui-react/with-schemas";
+import { createStore, NoValuesSchema } from "tinybase/with-schemas";
 import { useAndStartPersister } from "@/tinybase/useAndStartPersister";
 
 export const SHOPPING_LIST_TABLE = "shoppingLists";
@@ -32,66 +29,41 @@ export const unstable_settings = {
   initialRouteName: "/(index)",
 };
 
+const TABLES_SCHEMA = {
+  shoppingLists: {
+    [SHOPPING_LIST_ID_CELL]: { type: "string" },
+    [SHOPPING_LIST_NAME_CELL]: { type: "string" },
+    [SHOPPING_LIST_DESCRIPTION_CELL]: { type: "string" },
+    [SHOPPING_LIST_EMOJI_CELL]: { type: "string" },
+    [SHOPPING_LIST_COLOR_CELL]: { type: "string" },
+    [SHOPPING_LIST_CREATED_AT_CELL]: { type: "string" },
+    [SHOPPING_LIST_UPDATED_AT_CELL]: { type: "string" },
+  },
+  shoppingListItems: {
+    [SHOPPING_LIST_ITEM_ID_CELL]: { type: "string" },
+    [SHOPPING_LIST_ITEM_NAME_CELL]: { type: "string" },
+    [SHOPPING_LIST_ITEM_QUANTITY_CELL]: { type: "number" },
+    [SHOPPING_LIST_ITEM_UNIT_CELL]: { type: "string" },
+    [SHOPPING_LIST_ITEM_IS_PURCHASED_CELL]: { type: "boolean" },
+    [SHOPPING_LIST_ITEM_CATEGORY_CELL]: { type: "string" },
+    [SHOPPING_LIST_ITEM_NOTES_CELL]: { type: "string" },
+    [SHOPPING_LIST_ITEM_CREATED_AT_CELL]: { type: "string" },
+    [SHOPPING_LIST_ITEM_UPDATED_AT_CELL]: { type: "string" },
+  },
+} as const;
+
+const { useCreateStore, Provider: TinyBaseProvider } =
+  UiReact as UiReact.WithSchemas<[typeof TABLES_SCHEMA, NoValuesSchema]>;
+
 export default function AppIndexLayout() {
   const { user } = useUser();
-  const store = useCreateStore(createStore);
+  const store = useCreateStore(() => {
+    const store = createStore().setTablesSchema(TABLES_SCHEMA);
+    useAndStartPersister(store as any);
+    return store;
+  });
 
   // console.log(JSON.stringify(user?.primaryEmailAddress?.emailAddress));
-
-  store.setTablesSchema({
-    shoppingLists: {
-      [SHOPPING_LIST_ID_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_NAME_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_DESCRIPTION_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_EMOJI_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_COLOR_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_CREATED_AT_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_UPDATED_AT_CELL]: {
-        type: "string",
-      },
-    },
-    shoppingListItems: {
-      [SHOPPING_LIST_ITEM_ID_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_ITEM_NAME_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_ITEM_QUANTITY_CELL]: {
-        type: "number",
-      },
-      [SHOPPING_LIST_ITEM_UNIT_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_ITEM_IS_PURCHASED_CELL]: {
-        type: "boolean",
-      },
-      [SHOPPING_LIST_ITEM_CATEGORY_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_ITEM_NOTES_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_ITEM_CREATED_AT_CELL]: {
-        type: "string",
-      },
-      [SHOPPING_LIST_ITEM_UPDATED_AT_CELL]: {
-        type: "string",
-      },
-    },
-  });
 
   // store.setTables({
   //   shoppingLists: {
@@ -106,8 +78,6 @@ export default function AppIndexLayout() {
   //     },
   //   },
   // });
-
-  useAndStartPersister(store);
 
   // console.log(store.getRow("shoppingLists", "1").n);
 
