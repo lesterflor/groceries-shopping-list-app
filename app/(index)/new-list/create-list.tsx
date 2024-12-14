@@ -5,13 +5,15 @@ import { Stack } from "expo-router";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { randomUUID } from "expo-crypto";
-import { backgroundColors } from "@/constants/Colors";
+import { backgroundColors, emojies } from "@/constants/Colors";
 import { useSetShoppingListCallback } from "@/stores/ShoppingListStore";
 
 export default function CreateListScreen() {
   const [listName, setListName] = useState("");
   const [listDescription, setListDescription] = useState("");
-  const [listEmoji, setListEmoji] = useState("");
+  const [listEmoji, setListEmoji] = useState(
+    emojies[Math.floor(Math.random() * emojies.length)]
+  );
   const [listColor, setListColor] = useState(
     backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
   );
