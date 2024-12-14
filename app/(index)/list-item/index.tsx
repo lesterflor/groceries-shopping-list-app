@@ -1,6 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import { Stack, useLocalSearchParams } from "expo-router";
+import React from "react";
 
 export default function ListItemScreen() {
   const { listId } = useLocalSearchParams();

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { randomUUID } from "expo-crypto";
 import { backgroundColors, emojies } from "@/constants/Colors";
 import { useSetShoppingListCallback } from "@/stores/ShoppingListStore";
+import React from "react";
 
 export default function CreateListScreen() {
   const [listName, setListName] = useState("");

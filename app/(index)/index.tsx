@@ -7,6 +7,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import { backgroundColors } from "@/constants/Colors";
 import { useSortedShoppingListIds } from "@/stores/ShoppingListStore";
 import { Link, Stack } from "expo-router";
+import React from "react";
 import { View } from "react-native";
 import Animated from "react-native-reanimated";
 
