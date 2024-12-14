@@ -19,7 +19,7 @@ import Animated from "react-native-reanimated";
 import {
   useDelShoppingListCallback,
   useShoppingListCell,
-} from "@/stores/ShoppingListStore";
+} from "@/stores/ShoppingListsStore";
 
 // function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
 //   const store = useStore();

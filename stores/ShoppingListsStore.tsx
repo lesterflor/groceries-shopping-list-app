@@ -114,7 +114,7 @@ export const useShoppingListEntryCell = (
   cellId: ShoppingListEntryCellId
 ) => useCell("shoppingListEntries", id, cellId, STORE_ID);
 
-export default function ShoppingListStore() {
+export default function ShoppingListsStore() {
   const store = useCreateStore(() =>
     createStore().setTablesSchema(TABLES_SCHEMA)
   );

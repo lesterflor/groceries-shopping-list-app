@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { randomUUID } from "expo-crypto";
 import { backgroundColors, emojies } from "@/constants/Colors";
-import { useSetShoppingListCallback } from "@/stores/ShoppingListStore";
+import { useSetShoppingListCallback } from "@/stores/ShoppingListsStore";
 import React from "react";
 
 export default function CreateListScreen() {

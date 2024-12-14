@@ -3,7 +3,7 @@ import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import {
   useShoppingListCell,
   useShoppingListEntryIds,
-} from "@/stores/ShoppingListStore";
+} from "@/stores/ShoppingListsStore";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { Text } from "react-native";
 import React from "react";

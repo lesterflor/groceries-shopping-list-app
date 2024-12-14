@@ -5,7 +5,7 @@ import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { backgroundColors } from "@/constants/Colors";
-import { useSortedShoppingListIds } from "@/stores/ShoppingListStore";
+import { useSortedShoppingListIds } from "@/stores/ShoppingListsStore";
 import { Link, Stack } from "expo-router";
 import React from "react";
 import { View } from "react-native";

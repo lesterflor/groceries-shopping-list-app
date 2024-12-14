@@ -1,7 +1,7 @@
 import React from "react";
 import { Stack } from "expo-router";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
-import ShoppingListStore from "@/stores/ShoppingListStore";
+import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { Provider as TinyBaseProvider } from "tinybase/ui-react";
 
 export const unstable_settings = {
@@ -14,7 +14,7 @@ export default function AppIndexLayout() {
   return (
     <SignedIn>
       <TinyBaseProvider>
-        <ShoppingListStore />
+        <ShoppingListsStore />
 
         <Stack
           screenOptions={{
