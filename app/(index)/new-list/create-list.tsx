@@ -4,23 +4,11 @@ import TextInput from "@/components/ui/text-input";
 import { Stack } from "expo-router";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { useAddRowCallback } from "tinybase/ui-react";
-import { useStore } from "tinybase/ui-react";
-import {
-  SHOPPING_LIST_COLOR_CELL,
-  SHOPPING_LIST_CREATED_AT_CELL,
-  SHOPPING_LIST_DESCRIPTION_CELL,
-  SHOPPING_LIST_EMOJI_CELL,
-  SHOPPING_LIST_ID_CELL,
-  SHOPPING_LIST_NAME_CELL,
-  SHOPPING_LIST_TABLE,
-  SHOPPING_LIST_UPDATED_AT_CELL,
-} from "../_layout";
 import { randomUUID } from "expo-crypto";
 import { backgroundColors } from "@/constants/Colors";
+import { useSetShoppingListCallback } from "@/stores/ShoppingListStore";
 
 export default function CreateListScreen() {
-  const store = useStore();
   const [listName, setListName] = useState("");
   const [listDescription, setListDescription] = useState("");
   const [listEmoji, setListEmoji] = useState("");
@@ -29,6 +17,7 @@ export default function CreateListScreen() {
   );
 
   const router = useRouter();
+  const useAddShoppingList = useSetShoppingListCallback();
 
   const handleCreateList = () => {
     if (!listName) {
@@ -36,16 +25,7 @@ export default function CreateListScreen() {
     }
 
     const id = randomUUID();
-
-    store?.setRow(SHOPPING_LIST_TABLE, id, {
-      [SHOPPING_LIST_ID_CELL]: id,
-      [SHOPPING_LIST_NAME_CELL]: listName,
-      [SHOPPING_LIST_DESCRIPTION_CELL]: listDescription,
-      [SHOPPING_LIST_EMOJI_CELL]: listEmoji,
-      [SHOPPING_LIST_COLOR_CELL]: listColor,
-      [SHOPPING_LIST_CREATED_AT_CELL]: new Date().toISOString(),
-      [SHOPPING_LIST_UPDATED_AT_CELL]: new Date().toISOString(),
-    });
+    useAddShoppingList(id, listName, listDescription, listEmoji, listColor);
 
     router.push({
       pathname: "/(index)/list-item",
