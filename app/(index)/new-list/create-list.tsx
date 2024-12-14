@@ -30,8 +30,8 @@ export default function CreateListScreen() {
     const id = randomUUID();
     useAddShoppingList(id, listName, listDescription, listEmoji, listColor);
 
-    router.push({
-      pathname: "/(index)/list-item",
+    router.replace({
+      pathname: "/(index)/list",
       params: {
         listId: id,
       },
