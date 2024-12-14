@@ -1,9 +1,10 @@
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import { useShoppingListCell } from "@/stores/ShoppingListStore";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { Text } from "react-native";
 import React from "react";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
 export default function ListScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
@@ -16,6 +17,11 @@ export default function ListScreen() {
         options={{
           headerTitle: emoji + " " + name,
           headerLargeStyle: { backgroundColor: color },
+          headerRight: () => (
+            <Link href={`/list/new-entry?listId=${listId}`}>
+              <IconSymbol size={24} name="plus" color={"#007AFF"} />
+            </Link>
+          ),
         }}
       />
       <BodyScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>

@@ -65,6 +65,26 @@ export const useSetShoppingListCallback = () => {
   );
 };
 
+export const useAddShoppingListEntryCallback = (listId: string) => {
+  const store = useStore(STORE_ID);
+  return useCallback(
+    (id: string, name: string) =>
+      store.setRow("shoppingListEntries", id, {
+        id,
+        listId,
+        name,
+        quantity: 1,
+        unit: "bag",
+        isPurchased: false,
+        category: "",
+        notes: "",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }),
+    [store, listId]
+  );
+};
+
 export const useDelShoppingListCallback = (id: string) =>
   useDelRowCallback("shoppingLists", id, STORE_ID);
 

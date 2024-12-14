@@ -63,6 +63,12 @@ export default function AppIndexLayout() {
               headerLargeTitle: false,
             }}
           />
+          <Stack.Screen
+            name="list/new-entry/index"
+            options={{
+              headerLargeTitle: false,
+            }}
+          />
         </Stack>
       </TinyBaseProvider>
     </SignedIn>
