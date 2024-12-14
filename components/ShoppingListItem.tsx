@@ -79,7 +79,7 @@ export default function ShoppingListItem({ id }: { id: string }) {
           overshootRight={false}
           enableContextMenu
         >
-          <Link href={`/(index)/list-item?listId=${id}`}>
+          <Link href={`/(index)/list?listId=${id}`}>
             <View style={styles.swipeable}>
               <View
                 style={{
