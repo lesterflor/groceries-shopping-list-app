@@ -1,10 +1,16 @@
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
-import { useShoppingListCell } from "@/stores/ShoppingListStore";
+import {
+  useShoppingListCell,
+  useShoppingListEntryIds,
+} from "@/stores/ShoppingListStore";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { Text } from "react-native";
 import React from "react";
+import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import Animated from "react-native-reanimated";
+import ShoppingListEntryItem from "@/components/ShoppingListEntryItem";
 
 export default function ListScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
@@ -24,8 +30,30 @@ export default function ListScreen() {
           ),
         }}
       />
-      <BodyScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
-        <ThemedText>List ID: {listId}</ThemedText>
+
+      <BodyScrollView contentContainerStyle={{}}>
+        <Animated.FlatList
+          data={useShoppingListEntryIds(listId)}
+          renderItem={({ item: id }) => {
+            return <ShoppingListEntryItem id={id} />;
+          }}
+          contentContainerStyle={{
+            paddingTop: 8,
+          }}
+          ListEmptyComponent={() => (
+            <BodyScrollView
+              contentContainerStyle={{
+                alignItems: "center",
+                gap: 8,
+                paddingTop: 100,
+              }}
+            >
+              <Link href={`/list/new-entry?listId=${listId}`} asChild>
+                <Button variant="ghost">Create your first entry</Button>
+              </Link>
+            </BodyScrollView>
+          )}
+        />
       </BodyScrollView>
     </>
   );

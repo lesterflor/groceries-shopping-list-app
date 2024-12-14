@@ -1,6 +1,10 @@
 import React, { useCallback } from "react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
-import { createStore, NoValuesSchema } from "tinybase/with-schemas";
+import {
+  createIndexes,
+  createStore,
+  NoValuesSchema,
+} from "tinybase/with-schemas";
 import { useAndStartPersister } from "@/stores/useAndStartPersister";
 
 const STORE_ID = "shoppingListStore";
@@ -40,6 +44,9 @@ const {
   useCreateStore,
   useProvideStore,
   useSortedRowIds,
+  useCreateIndexes,
+  useSliceRowIds,
+  useProvideIndexes,
 } = UiReact as UiReact.WithSchemas<[typeof TABLES_SCHEMA, NoValuesSchema]>;
 
 export const useSetShoppingListCallback = () => {
@@ -99,13 +106,29 @@ export const useSortedShoppingListIds = (
 export const useShoppingListCell = (id: string, cellId: ShoppingListCellId) =>
   useCell("shoppingLists", id, cellId, STORE_ID);
 
+export const useShoppingListEntryIds = (listId: string) =>
+  useSliceRowIds("entriesByListId", listId, STORE_ID);
+
+export const useShoppingListEntryCell = (
+  id: string,
+  cellId: ShoppingListEntryCellId
+) => useCell("shoppingListEntries", id, cellId, STORE_ID);
+
 export default function ShoppingListStore() {
   const store = useCreateStore(() =>
     createStore().setTablesSchema(TABLES_SCHEMA)
   );
-
   useAndStartPersister(store as any);
   useProvideStore(STORE_ID, store);
+
+  const indexes = useCreateIndexes(store, () =>
+    createIndexes(store).setIndexDefinition(
+      "entriesByListId",
+      "shoppingListEntries",
+      "listId"
+    )
+  );
+  useProvideIndexes(STORE_ID, indexes);
 
   return null;
 }
