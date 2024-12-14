@@ -15,8 +15,9 @@ const TABLES_SCHEMA = {
     createdAt: { type: "string" },
     updatedAt: { type: "string" },
   },
-  shoppingListItems: {
+  shoppingListEntries: {
     id: { type: "string" },
+    listId: { type: "string" },
     name: { type: "string" },
     quantity: { type: "number" },
     unit: { type: "string" },
@@ -29,7 +30,8 @@ const TABLES_SCHEMA = {
 } as const;
 
 type ShoppingListCellId = keyof (typeof TABLES_SCHEMA)["shoppingLists"];
-type ShoppingListItemCellId = keyof (typeof TABLES_SCHEMA)["shoppingListItems"];
+type ShoppingListEntryCellId =
+  keyof (typeof TABLES_SCHEMA)["shoppingListEntries"];
 
 const {
   useStore,
