@@ -9,7 +9,12 @@ export default function ListScreen() {
   return (
     <>
       <Stack.Screen
-        options={{ headerTitle: useShoppingListCell(listId, "name") }}
+        options={{
+          headerTitle: useShoppingListCell(listId, "name"),
+          headerLargeStyle: {
+            backgroundColor: useShoppingListCell(listId, "color"),
+          },
+        }}
       />
       <BodyScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
         <ThemedText>List ID: {listId}</ThemedText>
