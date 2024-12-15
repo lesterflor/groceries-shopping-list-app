@@ -6,6 +6,10 @@ import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
+import { Href, useRouter } from "expo-router";
+import { View } from "react-native";
+import { IconCircle } from "@/components/IconCircle";
+import { backgroundColors, emojies } from "@/constants/Colors";
 
 export default function NewListScreen() {
   const router = useRouter();
@@ -19,44 +23,43 @@ export default function NewListScreen() {
     }
   };
   return (
-    <>
-      <BodyScrollView contentContainerStyle={{ padding: 16 }}>
-        <ThemedText
-          type="subtitle"
-          style={{ textAlign: "center", marginTop: 16 }}
-        >
-          Create or join a list
-        </ThemedText>
-        <IconCircle emoji="🛒" backgroundColor="lightblue" />
+    <BodyScrollView contentContainerStyle={{ padding: 16 }}>
+      <IconCircle
+        style={{ alignSelf: "center", marginTop: 16 }}
+        size={64}
+        emoji={emojies[Math.floor(Math.random() * emojies.length)]}
+        backgroundColor={
+          backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
+        }
+      />
+      <ThemedText
+        type="subtitle"
+        style={{ textAlign: "center", marginVertical: 16 }}
+      >
+        Create a new list
+      </ThemedText>
 
-        <View style={{ gap: 8 }}>
-          <Button
-            onPress={() => handleDismissTo("/(index)/new-list/create-list")}
-          >
-            Create new list
-          </Button>
+      <Button onPress={() => handleDismissTo("/(index)/new-list/create-list")}>
+        Create new list
+      </Button>
 
-          <ThemedText style={{ textAlign: "center", color: "gray" }}>
-            Or
-          </ThemedText>
+      <ThemedText
+        style={{ textAlign: "center", color: "gray", marginVertical: 8 }}
+      >
+        Or
+      </ThemedText>
 
-          <View>
-            <ThemedText type="defaultSemiBold">
-              Join an existing list
-            </ThemedText>
-            <TextInput
-              placeholder="Enter a list code"
-              textContentType="creditCardNumber"
-            />
-            <Button
-              variant="outline"
-              onPress={() => handleDismissTo("/(index)/new-list/join-list")}
-            >
-              Join list
-            </Button>
-          </View>
-        </View>
-      </BodyScrollView>
-    </>
+      <TextInput
+        placeholder="Enter a list code"
+        label="Enter a list code"
+        textContentType="creditCardNumber"
+      />
+      <Button
+        variant="ghost"
+        onPress={() => handleDismissTo("/(index)/new-list/join-list")}
+      >
+        Join list
+      </Button>
+    </BodyScrollView>
   );
 }
