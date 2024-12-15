@@ -1,23 +1,21 @@
-import * as SQLite from "expo-sqlite";
 import * as UiReact from "tinybase/ui-react/with-schemas";
-import { createExpoSqlitePersister } from "tinybase/persisters/persister-expo-sqlite/with-schemas";
 import { Store, OptionalSchemas, Content } from "tinybase/with-schemas";
+import { Persister, Persists } from "tinybase/persisters/with-schemas";
 
-export const useAndStartPersister = <Schemas extends OptionalSchemas>(
+export const useLocalPersisterAndStartImpl = <Schemas extends OptionalSchemas>(
   storeId: string,
   store: Store<Schemas>,
+  create: (
+    storeId: string,
+    store: Store<Schemas>
+  ) => Persister<Schemas, Persists>,
   initialContentJson?: string,
   then?: () => void
-) => {
-  // Persist store to Expo SQLite or local storage; load once, then auto-save.
-  return (UiReact as UiReact.WithSchemas<Schemas>).useCreatePersister(
+) =>
+  (UiReact as UiReact.WithSchemas<Schemas>).useCreatePersister(
     store,
-    (store) =>
-      createExpoSqlitePersister(
-        store,
-        SQLite.openDatabaseSync(storeId + ".db")
-      ),
-    [storeId],
+    (store) => create(storeId, store),
+    [create, storeId],
     async (persister) => {
       let initialContent: Content<Schemas> | undefined = undefined;
       try {
@@ -29,4 +27,3 @@ export const useAndStartPersister = <Schemas extends OptionalSchemas>(
     },
     [initialContentJson, then]
   );
-};

@@ -6,7 +6,7 @@ import {
   createStore,
   NoValuesSchema,
 } from "tinybase/with-schemas";
-import { useAndStartPersister } from "@/stores/useAndStartPersister";
+import { useLocalPersisterAndStart } from "@/stores/useLocalPersisterAndStart";
 import { useDelInitialContentCallback } from "./ShoppingListsStore";
 
 const STORE_ID_PREFIX = "shoppingListStore-";
@@ -108,7 +108,7 @@ export default function ShoppingListStore({
     createStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
 
-  useAndStartPersister(
+  useLocalPersisterAndStart(
     getStoreId(listId),
     store,
     initialContentJson,
