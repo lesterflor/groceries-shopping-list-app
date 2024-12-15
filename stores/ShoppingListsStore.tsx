@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { createStore, NoValuesSchema } from "tinybase/with-schemas";
-import { useCreateLocalPersisterAndStart } from "@/stores/useCreateLocalPersisterAndStart";
+import { useCreateLocalPersisterAndStart } from "@/stores/persisters/useCreateLocalPersisterAndStart";
 import ShoppingListStore from "./ShoppingListStore";
 
 const STORE_ID = "shoppingListsStore";
