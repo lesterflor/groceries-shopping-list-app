@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { createStore } from "tinybase/with-schemas";
-import { useLocalPersisterAndStart } from "@/stores/useLocalPersisterAndStart";
+import { useCreateLocalPersisterAndStart } from "@/stores/useCreateLocalPersisterAndStart";
 
 const STORE_ID_PREFIX = "shoppingListStore-";
 
@@ -100,7 +100,11 @@ export default function ShoppingListStore({
     createStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
 
-  useLocalPersisterAndStart(getStoreId(listId), store, initialContentJson);
+  useCreateLocalPersisterAndStart(
+    getStoreId(listId),
+    store,
+    initialContentJson
+  );
   useProvideStore(getStoreId(listId), store);
 
   return null;

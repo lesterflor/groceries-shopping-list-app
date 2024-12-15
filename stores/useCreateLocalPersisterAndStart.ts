@@ -1,21 +1,18 @@
-import { Persister, Persists } from "tinybase/persisters/with-schemas";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { Content, OptionalSchemas, Store } from "tinybase/with-schemas";
+import { createLocalPersister } from "./createLocalPersister";
 
-export const useLocalPersisterAndStartImpl = <Schemas extends OptionalSchemas>(
+export const useCreateLocalPersisterAndStart = <
+  Schemas extends OptionalSchemas
+>(
   storeId: string,
   store: Store<Schemas>,
-  create: (
-    storeId: string,
-    store: Store<Schemas>
-  ) => Persister<Schemas, Persists>,
-  initialContentJson?: string,
-  then?: () => void
+  initialContentJson?: string
 ) =>
   (UiReact as UiReact.WithSchemas<Schemas>).useCreatePersister(
     store,
-    (store) => create(storeId, store),
-    [create, storeId],
+    (store) => createLocalPersister(storeId, store),
+    [storeId],
     async (persister) => {
       let initialContent: Content<Schemas> | undefined = undefined;
       try {
@@ -23,7 +20,6 @@ export const useLocalPersisterAndStartImpl = <Schemas extends OptionalSchemas>(
       } catch {}
       await persister.load(initialContent);
       await persister.startAutoSave();
-      then?.();
     },
-    [initialContentJson, then]
+    [initialContentJson]
   );
