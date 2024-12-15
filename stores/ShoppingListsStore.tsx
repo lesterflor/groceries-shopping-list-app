@@ -22,7 +22,7 @@ const {
   useTable,
 } = UiReact as UiReact.WithSchemas<[typeof TABLES_SCHEMA, NoValuesSchema]>;
 
-export const useSetShoppingListCallback = () => {
+export const useAddShoppingListCallback = () => {
   const store = useStore(STORE_ID);
   return useCallback(
     (

@@ -5,7 +5,7 @@ import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
 import { backgroundColors, emojies } from "@/constants/Colors";
-import { useSetShoppingListCallback } from "@/stores/ShoppingListsStore";
+import { useAddShoppingListCallback } from "@/stores/ShoppingListsStore";
 
 export default function CreateListScreen() {
   const [listName, setListName] = useState("");
@@ -18,7 +18,7 @@ export default function CreateListScreen() {
   );
 
   const router = useRouter();
-  const useAddShoppingList = useSetShoppingListCallback();
+  const useAddShoppingList = useAddShoppingListCallback();
 
   const handleCreateList = () => {
     if (!listName) {
