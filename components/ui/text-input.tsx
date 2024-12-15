@@ -1,16 +1,16 @@
 import React from "react";
 import {
+  StyleSheet,
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
-  StyleSheet,
+  TextStyle,
   useColorScheme,
   View,
   ViewStyle,
-  TextStyle,
 } from "react-native";
-
-import { ThemedText } from "../ThemedText";
 import { zincColors } from "@/constants/Colors";
+import { ThemedText } from "../ThemedText";
+
 type InputVariant = "default" | "filled" | "outlined";
 type InputSize = "sm" | "md" | "lg";
 

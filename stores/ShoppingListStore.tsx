@@ -1,13 +1,7 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
-import {
-  Content,
-  createIndexes,
-  createStore,
-  NoValuesSchema,
-} from "tinybase/with-schemas";
-import { useAndStartPersister } from "@/stores/useAndStartPersister";
-import { useDelInitialContentCallback } from "./ShoppingListsStore";
+import { createStore } from "tinybase/with-schemas";
+import { useCreateLocalPersisterAndStart } from "@/stores/persisters/useCreateLocalPersisterAndStart";
 
 const STORE_ID_PREFIX = "shoppingListStore-";
 
@@ -39,11 +33,11 @@ type ShoppingListValueId = keyof typeof VALUES_SCHEMA;
 type ShoppingListEntryCellId = keyof (typeof TABLES_SCHEMA)["entries"];
 
 const {
-  useStore,
   useCell,
   useCreateStore,
   useProvideStore,
   useSortedRowIds,
+  useStore,
   useValue,
 } = UiReact as UiReact.WithSchemas<Schema>;
 
@@ -100,19 +94,16 @@ export default function ShoppingListStore({
   initialContentJson,
 }: {
   listId: string;
-  initialContentJson?: string;
+  initialContentJson: string;
 }) {
-  const delInitialContent = useDelInitialContentCallback(listId);
-
   const store = useCreateStore(() =>
     createStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
 
-  useAndStartPersister(
+  useCreateLocalPersisterAndStart(
     getStoreId(listId),
     store,
-    initialContentJson,
-    delInitialContent
+    initialContentJson
   );
   useProvideStore(getStoreId(listId), store);
 

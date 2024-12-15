@@ -1,10 +1,10 @@
 import * as React from "react";
-import { isClerkAPIResponseError, useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
-import { BodyScrollView } from "@/components/ui/BodyScrollView";
-import TextInput from "@/components/ui/text-input";
-import Button from "@/components/ui/button";
 import { ThemedText } from "@/components/ThemedText";
+import { BodyScrollView } from "@/components/ui/BodyScrollView";
+import Button from "@/components/ui/button";
+import TextInput from "@/components/ui/text-input";
+import { isClerkAPIResponseError, useSignUp } from "@clerk/clerk-expo";
 import { ClerkAPIError } from "@clerk/types";
 
 export default function SignUpScreen() {

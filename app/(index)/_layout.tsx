@@ -1,9 +1,9 @@
 import React from "react";
 import { Stack } from "expo-router";
-import { SignedIn, useUser } from "@clerk/clerk-expo";
-import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { Provider as TinyBaseProvider } from "tinybase/ui-react";
 import { Inspector } from "tinybase/ui-react-inspector";
+import ShoppingListsStore from "@/stores/ShoppingListsStore";
+import { SignedIn, useUser } from "@clerk/clerk-expo";
 
 export const unstable_settings = {
   initialRouteName: "/(index)",

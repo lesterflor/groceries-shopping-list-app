@@ -1,16 +1,14 @@
-import { ThemedText } from "@/components/ThemedText";
+import React from "react";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
+import Animated from "react-native-reanimated";
+import ShoppingListEntryItem from "@/components/ShoppingListEntryItem";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
+import Button from "@/components/ui/button";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import {
   useShoppingListEntryIds,
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
-import { Text } from "react-native";
-import React from "react";
-import Button from "@/components/ui/button";
-import { IconSymbol } from "@/components/ui/IconSymbol";
-import Animated from "react-native-reanimated";
-import ShoppingListEntryItem from "@/components/ShoppingListEntryItem";
 
 export default function ListScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };

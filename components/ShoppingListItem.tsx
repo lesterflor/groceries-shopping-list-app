@@ -1,23 +1,20 @@
 import React from "react";
-import { StyleSheet, Pressable, View } from "react-native";
+import { Link } from "expo-router";
+import { Pressable, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import Animated from "react-native-reanimated";
 import Reanimated, {
   FadeIn,
-  FadeOut,
   SharedValue,
-  SlideInLeft,
-  SlideOutLeft,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { ThemedText } from "./ThemedText";
-import { Link } from "expo-router";
-import { IconSymbol } from "./ui/IconSymbol";
-import { appleRed, backgroundColors, emojies } from "@/constants/Colors";
-import { IconCircle } from "./IconCircle";
-import Animated from "react-native-reanimated";
+import { appleRed } from "@/constants/Colors";
 import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
 import { useShoppingListValue } from "@/stores/ShoppingListStore";
+import { IconCircle } from "./IconCircle";
+import { ThemedText } from "./ThemedText";
+import { IconSymbol } from "./ui/IconSymbol";
 
 // function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
 //   const store = useStore();
