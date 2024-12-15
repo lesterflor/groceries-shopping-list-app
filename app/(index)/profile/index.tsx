@@ -1,9 +1,8 @@
+import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
-import { useClerk } from "@clerk/clerk-expo";
-import { useUser } from "@clerk/clerk-expo";
-import { useRouter } from "expo-router";
+import { useClerk, useUser } from "@clerk/clerk-expo";
 
 export default function ProfileScreen() {
   const { user } = useUser();

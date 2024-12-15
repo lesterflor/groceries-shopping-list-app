@@ -1,14 +1,13 @@
+import React from "react";
+import { Link, Stack } from "expo-router";
+import Animated from "react-native-reanimated";
 import { IconCircle } from "@/components/IconCircle";
 import ShoppingListItem from "@/components/ShoppingListItem";
-import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { backgroundColors } from "@/constants/Colors";
-import { Link, Stack } from "expo-router";
-import { View } from "react-native";
-import Animated from "react-native-reanimated";
-import { useSortedRowIds } from "tinybase/ui-react";
+import { useShoppingListIds } from "@/stores/ShoppingListsStore";
 
 export default function HomeScreen() {
   return (
@@ -29,10 +28,10 @@ export default function HomeScreen() {
       />
       <BodyScrollView contentContainerStyle={{}}>
         <Animated.FlatList
-          data={useSortedRowIds("shoppingLists", "createdAt")}
-          renderItem={({ item }) => {
-            return <ShoppingListItem id={item} />;
-          }}
+          data={useShoppingListIds()}
+          renderItem={({ item: listId }) => (
+            <ShoppingListItem listId={listId} />
+          )}
           contentContainerStyle={{
             paddingTop: 8,
           }}

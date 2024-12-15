@@ -1,23 +1,20 @@
 import React from "react";
-import { SHOPPING_LIST_TABLE } from "@/app/(index)/_layout";
-import { StyleSheet, Pressable, View } from "react-native";
+import { Link } from "expo-router";
+import { Pressable, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import Animated from "react-native-reanimated";
 import Reanimated, {
   FadeIn,
-  FadeOut,
   SharedValue,
-  SlideInLeft,
-  SlideOutLeft,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { useRow, useStore } from "tinybase/ui-react";
-import { ThemedText } from "./ThemedText";
-import { Link } from "expo-router";
-import { IconSymbol } from "./ui/IconSymbol";
-import { appleRed, backgroundColors, emojies } from "@/constants/Colors";
+import { appleRed } from "@/constants/Colors";
+import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
+import { useShoppingListValue } from "@/stores/ShoppingListStore";
 import { IconCircle } from "./IconCircle";
-import Animated from "react-native-reanimated";
+import { ThemedText } from "./ThemedText";
+import { IconSymbol } from "./ui/IconSymbol";
 
 // function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
 //   const store = useStore();
@@ -41,9 +38,12 @@ import Animated from "react-native-reanimated";
 //   );
 // }
 
-export default function ShoppingListItem({ id }: { id: string }) {
-  const store = useStore();
-  const listItem = useRow(SHOPPING_LIST_TABLE, id);
+export default function ShoppingListItem({ listId }: { listId: string }) {
+  // Listening to just these cells means that the component won't unnecessarily
+  // re-render if anything else in the row changes (such as the timestamps).
+  const name = useShoppingListValue(listId, "name");
+  const emoji = useShoppingListValue(listId, "emoji");
+  const color = useShoppingListValue(listId, "color");
 
   return (
     // TODO: Exiiting is not working not sure why
@@ -63,12 +63,8 @@ export default function ShoppingListItem({ id }: { id: string }) {
               };
             });
 
-            const handleDelete = () => {
-              store.delRow(SHOPPING_LIST_TABLE, id);
-            };
-
             return (
-              <Pressable onPress={handleDelete}>
+              <Pressable onPress={useDelShoppingListCallback(listId)}>
                 <Reanimated.View style={[styleAnimation, styles.rightAction]}>
                   <IconSymbol name="trash.fill" size={24} color="white" />
                 </Reanimated.View>
@@ -78,7 +74,7 @@ export default function ShoppingListItem({ id }: { id: string }) {
           overshootRight={false}
           enableContextMenu
         >
-          <Link href={`/(index)/list-item?listId=${id}`}>
+          <Link href={`/(index)/list?listId=${listId}`}>
             <View style={styles.swipeable}>
               <View
                 style={{
@@ -87,21 +83,8 @@ export default function ShoppingListItem({ id }: { id: string }) {
                   gap: 8,
                 }}
               >
-                <IconCircle
-                  emoji={
-                    listItem.emoji === ""
-                      ? emojies[Math.floor(Math.random() * emojies.length)]
-                      : listItem.emoji
-                  }
-                  backgroundColor={
-                    listItem.color
-                      ? listItem.color
-                      : backgroundColors[
-                          Math.floor(Math.random() * backgroundColors.length)
-                        ]
-                  }
-                />
-                <ThemedText type="defaultSemiBold">{listItem.name}</ThemedText>
+                <IconCircle emoji={emoji} backgroundColor={color} />
+                <ThemedText type="defaultSemiBold">{name}</ThemedText>
               </View>
               <IconSymbol name="chevron.right" size={14} color="#A1A1AA" />
             </View>

@@ -1,13 +1,13 @@
-import { zincColors } from "@/constants/Colors";
 import React from "react";
 import {
-  Pressable,
   ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  TextStyle,
   useColorScheme,
   ViewStyle,
-  TextStyle,
-  StyleSheet,
 } from "react-native";
+import { zincColors } from "@/constants/Colors";
 import { ThemedText } from "../ThemedText";
 
 type ButtonVariant = "filled" | "outline" | "ghost";

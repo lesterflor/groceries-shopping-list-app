@@ -1,3 +1,7 @@
+import React from "react";
+import { Href, useRouter } from "expo-router";
+import { View } from "react-native";
+import { IconCircle } from "@/components/IconCircle";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";

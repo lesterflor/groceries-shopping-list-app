@@ -1,12 +1,11 @@
-import { useSignIn } from "@clerk/clerk-expo";
-import { Link, useRouter } from "expo-router";
-import { Text, View } from "react-native";
 import React from "react";
-import TextInput from "@/components/ui/text-input";
-import Button from "@/components/ui/button";
-import { BodyScrollView } from "@/components/ui/BodyScrollView";
-import { appleBlue } from "@/constants/Colors";
+import { useRouter } from "expo-router";
+import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
+import { BodyScrollView } from "@/components/ui/BodyScrollView";
+import Button from "@/components/ui/button";
+import TextInput from "@/components/ui/text-input";
+import { useSignIn } from "@clerk/clerk-expo";
 
 export default function SignIn() {
   const { signIn, setActive, isLoaded } = useSignIn();
