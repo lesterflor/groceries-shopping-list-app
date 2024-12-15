@@ -27,13 +27,13 @@ export default function CreateListScreen() {
       return;
     }
 
-    const id = randomUUID();
-    useAddShoppingList(id, listName, listDescription, listEmoji, listColor);
+    const listId = randomUUID();
+    useAddShoppingList(listId, listName, listDescription, listEmoji, listColor);
 
     router.replace({
       pathname: "/(index)/list",
       params: {
-        listId: id,
+        listId: listId,
       },
     });
   };

@@ -5,7 +5,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { randomUUID } from "expo-crypto";
-import { useAddShoppingListEntryCallback } from "@/stores/ShoppingListsStore";
+import { useAddShoppingListEntryCallback } from "@/stores/ShoppingListStore";
 import React from "react";
 
 export default function CreateItemScreen() {

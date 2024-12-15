@@ -1,9 +1,9 @@
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import {
-  useShoppingListCell,
   useShoppingListEntryIds,
-} from "@/stores/ShoppingListsStore";
+  useShoppingListValue,
+} from "@/stores/ShoppingListStore";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { Text } from "react-native";
 import React from "react";
@@ -14,9 +14,9 @@ import ShoppingListEntryItem from "@/components/ShoppingListEntryItem";
 
 export default function ListScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
-  const name = useShoppingListCell(listId, "name");
-  const emoji = useShoppingListCell(listId, "emoji");
-  const color = useShoppingListCell(listId, "color");
+  const name = useShoppingListValue(listId, "name");
+  const emoji = useShoppingListValue(listId, "emoji");
+  const color = useShoppingListValue(listId, "color");
   return (
     <>
       <Stack.Screen
@@ -34,8 +34,8 @@ export default function ListScreen() {
       <BodyScrollView contentContainerStyle={{}}>
         <Animated.FlatList
           data={useShoppingListEntryIds(listId)}
-          renderItem={({ item: id }) => {
-            return <ShoppingListEntryItem id={id} />;
+          renderItem={({ item: entryId }) => {
+            return <ShoppingListEntryItem listId={listId} entryId={entryId} />;
           }}
           contentContainerStyle={{
             paddingTop: 8,
