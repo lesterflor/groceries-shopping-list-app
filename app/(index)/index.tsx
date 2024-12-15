@@ -5,10 +5,10 @@ import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { backgroundColors } from "@/constants/Colors";
+import { useSortedShoppingListIds } from "@/stores/ShoppingListStore";
 import { Link, Stack } from "expo-router";
 import { View } from "react-native";
 import Animated from "react-native-reanimated";
-import { useSortedRowIds } from "tinybase/ui-react";
 
 export default function HomeScreen() {
   return (
@@ -29,7 +29,7 @@ export default function HomeScreen() {
       />
       <BodyScrollView contentContainerStyle={{}}>
         <Animated.FlatList
-          data={useSortedRowIds("shoppingLists", "createdAt")}
+          data={useSortedShoppingListIds()}
           renderItem={({ item }) => {
             return <ShoppingListItem id={item} />;
           }}
