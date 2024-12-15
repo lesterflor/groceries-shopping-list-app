@@ -14,13 +14,11 @@ const TABLES_SCHEMA = {
 } as const;
 
 const {
-  useStore,
-  useDelRowCallback,
   useCreateStore,
+  useDelRowCallback,
   useProvideStore,
   useRowIds,
-  useDelCellCallback,
-  useCell,
+  useStore,
   useTable,
 } = UiReact as UiReact.WithSchemas<[typeof TABLES_SCHEMA, NoValuesSchema]>;
 

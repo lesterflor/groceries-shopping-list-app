@@ -1,6 +1,6 @@
 import React from "react";
-import { ThemedText } from "./ThemedText";
 import { useShoppingListEntryCell } from "@/stores/ShoppingListStore";
+import { ThemedText } from "./ThemedText";
 
 export default function ShoppingListEntryItem({
   listId,

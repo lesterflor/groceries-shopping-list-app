@@ -33,11 +33,11 @@ type ShoppingListValueId = keyof typeof VALUES_SCHEMA;
 type ShoppingListEntryCellId = keyof (typeof TABLES_SCHEMA)["entries"];
 
 const {
-  useStore,
   useCell,
   useCreateStore,
   useProvideStore,
   useSortedRowIds,
+  useStore,
   useValue,
 } = UiReact as UiReact.WithSchemas<Schema>;
 

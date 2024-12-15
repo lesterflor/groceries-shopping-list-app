@@ -1,18 +1,18 @@
 import "react-native-reanimated";
+import { useEffect } from "react";
+import { useFonts } from "expo-font";
+import { Slot } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "react-native";
 import { tokenCache } from "@/cache";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
 import {
   DarkTheme,
   DefaultTheme,
   Theme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Slot } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { StatusBar } from "react-native";
-import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 

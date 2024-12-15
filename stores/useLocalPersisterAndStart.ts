@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 import { createExpoSqlitePersister } from "tinybase/persisters/persister-expo-sqlite/with-schemas";
-import { Store, OptionalSchemas } from "tinybase/with-schemas";
+import { OptionalSchemas, Store } from "tinybase/with-schemas";
 import { useLocalPersisterAndStartImpl } from "./common";
 
 const create = <Schemas extends OptionalSchemas>(

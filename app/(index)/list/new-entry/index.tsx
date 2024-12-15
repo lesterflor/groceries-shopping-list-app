@@ -1,12 +1,10 @@
+import React, { useState } from "react";
+import { randomUUID } from "expo-crypto";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { Stack, useLocalSearchParams } from "expo-router";
-import { useRouter } from "expo-router";
-import { useState } from "react";
-import { randomUUID } from "expo-crypto";
 import { useAddShoppingListEntryCallback } from "@/stores/ShoppingListStore";
-import React from "react";
 
 export default function CreateItemScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };

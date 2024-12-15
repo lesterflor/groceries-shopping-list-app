@@ -1,13 +1,11 @@
+import React, { useState } from "react";
+import { randomUUID } from "expo-crypto";
+import { Stack, useRouter } from "expo-router";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { Stack } from "expo-router";
-import { useRouter } from "expo-router";
-import { useState } from "react";
-import { randomUUID } from "expo-crypto";
 import { backgroundColors, emojies } from "@/constants/Colors";
 import { useSetShoppingListCallback } from "@/stores/ShoppingListsStore";
-import React from "react";
 
 export default function CreateListScreen() {
   const [listName, setListName] = useState("");

@@ -1,6 +1,6 @@
-import * as UiReact from "tinybase/ui-react/with-schemas";
-import { Store, OptionalSchemas, Content } from "tinybase/with-schemas";
 import { Persister, Persists } from "tinybase/persisters/with-schemas";
+import * as UiReact from "tinybase/ui-react/with-schemas";
+import { Content, OptionalSchemas, Store } from "tinybase/with-schemas";
 
 export const useLocalPersisterAndStartImpl = <Schemas extends OptionalSchemas>(
   storeId: string,

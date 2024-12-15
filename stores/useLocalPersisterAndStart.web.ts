@@ -1,7 +1,6 @@
-import { Store, OptionalSchemas } from "tinybase/with-schemas";
 import { createLocalPersister } from "tinybase/persisters/persister-browser/with-schemas";
+import { OptionalSchemas, Store } from "tinybase/with-schemas";
 import { useLocalPersisterAndStartImpl } from "./common";
-import { useCallback } from "react";
 
 const create = <Schemas extends OptionalSchemas>(
   storeId: string,

@@ -1,6 +1,6 @@
+import React from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
-import React from "react";
 
 export default function JoinListScreen() {
   return (

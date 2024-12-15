@@ -1,15 +1,13 @@
+import React from "react";
+import { Link, Stack } from "expo-router";
+import Animated from "react-native-reanimated";
 import { IconCircle } from "@/components/IconCircle";
 import ShoppingListItem from "@/components/ShoppingListItem";
-import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { backgroundColors } from "@/constants/Colors";
 import { useShoppingListIds } from "@/stores/ShoppingListsStore";
-import { Link, Stack } from "expo-router";
-import React from "react";
-import { View } from "react-native";
-import Animated from "react-native-reanimated";
 
 export default function HomeScreen() {
   return (
