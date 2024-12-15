@@ -58,7 +58,13 @@ export default function AppIndexLayout() {
             }}
           />
           <Stack.Screen
-            name="list-item/index"
+            name="list/index"
+            options={{
+              headerLargeTitle: false,
+            }}
+          />
+          <Stack.Screen
+            name="list/new-entry/index"
             options={{
               headerLargeTitle: false,
             }}

@@ -5,6 +5,7 @@ import TextInput from "@/components/ui/text-input";
 import { Href, useRouter } from "expo-router";
 import { View } from "react-native";
 import { IconCircle } from "@/components/IconCircle";
+import React from "react";
 
 export default function NewListScreen() {
   const router = useRouter();
