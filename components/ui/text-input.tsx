@@ -11,7 +11,7 @@ import {
 import { zincColors } from "@/constants/Colors";
 import { ThemedText } from "../ThemedText";
 
-type InputVariant = "default" | "filled" | "outlined";
+type InputVariant = "default" | "filled" | "outlined" | "ghost";
 type InputSize = "sm" | "md" | "lg";
 
 interface TextInputProps extends Omit<RNTextInputProps, "style"> {
@@ -43,7 +43,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   > = {
     sm: { height: 36, fontSize: 14, padding: 8 },
     md: { height: 44, fontSize: 16, padding: 12 },
-    lg: { height: 55, fontSize: 16, padding: 16 },
+    lg: { height: 55, fontSize: 32, padding: 16 },
   };
 
   const getVariantStyle = () => {
@@ -63,6 +63,11 @@ export const TextInput: React.FC<TextInputProps> = ({
           ...baseStyle,
           borderWidth: 1,
           borderColor: isDark ? zincColors[600] : zincColors[200],
+        };
+      case "ghost":
+        return {
+          ...baseStyle,
+          backgroundColor: "transparent",
         };
       default:
         return baseStyle;
