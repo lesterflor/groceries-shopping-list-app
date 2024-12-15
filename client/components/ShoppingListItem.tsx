@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import Animated from "react-native-reanimated";
+import Animated, { FadeOut, SlideOutLeft } from "react-native-reanimated";
 import Reanimated, {
   FadeIn,
   SharedValue,
   useAnimatedStyle,
+  configureReanimatedLogger,
 } from "react-native-reanimated";
 import { appleRed, borderColor } from "@/constants/Colors";
 import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
@@ -16,27 +17,7 @@ import { IconCircle } from "./IconCircle";
 import { ThemedText } from "./ThemedText";
 import { IconSymbol } from "./ui/IconSymbol";
 
-// function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
-//   const store = useStore();
-
-//   const styleAnimation = useAnimatedStyle(() => {
-//     return {
-//       transform: [{ translateX: drag.value + 200 }],
-//     };
-//   });
-
-//   const handleDelete = () => {
-//     store.delRow(SHOPPING_LIST_TABLE, id);
-//   };
-
-//   return (
-//     <Pressable onPress={handleDelete}>
-//       <Reanimated.View style={[styleAnimation, styles.rightAction]}>
-//         <IconSymbol name="trash.fill" size={24} color="white" />
-//       </Reanimated.View>
-//     </Pressable>
-//   );
-// }
+configureReanimatedLogger({ strict: false });
 
 export default function ShoppingListItem({ listId }: { listId: string }) {
   // Listening to just these cells means that the component won't unnecessarily
@@ -45,32 +26,34 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
   const emoji = useShoppingListValue(listId, "emoji");
   const color = useShoppingListValue(listId, "color");
 
+  const RightAction = useCallback(
+    (prog: SharedValue<number>, drag: SharedValue<number>) => {
+      const styleAnimation = useAnimatedStyle(() => {
+        return {
+          transform: [{ translateX: drag.value + 200 }],
+        };
+      });
+
+      return (
+        <Pressable onPress={useDelShoppingListCallback(listId)}>
+          <Reanimated.View style={[styleAnimation, styles.rightAction]}>
+            <IconSymbol name="trash.fill" size={24} color="white" />
+          </Reanimated.View>
+        </Pressable>
+      );
+    },
+    [listId]
+  );
+
   return (
     // TODO: Exiiting is not working not sure why
-    <Animated.View entering={FadeIn}>
+    <Animated.View entering={FadeIn} exiting={SlideOutLeft}>
       <GestureHandlerRootView>
         <ReanimatedSwipeable
           friction={2}
           enableTrackpadTwoFingerGesture
           rightThreshold={40}
-          renderRightActions={(
-            prog: SharedValue<number>,
-            drag: SharedValue<number>
-          ) => {
-            const styleAnimation = useAnimatedStyle(() => {
-              return {
-                transform: [{ translateX: drag.value + 200 }],
-              };
-            });
-
-            return (
-              <Pressable onPress={useDelShoppingListCallback(listId)}>
-                <Reanimated.View style={[styleAnimation, styles.rightAction]}>
-                  <IconSymbol name="trash.fill" size={24} color="white" />
-                </Reanimated.View>
-              </Pressable>
-            );
-          }}
+          renderRightActions={RightAction}
           overshootRight={false}
           enableContextMenu
         >
