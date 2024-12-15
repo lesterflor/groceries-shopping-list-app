@@ -1,27 +1,28 @@
 import React, { useCallback } from "react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import {
+  Content,
   createIndexes,
   createStore,
   NoValuesSchema,
 } from "tinybase/with-schemas";
 import { useAndStartPersister } from "@/stores/useAndStartPersister";
+import { useDelInitialContentCallback } from "./ShoppingListsStore";
 
-const STORE_ID = "shoppingListStore";
+const STORE_ID_PREFIX = "shoppingListStore-";
 
+const VALUES_SCHEMA = {
+  listId: { type: "string" },
+  name: { type: "string" },
+  description: { type: "string" },
+  emoji: { type: "string" },
+  color: { type: "string" },
+  createdAt: { type: "string" },
+  updatedAt: { type: "string" },
+} as const;
 const TABLES_SCHEMA = {
-  shoppingLists: {
-    id: { type: "string" },
-    name: { type: "string" },
-    description: { type: "string" },
-    emoji: { type: "string" },
-    color: { type: "string" },
-    createdAt: { type: "string" },
-    updatedAt: { type: "string" },
-  },
-  shoppingListEntries: {
-    id: { type: "string" },
-    listId: { type: "string" },
+  entries: {
+    entryId: { type: "string" },
     name: { type: "string" },
     quantity: { type: "number" },
     unit: { type: "string" },
@@ -33,52 +34,27 @@ const TABLES_SCHEMA = {
   },
 } as const;
 
-type ShoppingListCellId = keyof (typeof TABLES_SCHEMA)["shoppingLists"];
-type ShoppingListEntryCellId =
-  keyof (typeof TABLES_SCHEMA)["shoppingListEntries"];
+type Schema = [typeof TABLES_SCHEMA, typeof VALUES_SCHEMA];
+type ShoppingListValueId = keyof typeof VALUES_SCHEMA;
+type ShoppingListEntryCellId = keyof (typeof TABLES_SCHEMA)["entries"];
 
 const {
   useStore,
-  useDelRowCallback,
   useCell,
   useCreateStore,
   useProvideStore,
   useSortedRowIds,
-  useCreateIndexes,
-  useSliceRowIds,
-  useProvideIndexes,
-} = UiReact as UiReact.WithSchemas<[typeof TABLES_SCHEMA, NoValuesSchema]>;
+  useValue,
+} = UiReact as UiReact.WithSchemas<Schema>;
 
-export const useSetShoppingListCallback = () => {
-  const store = useStore(STORE_ID);
-  return useCallback(
-    (
-      id: string,
-      name: string,
-      description: string,
-      emoji: string,
-      color: string
-    ) =>
-      store.setRow("shoppingLists", id, {
-        id,
-        name,
-        description,
-        emoji,
-        color,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      }),
-    [store]
-  );
-};
+const getStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 
 export const useAddShoppingListEntryCallback = (listId: string) => {
-  const store = useStore(STORE_ID);
+  const store = useStore(getStoreId(listId));
   return useCallback(
-    (id: string, name: string) =>
-      store.setRow("shoppingListEntries", id, {
-        id,
-        listId,
+    (entryId: string, name: string) =>
+      store.setRow("entries", entryId, {
+        entryId,
         name,
         quantity: 1,
         unit: "bag",
@@ -92,43 +68,53 @@ export const useAddShoppingListEntryCallback = (listId: string) => {
   );
 };
 
-export const useDelShoppingListCallback = (id: string) =>
-  useDelRowCallback("shoppingLists", id, STORE_ID);
+export const useShoppingListValue = (
+  listId: string,
+  valueId: ShoppingListValueId
+) => useValue(valueId, getStoreId(listId));
 
-export const useSortedShoppingListIds = (
-  cellId: ShoppingListCellId = "createdAt",
+export const useShoppingListEntryIds = (
+  listId: string,
+  cellId: ShoppingListEntryCellId = "createdAt",
   descending?: boolean,
   offset?: number,
   limit?: number
 ) =>
-  useSortedRowIds("shoppingLists", cellId, descending, offset, limit, STORE_ID);
-
-export const useShoppingListCell = (id: string, cellId: ShoppingListCellId) =>
-  useCell("shoppingLists", id, cellId, STORE_ID);
-
-export const useShoppingListEntryIds = (listId: string) =>
-  useSliceRowIds("entriesByListId", listId, STORE_ID);
+  useSortedRowIds(
+    "entries",
+    cellId,
+    descending,
+    offset,
+    limit,
+    getStoreId(listId)
+  );
 
 export const useShoppingListEntryCell = (
-  id: string,
+  listId: string,
+  entryId: string,
   cellId: ShoppingListEntryCellId
-) => useCell("shoppingListEntries", id, cellId, STORE_ID);
+) => useCell("entries", entryId, cellId, getStoreId(listId));
 
-export default function ShoppingListStore() {
+export default function ShoppingListStore({
+  listId,
+  initialContentJson,
+}: {
+  listId: string;
+  initialContentJson?: string;
+}) {
+  const delInitialContent = useDelInitialContentCallback(listId);
+
   const store = useCreateStore(() =>
-    createStore().setTablesSchema(TABLES_SCHEMA)
+    createStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
-  useAndStartPersister(store as any);
-  useProvideStore(STORE_ID, store);
 
-  const indexes = useCreateIndexes(store, () =>
-    createIndexes(store).setIndexDefinition(
-      "entriesByListId",
-      "shoppingListEntries",
-      "listId"
-    )
+  useAndStartPersister(
+    getStoreId(listId),
+    store,
+    initialContentJson,
+    delInitialContent
   );
-  useProvideIndexes(STORE_ID, indexes);
+  useProvideStore(getStoreId(listId), store);
 
   return null;
 }

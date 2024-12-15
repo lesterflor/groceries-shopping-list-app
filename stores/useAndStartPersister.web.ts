@@ -1,13 +1,32 @@
-import { createLocalPersister } from "tinybase/persisters/persister-browser";
-import { useCreatePersister } from "tinybase/ui-react";
-import { Store } from "tinybase/store";
+import * as UiReact from "tinybase/ui-react/with-schemas";
+import { createLocalPersister } from "tinybase/persisters/persister-browser/with-schemas";
+import { Store, OptionalSchemas, Content } from "tinybase/with-schemas";
 
-export const useAndStartPersister = (store: Store) =>
+export const useAndStartPersister = <Schemas extends OptionalSchemas>(
+  storeId: string,
+  store: Store<Schemas>,
+  initialContentJson?: string,
+  then?: () => void
+) => {
+  let initialContent: Content<Schemas> | undefined = undefined;
+  try {
+    initialContent = JSON.parse(initialContentJson);
+  } catch {}
+
   // Persist store to Expo SQLite or local storage; load once, then auto-save.
-  useCreatePersister(
+  return (UiReact as UiReact.WithSchemas<Schemas>).useCreatePersister(
     store,
-    (store) => createLocalPersister(store, "todos"),
-    [],
-    // @ts-ignore
-    (persister) => persister.load().then(persister.startAutoSave)
+    (store) => createLocalPersister(store, storeId),
+    [storeId],
+    async (persister) => {
+      let initialContent: Content<Schemas> | undefined = undefined;
+      try {
+        initialContent = JSON.parse(initialContentJson);
+      } catch {}
+      await persister.load(initialContent);
+      await persister.startAutoSave();
+      then?.();
+    },
+    [initialContentJson, then]
   );
+};

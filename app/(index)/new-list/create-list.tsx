@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { randomUUID } from "expo-crypto";
 import { backgroundColors, emojies } from "@/constants/Colors";
-import { useSetShoppingListCallback } from "@/stores/ShoppingListStore";
+import { useSetShoppingListCallback } from "@/stores/ShoppingListsStore";
 import React from "react";
 
 export default function CreateListScreen() {
@@ -27,13 +27,13 @@ export default function CreateListScreen() {
       return;
     }
 
-    const id = randomUUID();
-    useAddShoppingList(id, listName, listDescription, listEmoji, listColor);
+    const listId = randomUUID();
+    useAddShoppingList(listId, listName, listDescription, listEmoji, listColor);
 
     router.replace({
       pathname: "/(index)/list",
       params: {
-        listId: id,
+        listId: listId,
       },
     });
   };

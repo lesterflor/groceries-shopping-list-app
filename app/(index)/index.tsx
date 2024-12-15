@@ -5,7 +5,7 @@ import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { backgroundColors } from "@/constants/Colors";
-import { useSortedShoppingListIds } from "@/stores/ShoppingListStore";
+import { useShoppingListIds } from "@/stores/ShoppingListsStore";
 import { Link, Stack } from "expo-router";
 import React from "react";
 import { View } from "react-native";
@@ -30,10 +30,10 @@ export default function HomeScreen() {
       />
       <BodyScrollView contentContainerStyle={{}}>
         <Animated.FlatList
-          data={useSortedShoppingListIds()}
-          renderItem={({ item }) => {
-            return <ShoppingListItem id={item} />;
-          }}
+          data={useShoppingListIds()}
+          renderItem={({ item: listId }) => (
+            <ShoppingListItem listId={listId} />
+          )}
           contentContainerStyle={{
             paddingTop: 8,
           }}

@@ -1,8 +1,9 @@
 import React from "react";
 import { Stack } from "expo-router";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
-import ShoppingListStore from "@/stores/ShoppingListStore";
+import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { Provider as TinyBaseProvider } from "tinybase/ui-react";
+import { Inspector } from "tinybase/ui-react-inspector";
 
 export const unstable_settings = {
   initialRouteName: "/(index)",
@@ -14,8 +15,7 @@ export default function AppIndexLayout() {
   return (
     <SignedIn>
       <TinyBaseProvider>
-        <ShoppingListStore />
-
+        <ShoppingListsStore />
         <Stack
           screenOptions={{
             ...(process.env.EXPO_OS !== "ios"
@@ -70,6 +70,8 @@ export default function AppIndexLayout() {
             }}
           />
         </Stack>
+
+        {process.env.EXPO_OS === "web" ? <Inspector /> : null}
       </TinyBaseProvider>
     </SignedIn>
   );

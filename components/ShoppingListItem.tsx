@@ -16,10 +16,8 @@ import { IconSymbol } from "./ui/IconSymbol";
 import { appleRed, backgroundColors, emojies } from "@/constants/Colors";
 import { IconCircle } from "./IconCircle";
 import Animated from "react-native-reanimated";
-import {
-  useDelShoppingListCallback,
-  useShoppingListCell,
-} from "@/stores/ShoppingListStore";
+import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
+import { useShoppingListValue } from "@/stores/ShoppingListStore";
 
 // function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
 //   const store = useStore();
@@ -43,12 +41,12 @@ import {
 //   );
 // }
 
-export default function ShoppingListItem({ id }: { id: string }) {
+export default function ShoppingListItem({ listId }: { listId: string }) {
   // Listening to just these cells means that the component won't unnecessarily
   // re-render if anything else in the row changes (such as the timestamps).
-  const name = useShoppingListCell(id, "name");
-  const emoji = useShoppingListCell(id, "emoji");
-  const color = useShoppingListCell(id, "color");
+  const name = useShoppingListValue(listId, "name");
+  const emoji = useShoppingListValue(listId, "emoji");
+  const color = useShoppingListValue(listId, "color");
 
   return (
     // TODO: Exiiting is not working not sure why
@@ -69,7 +67,7 @@ export default function ShoppingListItem({ id }: { id: string }) {
             });
 
             return (
-              <Pressable onPress={useDelShoppingListCallback(id)}>
+              <Pressable onPress={useDelShoppingListCallback(listId)}>
                 <Reanimated.View style={[styleAnimation, styles.rightAction]}>
                   <IconSymbol name="trash.fill" size={24} color="white" />
                 </Reanimated.View>
@@ -79,7 +77,7 @@ export default function ShoppingListItem({ id }: { id: string }) {
           overshootRight={false}
           enableContextMenu
         >
-          <Link href={`/(index)/list?listId=${id}`}>
+          <Link href={`/(index)/list?listId=${listId}`}>
             <View style={styles.swipeable}>
               <View
                 style={{
