@@ -9,7 +9,7 @@ import Reanimated, {
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { appleRed } from "@/constants/Colors";
+import { appleRed, borderColor } from "@/constants/Colors";
 import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
 import { useShoppingListValue } from "@/stores/ShoppingListStore";
 import { IconCircle } from "./IconCircle";
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#A1A1AA80",
+    borderBottomColor: borderColor,
     gap: 8,
     paddingHorizontal: 16,
     paddingVertical: 8,
