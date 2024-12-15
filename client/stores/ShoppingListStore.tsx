@@ -41,10 +41,10 @@ const {
   useValue,
 } = UiReact as UiReact.WithSchemas<Schema>;
 
-const getStoreId = (listId: string) => STORE_ID_PREFIX + listId;
+const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 
 export const useAddShoppingListProductCallback = (listId: string) => {
-  const store = useStore(getStoreId(listId));
+  const store = useStore(useStoreId(listId));
   return useCallback(
     (productId: string, name: string) =>
       store.setRow("products", productId, {
@@ -65,7 +65,7 @@ export const useAddShoppingListProductCallback = (listId: string) => {
 export const useShoppingListValue = (
   listId: string,
   valueId: ShoppingListValueId
-) => useValue(valueId, getStoreId(listId));
+) => useValue(valueId, useStoreId(listId));
 
 export const useShoppingListProductIds = (
   listId: string,
@@ -80,14 +80,14 @@ export const useShoppingListProductIds = (
     descending,
     offset,
     limit,
-    getStoreId(listId)
+    useStoreId(listId)
   );
 
 export const useShoppingListProductCell = (
   listId: string,
   productId: string,
   cellId: ShoppingListProductCellId
-) => useCell("products", productId, cellId, getStoreId(listId));
+) => useCell("products", productId, cellId, useStoreId(listId));
 
 export default function ShoppingListStore({
   listId,
@@ -96,16 +96,12 @@ export default function ShoppingListStore({
   listId: string;
   initialContentJson: string;
 }) {
+  const storeId = useStoreId(listId);
   const store = useCreateMergeableStore(() =>
     createMergeableStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
-
-  useCreateClientPersisterAndStart(
-    getStoreId(listId),
-    store,
-    initialContentJson
-  );
-  useProvideStore(getStoreId(listId), store);
+  useCreateClientPersisterAndStart(storeId, store, initialContentJson);
+  useProvideStore(storeId, store);
 
   return null;
 }
