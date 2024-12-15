@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { createMergeableStore } from "tinybase/with-schemas";
-import { useCreateLocalPersisterAndStart } from "@/stores/persisters/useCreateLocalPersisterAndStart";
+import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
 
 const STORE_ID_PREFIX = "shoppingListStore-";
 
@@ -100,7 +100,7 @@ export default function ShoppingListStore({
     createMergeableStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
 
-  useCreateLocalPersisterAndStart(
+  useCreateClientPersisterAndStart(
     getStoreId(listId),
     store,
     initialContentJson
