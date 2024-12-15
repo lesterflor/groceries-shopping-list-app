@@ -29,30 +29,29 @@ export default function ListScreen() {
         }}
       />
 
-      <BodyScrollView contentContainerStyle={{}}>
-        <Animated.FlatList
-          data={useShoppingListEntryIds(listId)}
-          renderItem={({ item: entryId }) => {
-            return <ShoppingListEntryItem listId={listId} entryId={entryId} />;
-          }}
-          contentContainerStyle={{
-            paddingTop: 8,
-          }}
-          ListEmptyComponent={() => (
-            <BodyScrollView
-              contentContainerStyle={{
-                alignItems: "center",
-                gap: 8,
-                paddingTop: 100,
-              }}
-            >
-              <Link href={`/list/new-entry?listId=${listId}`} asChild>
-                <Button variant="ghost">Create your first entry</Button>
-              </Link>
-            </BodyScrollView>
-          )}
-        />
-      </BodyScrollView>
+      <Animated.FlatList
+        data={useShoppingListEntryIds(listId)}
+        renderItem={({ item: entryId }) => {
+          return <ShoppingListEntryItem listId={listId} entryId={entryId} />;
+        }}
+        contentContainerStyle={{
+          paddingTop: 8,
+        }}
+        contentInsetAdjustmentBehavior="automatic"
+        ListEmptyComponent={() => (
+          <BodyScrollView
+            contentContainerStyle={{
+              alignItems: "center",
+              gap: 8,
+              paddingTop: 100,
+            }}
+          >
+            <Link href={`/list/new-entry?listId=${listId}`} asChild>
+              <Button variant="ghost">Create your first entry</Button>
+            </Link>
+          </BodyScrollView>
+        )}
+      />
     </>
   );
 }

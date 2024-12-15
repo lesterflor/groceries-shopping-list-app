@@ -26,38 +26,35 @@ export default function HomeScreen() {
           ),
         }}
       />
-      <BodyScrollView contentContainerStyle={{}}>
-        <Animated.FlatList
-          data={useShoppingListIds()}
-          renderItem={({ item: listId }) => (
-            <ShoppingListItem listId={listId} />
-          )}
-          contentContainerStyle={{
-            paddingTop: 8,
-          }}
-          ListEmptyComponent={() => (
-            <BodyScrollView
-              contentContainerStyle={{
-                alignItems: "center",
-                gap: 8,
-                paddingTop: 100,
-              }}
-            >
-              <IconCircle
-                emoji="🛒"
-                backgroundColor={
-                  backgroundColors[
-                    Math.floor(Math.random() * backgroundColors.length)
-                  ]
-                }
-              />
-              <Link href="/new-list" asChild>
-                <Button variant="ghost">Create your first list</Button>
-              </Link>
-            </BodyScrollView>
-          )}
-        />
-      </BodyScrollView>
+      <Animated.FlatList
+        data={useShoppingListIds()}
+        renderItem={({ item: listId }) => <ShoppingListItem listId={listId} />}
+        contentContainerStyle={{
+          paddingTop: 8,
+        }}
+        contentInsetAdjustmentBehavior="automatic"
+        ListEmptyComponent={() => (
+          <BodyScrollView
+            contentContainerStyle={{
+              alignItems: "center",
+              gap: 8,
+              paddingTop: 100,
+            }}
+          >
+            <IconCircle
+              emoji="🛒"
+              backgroundColor={
+                backgroundColors[
+                  Math.floor(Math.random() * backgroundColors.length)
+                ]
+              }
+            />
+            <Link href="/new-list" asChild>
+              <Button variant="ghost">Create your first list</Button>
+            </Link>
+          </BodyScrollView>
+        )}
+      />
     </>
   );
 }
