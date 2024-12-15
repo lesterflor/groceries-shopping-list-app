@@ -45,14 +45,26 @@ export const Colors = {
 };
 
 export const backgroundColors = [
-  "#A5D8FF", // Blue 200
-  "#B9FBC0", // Green 200
-  "#FFA8A8", // Red 200
-  "#FFF3BF", // Yellow 200
-  "#FFD8B5", // Orange 200
-  "#E0AAFF", // Purple 200
-  "#D0F4EA", // Teal 200
-  "#CAF0F8", // Cyan 200
+  "#9CCAFF", // Blue 200
+  "#B4F7B2", // Green 200
+  "#FF9E9E", // Red 200
+  "#FFEAAF", // Yellow 200
+  "#FFC59A", // Orange 200
+  "#D79AFF", // Purple 200
+  "#C9F1E2", // Teal 200
+  "#BEE9F8", // Cyan 200
+  "#FFABDC", // Pink 200
+  "#D9C9FF", // Lavender 200
+  "#B9DBFF", // Sky Blue 200
+  "#A7F2D1", // Mint 200
+  "#FFDC9B", // Peach 200
+  "#FFB3A3", // Coral 200
+  "#D8AFFF", // Orchid 200
+  "#A3D9FF", // Azure 200
+  "#FFB8C5", // Rose 200
+  "#B3FFD3", // Seafoam 200
+  "#FFE09F", // Cream 200
+  "#A4E8FF", // Turquoise 200
 ];
 
 export const emojies = [
