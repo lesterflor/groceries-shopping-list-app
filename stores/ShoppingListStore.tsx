@@ -15,8 +15,8 @@ const VALUES_SCHEMA = {
   updatedAt: { type: "string" },
 } as const;
 const TABLES_SCHEMA = {
-  entries: {
-    entryId: { type: "string" },
+  products: {
+    productId: { type: "string" },
     name: { type: "string" },
     quantity: { type: "number" },
     unit: { type: "string" },
@@ -30,7 +30,7 @@ const TABLES_SCHEMA = {
 
 type Schema = [typeof TABLES_SCHEMA, typeof VALUES_SCHEMA];
 type ShoppingListValueId = keyof typeof VALUES_SCHEMA;
-type ShoppingListEntryCellId = keyof (typeof TABLES_SCHEMA)["entries"];
+type ShoppingListProductCellId = keyof (typeof TABLES_SCHEMA)["products"];
 
 const {
   useCell,
@@ -43,12 +43,12 @@ const {
 
 const getStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 
-export const useAddShoppingListEntryCallback = (listId: string) => {
+export const useAddShoppingListProductCallback = (listId: string) => {
   const store = useStore(getStoreId(listId));
   return useCallback(
-    (entryId: string, name: string) =>
-      store.setRow("entries", entryId, {
-        entryId,
+    (productId: string, name: string) =>
+      store.setRow("products", productId, {
+        productId,
         name,
         quantity: 1,
         unit: "bag",
@@ -67,15 +67,15 @@ export const useShoppingListValue = (
   valueId: ShoppingListValueId
 ) => useValue(valueId, getStoreId(listId));
 
-export const useShoppingListEntryIds = (
+export const useShoppingListProductIds = (
   listId: string,
-  cellId: ShoppingListEntryCellId = "createdAt",
+  cellId: ShoppingListProductCellId = "createdAt",
   descending?: boolean,
   offset?: number,
   limit?: number
 ) =>
   useSortedRowIds(
-    "entries",
+    "products",
     cellId,
     descending,
     offset,
@@ -83,11 +83,11 @@ export const useShoppingListEntryIds = (
     getStoreId(listId)
   );
 
-export const useShoppingListEntryCell = (
+export const useShoppingListProductCell = (
   listId: string,
-  entryId: string,
-  cellId: ShoppingListEntryCellId
-) => useCell("entries", entryId, cellId, getStoreId(listId));
+  productId: string,
+  cellId: ShoppingListProductCellId
+) => useCell("products", productId, cellId, getStoreId(listId));
 
 export default function ShoppingListStore({
   listId,
