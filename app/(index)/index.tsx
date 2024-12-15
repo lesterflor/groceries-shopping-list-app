@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useRouter } from "expo-router";
 import Animated from "react-native-reanimated";
 import { IconCircle } from "@/components/IconCircle";
 import ShoppingListItem from "@/components/ShoppingListItem";
@@ -10,6 +10,7 @@ import { backgroundColors } from "@/constants/Colors";
 import { useShoppingListIds } from "@/stores/ShoppingListsStore";
 
 export default function HomeScreen() {
+  const router = useRouter();
   return (
     <>
       <Stack.Screen
@@ -49,9 +50,9 @@ export default function HomeScreen() {
                 ]
               }
             />
-            <Link href="/new-list" asChild>
-              <Button variant="ghost">Create your first list</Button>
-            </Link>
+            <Button onPress={() => router.push("/new-list")} variant="ghost">
+              Create your first list
+            </Button>
           </BodyScrollView>
         )}
       />

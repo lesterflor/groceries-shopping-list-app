@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import Animated from "react-native-reanimated";
 import ShoppingListEntryItem from "@/components/ShoppingListEntryItem";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
@@ -11,6 +11,7 @@ import {
 } from "@/stores/ShoppingListStore";
 
 export default function ListScreen() {
+  const router = useRouter();
   const { listId } = useLocalSearchParams() as { listId: string };
   const name = useShoppingListValue(listId, "name");
   const emoji = useShoppingListValue(listId, "emoji");
@@ -46,9 +47,12 @@ export default function ListScreen() {
               paddingTop: 100,
             }}
           >
-            <Link href={`/list/new-entry?listId=${listId}`} asChild>
-              <Button variant="ghost">Create your first entry</Button>
-            </Link>
+            <Button
+              onPress={() => router.push(`/list/new-entry?listId=${listId}`)}
+              variant="ghost"
+            >
+              Create your first entry
+            </Button>
           </BodyScrollView>
         )}
       />
