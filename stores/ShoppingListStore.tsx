@@ -1,13 +1,7 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
-import {
-  Content,
-  createIndexes,
-  createStore,
-  NoValuesSchema,
-} from "tinybase/with-schemas";
+import { createStore } from "tinybase/with-schemas";
 import { useLocalPersisterAndStart } from "@/stores/useLocalPersisterAndStart";
-import { useDelInitialContentCallback } from "./ShoppingListsStore";
 
 const STORE_ID_PREFIX = "shoppingListStore-";
 
@@ -100,20 +94,13 @@ export default function ShoppingListStore({
   initialContentJson,
 }: {
   listId: string;
-  initialContentJson?: string;
+  initialContentJson: string;
 }) {
-  const delInitialContent = useDelInitialContentCallback(listId);
-
   const store = useCreateStore(() =>
     createStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
 
-  useLocalPersisterAndStart(
-    getStoreId(listId),
-    store,
-    initialContentJson,
-    delInitialContent
-  );
+  useLocalPersisterAndStart(getStoreId(listId), store, initialContentJson);
   useProvideStore(getStoreId(listId), store);
 
   return null;
