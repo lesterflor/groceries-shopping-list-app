@@ -5,5 +5,4 @@ import { MergeableStore, OptionalSchemas } from "tinybase/with-schemas";
 export const createLocalPersister = <Schemas extends OptionalSchemas>(
   storeId: string,
   store: MergeableStore<Schemas>
-) =>
-  createExpoSqlitePersister(store, SQLite.openDatabaseSync("app.db"), storeId);
+) => createExpoSqlitePersister(store, SQLite.openDatabaseSync(storeId + ".db"));
