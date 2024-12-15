@@ -88,20 +88,7 @@ export default function ShoppingListItem({ id }: { id: string }) {
                   gap: 8,
                 }}
               >
-                <IconCircle
-                  emoji={
-                    emoji === ""
-                      ? emojies[Math.floor(Math.random() * emojies.length)]
-                      : emoji
-                  }
-                  backgroundColor={
-                    color
-                      ? color
-                      : backgroundColors[
-                          Math.floor(Math.random() * backgroundColors.length)
-                        ]
-                  }
-                />
+                <IconCircle emoji={emoji} backgroundColor={color} />
                 <ThemedText type="defaultSemiBold">{name}</ThemedText>
               </View>
               <IconSymbol name="chevron.right" size={14} color="#A1A1AA" />
