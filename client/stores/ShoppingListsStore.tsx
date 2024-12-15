@@ -2,9 +2,10 @@ import React, { useCallback } from "react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { createMergeableStore, NoValuesSchema } from "tinybase/with-schemas";
 import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
+import { useUser } from "@clerk/clerk-expo";
 import ShoppingListStore from "./ShoppingListStore";
 
-const STORE_ID = "shoppingListsStore";
+const STORE_ID_PREFIX = "shoppingListsStore-";
 
 const TABLES_SCHEMA = {
   lists: {
@@ -22,8 +23,10 @@ const {
   useTable,
 } = UiReact as UiReact.WithSchemas<[typeof TABLES_SCHEMA, NoValuesSchema]>;
 
+const useStoreId = () => STORE_ID_PREFIX + useUser().user.id;
+
 export const useAddShoppingListCallback = () => {
-  const store = useStore(STORE_ID);
+  const store = useStore(useStoreId());
   return useCallback(
     (
       id: string,
@@ -52,18 +55,19 @@ export const useAddShoppingListCallback = () => {
 };
 
 export const useDelShoppingListCallback = (id: string) =>
-  useDelRowCallback("lists", id, STORE_ID);
+  useDelRowCallback("lists", id, useStoreId());
 
-export const useShoppingListIds = () => useRowIds("lists", STORE_ID);
+export const useShoppingListIds = () => useRowIds("lists", useStoreId());
 
 export default function ShoppingListsStore() {
+  const storeId = useStoreId();
   const store = useCreateMergeableStore(() =>
     createMergeableStore().setTablesSchema(TABLES_SCHEMA)
   );
-  useCreateClientPersisterAndStart(STORE_ID, store);
-  useProvideStore(STORE_ID, store);
+  useCreateClientPersisterAndStart(storeId, store);
+  useProvideStore(storeId, store);
 
-  return Object.entries(useTable("lists", STORE_ID)).map(
+  return Object.entries(useTable("lists", storeId)).map(
     ([listId, { initialContentJson }]) => (
       <ShoppingListStore
         listId={listId}
