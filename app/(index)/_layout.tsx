@@ -2,9 +2,10 @@ import React from "react";
 import { Stack } from "expo-router";
 import { Provider as TinyBaseProvider } from "tinybase/ui-react";
 import { Inspector } from "tinybase/ui-react-inspector";
+import { ListCreationProvider } from "@/context/ListCreationContext";
 import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
-import { ListCreationProvider } from "@/context/ListCreationContext";
+
 export const unstable_settings = {
   initialRouteName: "/(index)",
 };
@@ -65,7 +66,7 @@ export default function AppIndexLayout() {
               }}
             />
             <Stack.Screen
-              name="list/new-entry/index"
+              name="list/new-product/index"
               options={{
                 headerLargeTitle: false,
               }}

@@ -1,12 +1,12 @@
 import React from "react";
 import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import Animated from "react-native-reanimated";
-import ShoppingListEntryItem from "@/components/ShoppingListEntryItem";
+import ShoppingListProductItem from "@/components/ShoppingListProductItem";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import {
-  useShoppingListEntryIds,
+  useShoppingListProductIds,
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
 
@@ -23,7 +23,7 @@ export default function ListScreen() {
           headerTitle: emoji + " " + name,
           headerLargeStyle: { backgroundColor: color },
           headerRight: () => (
-            <Link href={`/list/new-entry?listId=${listId}`}>
+            <Link href={`/list/new-product?listId=${listId}`}>
               <IconSymbol size={24} name="plus" color={"#007AFF"} />
             </Link>
           ),
@@ -31,9 +31,11 @@ export default function ListScreen() {
       />
 
       <Animated.FlatList
-        data={useShoppingListEntryIds(listId)}
-        renderItem={({ item: entryId }) => {
-          return <ShoppingListEntryItem listId={listId} entryId={entryId} />;
+        data={useShoppingListProductIds(listId)}
+        renderItem={({ item: productId }) => {
+          return (
+            <ShoppingListProductItem listId={listId} productId={productId} />
+          );
         }}
         contentContainerStyle={{
           paddingTop: 8,
@@ -48,10 +50,10 @@ export default function ListScreen() {
             }}
           >
             <Button
-              onPress={() => router.push(`/list/new-entry?listId=${listId}`)}
+              onPress={() => router.push(`/list/new-product?listId=${listId}`)}
               variant="ghost"
             >
-              Create your first entry
+              Add the first product to this list
             </Button>
           </BodyScrollView>
         )}
