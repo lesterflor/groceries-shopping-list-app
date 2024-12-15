@@ -56,8 +56,6 @@ export const useDelShoppingListCallback = (id: string) =>
 
 export const useShoppingListIds = () => useRowIds("lists", STORE_ID);
 
-export const useShoppingLists = () => useTable("lists", STORE_ID);
-
 export default function ShoppingListsStore() {
   const store = useCreateStore(() =>
     createStore().setTablesSchema(TABLES_SCHEMA)
@@ -65,7 +63,7 @@ export default function ShoppingListsStore() {
   useCreateLocalPersisterAndStart(STORE_ID, store);
   useProvideStore(STORE_ID, store);
 
-  return Object.entries(useShoppingLists()).map(
+  return Object.entries(useTable("lists", STORE_ID)).map(
     ([listId, { initialContentJson }]) => (
       <ShoppingListStore
         listId={listId}
