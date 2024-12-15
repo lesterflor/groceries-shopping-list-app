@@ -3,6 +3,7 @@ import * as UiReact from "tinybase/ui-react/with-schemas";
 import { createMergeableStore, NoValuesSchema } from "tinybase/with-schemas";
 import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
 import { useUser } from "@clerk/clerk-expo";
+import { useCreateServerSynchronizerAndStart } from "./persisters/useCreateServerSynchronizerAndStart";
 import ShoppingListStore from "./ShoppingListStore";
 
 const STORE_ID_PREFIX = "shoppingListsStore-";
@@ -65,6 +66,7 @@ export default function ShoppingListsStore() {
     createMergeableStore().setTablesSchema(TABLES_SCHEMA)
   );
   useCreateClientPersisterAndStart(storeId, store);
+  useCreateServerSynchronizerAndStart(storeId, store);
   useProvideStore(storeId, store);
 
   return Object.entries(useTable("lists", storeId)).map(
