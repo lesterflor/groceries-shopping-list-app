@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { randomUUID } from "expo-crypto";
 import * as UiReact from "tinybase/ui-react/with-schemas";
-import { createMergeableStore } from "tinybase/with-schemas";
+import { Cell, createMergeableStore, Value } from "tinybase/with-schemas";
 import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
 import { useCreateServerSynchronizerAndStart } from "./persisters/useCreateServerSynchronizerAndStart";
 
@@ -30,7 +30,7 @@ const TABLES_SCHEMA = {
   },
 } as const;
 
-type Schema = [typeof TABLES_SCHEMA, typeof VALUES_SCHEMA];
+type Schemas = [typeof TABLES_SCHEMA, typeof VALUES_SCHEMA];
 type ShoppingListValueId = keyof typeof VALUES_SCHEMA;
 type ShoppingListProductCellId = keyof (typeof TABLES_SCHEMA)["products"];
 
@@ -41,7 +41,7 @@ const {
   useSortedRowIds,
   useStore,
   useValue,
-} = UiReact as UiReact.WithSchemas<Schema>;
+} = UiReact as UiReact.WithSchemas<Schemas>;
 
 const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 
@@ -67,10 +67,10 @@ export const useAddShoppingListProductCallback = (listId: string) => {
   );
 };
 
-export const useShoppingListValue = (
+export const useShoppingListValue = <ValueId extends ShoppingListValueId>(
   listId: string,
-  valueId: ShoppingListValueId
-) => useValue(valueId, useStoreId(listId));
+  valueId: ValueId
+): Value<Schemas[1], ValueId> => useValue(valueId, useStoreId(listId));
 
 export const useShoppingListProductIds = (
   listId: string,
@@ -88,11 +88,14 @@ export const useShoppingListProductIds = (
     useStoreId(listId)
   );
 
-export const useShoppingListProductCell = (
+export const useShoppingListProductCell = <
+  CellId extends ShoppingListProductCellId
+>(
   listId: string,
   productId: string,
-  cellId: ShoppingListProductCellId
-) => useCell("products", productId, cellId, useStoreId(listId));
+  cellId: CellId
+): Cell<Schemas[0], "products", CellId> =>
+  useCell("products", productId, cellId, useStoreId(listId));
 
 export default function ShoppingListStore({
   listId,
