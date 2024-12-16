@@ -16,6 +16,12 @@ export default function ListScreen() {
   const name = useShoppingListValue(listId, "name");
   const emoji = useShoppingListValue(listId, "emoji");
   const color = useShoppingListValue(listId, "color");
+
+  const newProductHref = {
+    pathname: "/list/[listId]/product/new",
+    params: { listId },
+  } as const;
+
   return (
     <>
       <Stack.Screen
@@ -23,7 +29,7 @@ export default function ListScreen() {
           headerTitle: emoji + " " + name,
           headerLargeStyle: { backgroundColor: color },
           headerRight: () => (
-            <Link href={`/list/new-product?listId=${listId}`}>
+            <Link href={newProductHref}>
               <IconSymbol size={24} name="plus" color={"#007AFF"} />
             </Link>
           ),
@@ -49,10 +55,7 @@ export default function ListScreen() {
               paddingTop: 100,
             }}
           >
-            <Button
-              onPress={() => router.push(`/list/new-product?listId=${listId}`)}
-              variant="ghost"
-            >
+            <Button onPress={() => router.push(newProductHref)} variant="ghost">
               Add the first product to this list
             </Button>
           </BodyScrollView>
