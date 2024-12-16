@@ -42,7 +42,7 @@ export default function AppIndexLayout() {
               }}
             />
             <Stack.Screen
-              name="new-list/index"
+              name="list/new/index"
               options={{
                 presentation: "formSheet",
                 sheetAllowedDetents: [0.5, 0.75],

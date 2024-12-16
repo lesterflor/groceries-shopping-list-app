@@ -30,7 +30,7 @@ export default function CreateListScreen() {
     );
 
     router.replace({
-      pathname: "/(index)/list/[listId]",
+      pathname: "/list/[listId]",
       params: { listId },
     });
   };
@@ -58,9 +58,7 @@ export default function CreateListScreen() {
             containerStyle={styles.titleInputContainer}
           />
           <Link
-            href={{
-              pathname: "/(index)/emoji-picker",
-            }}
+            href={{ pathname: "/emoji-picker" }}
             style={[styles.emojiButton, { borderColor: selectedColor }]}
           >
             <View style={styles.emojiContainer}>
@@ -68,9 +66,7 @@ export default function CreateListScreen() {
             </View>
           </Link>
           <Link
-            href={{
-              pathname: "/(index)/color-picker",
-            }}
+            href={{ pathname: "/color-picker" }}
             style={[styles.colorButton, { borderColor: selectedColor }]}
           >
             <View style={styles.colorContainer}>
