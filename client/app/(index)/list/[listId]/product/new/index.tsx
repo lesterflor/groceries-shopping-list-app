@@ -5,7 +5,7 @@ import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
 import { useAddShoppingListProductCallback } from "@/stores/ShoppingListStore";
 
-export default function CreateItemScreen() {
+export default function NewItemScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
   const [name, setName] = useState("");
 

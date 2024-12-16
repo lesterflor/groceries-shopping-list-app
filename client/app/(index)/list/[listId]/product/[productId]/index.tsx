@@ -7,7 +7,7 @@ import {
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
 
-export default function CreateItemScreen() {
+export default function ProductScreen() {
   const { listId, productId } = useLocalSearchParams() as {
     listId: string;
     productId: string;
