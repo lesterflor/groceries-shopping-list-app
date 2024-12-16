@@ -17,6 +17,7 @@ const MAPPING = {
   "pencil.and.list.clipboard": "edit",
   plus: "add",
   minus: "remove",
+  square: "square",
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],

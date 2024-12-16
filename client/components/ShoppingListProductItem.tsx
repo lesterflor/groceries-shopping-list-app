@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "expo-router";
+import * as Haptics from "expo-haptics";
+import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { appleRed, borderColor } from "@/constants/Colors";
 import {
@@ -19,6 +20,7 @@ export default function ShoppingListProductItem({
   listId: string;
   productId: string;
 }) {
+  const router = useRouter();
   const [name] = useShoppingListProductCell(listId, productId, "name");
 
   const deleteCallback = useDelShoppingListProductCallback(listId, productId);
@@ -34,7 +36,12 @@ export default function ShoppingListProductItem({
     });
 
     return (
-      <Pressable onPress={deleteCallback}>
+      <Pressable
+        onPress={() => {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+          deleteCallback();
+        }}
+      >
         <Reanimated.View style={[styleAnimation, styles.rightAction]}>
           <IconSymbol name="trash.fill" size={24} color="white" />
         </Reanimated.View>
@@ -53,42 +60,57 @@ export default function ShoppingListProductItem({
       enableContextMenu
       containerStyle={{
         paddingBottom: 12,
+        paddingHorizontal: 16,
       }}
     >
-      <Link
-        href={{
-          pathname: "/list/[listId]/product/[productId]",
-          params: { listId, productId },
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 8,
         }}
       >
-        <View style={styles.swipeable}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 8,
-            }}
+        <Pressable
+          onPress={() => {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          }}
+        >
+          <IconSymbol name="square" size={30} color={borderColor} />
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            router.push({
+              pathname: "/list/[listId]/product/[productId]",
+              params: { listId, productId },
+            });
+          }}
+          style={styles.swipeable}
+        >
+          <ThemedText
+            type="defaultSemiBold"
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={{ maxWidth: "95%" }}
           >
-            <ThemedText type="defaultSemiBold">{name}</ThemedText>
-          </View>
+            {name}
+          </ThemedText>
           <IconSymbol name="chevron.right" size={14} color="#A1A1AA" />
-        </View>
-      </Link>
+        </Pressable>
+      </View>
     </ReanimatedSwipeable>
   );
 }
 
 const styles = StyleSheet.create({
   swipeable: {
-    width: "100%",
-    height: 40,
+    flexGrow: 1,
+    flexShrink: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: borderColor,
     gap: 8,
-    paddingHorizontal: 16,
     paddingVertical: 8,
   },
   rightAction: {
