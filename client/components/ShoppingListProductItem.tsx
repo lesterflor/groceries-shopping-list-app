@@ -2,7 +2,7 @@ import React from "react";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
-import { appleRed, borderColor } from "@/constants/Colors";
+import { appleGreen, appleRed, borderColor } from "@/constants/Colors";
 import {
   useDelShoppingListProductCallback,
   useShoppingListProductCell,
@@ -22,6 +22,11 @@ export default function ShoppingListProductItem({
 }) {
   const router = useRouter();
   const [name] = useShoppingListProductCell(listId, productId, "name");
+  const [isPurchased, setIsPurchased] = useShoppingListProductCell(
+    listId,
+    productId,
+    "isPurchased"
+  );
 
   const deleteCallback = useDelShoppingListProductCallback(listId, productId);
 
@@ -73,9 +78,14 @@ export default function ShoppingListProductItem({
         <Pressable
           onPress={() => {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            setIsPurchased(!isPurchased);
           }}
         >
-          <IconSymbol name="square" size={30} color={borderColor} />
+          <IconSymbol
+            name={isPurchased ? "checkmark.square.fill" : "square"}
+            size={30}
+            color={borderColor}
+          />
         </Pressable>
         <Pressable
           onPress={() => {
