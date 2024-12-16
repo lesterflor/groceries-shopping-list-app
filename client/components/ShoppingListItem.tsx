@@ -1,14 +1,12 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Link } from "expo-router";
-import { Pressable, StyleSheet, View } from "react-native";
+import { LayoutAnimation, Pressable, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, {
   configureReanimatedLogger,
   FadeIn,
-  LinearTransition,
   SharedValue,
-  SlideOutLeft,
   useAnimatedStyle,
 } from "react-native-reanimated";
 import Reanimated from "react-native-reanimated";
@@ -27,35 +25,37 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
   const [name] = useShoppingListValue(listId, "name");
   const [emoji] = useShoppingListValue(listId, "emoji");
   const [color] = useShoppingListValue(listId, "color");
+  const deleteCallback = useDelShoppingListCallback(listId);
 
-  const RightAction = useCallback(
-    (prog: SharedValue<number>, drag: SharedValue<number>) => {
-      const styleAnimation = useAnimatedStyle(() => {
-        return {
-          transform: [{ translateX: drag.value + 200 }],
-        };
-      });
+  const RightAction = (
+    prog: SharedValue<number>,
+    drag: SharedValue<number>
+  ) => {
+    const styleAnimation = useAnimatedStyle(() => {
+      return {
+        transform: [{ translateX: drag.value + 200 }],
+      };
+    });
 
-      return (
-        <Pressable onPress={useDelShoppingListCallback(listId)}>
-          <Reanimated.View style={[styleAnimation, styles.rightAction]}>
-            <IconSymbol name="trash.fill" size={24} color="white" />
-          </Reanimated.View>
-        </Pressable>
-      );
-    },
-    [listId]
-  );
+    const handleDelete = () => {
+      deleteCallback();
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+    };
+
+    return (
+      <Pressable onPress={handleDelete}>
+        <Reanimated.View style={[styleAnimation, styles.rightAction]}>
+          <IconSymbol name="trash.fill" size={24} color="white" />
+        </Reanimated.View>
+      </Pressable>
+    );
+  };
 
   return (
-    // TODO: Exiiting is not working not sure why
-    <Animated.View
-      layout={LinearTransition}
-      entering={FadeIn}
-      exiting={SlideOutLeft}
-    >
+    <Animated.View entering={FadeIn}>
       <GestureHandlerRootView>
         <ReanimatedSwipeable
+          key={listId}
           friction={2}
           enableTrackpadTwoFingerGesture
           rightThreshold={40}
