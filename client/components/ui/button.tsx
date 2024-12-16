@@ -7,7 +7,7 @@ import {
   useColorScheme,
   ViewStyle,
 } from "react-native";
-import { zincColors } from "@/constants/Colors";
+import { appleBlue, zincColors } from "@/constants/Colors";
 import { ThemedText } from "../ThemedText";
 
 type ButtonVariant = "filled" | "outline" | "ghost";
@@ -85,7 +85,7 @@ export const Button: React.FC<ButtonProps> = ({
         return isDark ? zincColors[900] : zincColors[50];
       case "outline":
       case "ghost":
-        return isDark ? zincColors[50] : zincColors[900];
+        return appleBlue;
     }
   };
 

@@ -4,10 +4,16 @@ import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
 import { useAddShoppingListProductCallback } from "@/stores/ShoppingListStore";
+import { ThemedText } from "@/components/ThemedText";
+import { Platform, View } from "react-native";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
 export default function NewItemScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
   const [name, setName] = useState("");
+  const [units, setUnits] = useState("kg");
+  const [notes, setNotes] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   const router = useRouter();
   const addShoppingListProduct = useAddShoppingListProductCallback(listId);
@@ -17,7 +23,7 @@ export default function NewItemScreen() {
       return;
     }
 
-    addShoppingListProduct(name);
+    addShoppingListProduct(name, quantity, units, notes);
 
     router.back();
   };
@@ -28,6 +34,20 @@ export default function NewItemScreen() {
         options={{
           headerLargeTitle: false,
           headerTitle: "Add product",
+          headerRight: () => (
+            <Button
+              variant="ghost"
+              onPress={handleCreateProduct}
+              disabled={!name}
+            >
+              Save
+            </Button>
+          ),
+          headerLeft: () => (
+            <Button variant="ghost" onPress={router.back}>
+              Cancel
+            </Button>
+          ),
         }}
       />
       <BodyScrollView
@@ -36,14 +56,64 @@ export default function NewItemScreen() {
         }}
       >
         <TextInput
-          label="Product name"
+          label="Name"
           placeholder="Potatoes"
           value={name}
           onChangeText={setName}
+          autoFocus={true}
+          onSubmitEditing={handleCreateProduct}
+          returnKeyType="done"
         />
-        <Button onPress={handleCreateProduct} disabled={!name}>
-          Add product
-        </Button>
+        <TextInput
+          label="Units"
+          placeholder="kg"
+          value={units}
+          onChangeText={setUnits}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <ThemedText>
+            x{quantity} {units}
+          </ThemedText>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              onPress={() => setQuantity(Math.max(0, quantity - 1))}
+              variant="ghost"
+            >
+              <IconSymbol name="minus" color={"gray"} />
+            </Button>
+            <Button onPress={() => setQuantity(quantity + 1)} variant="ghost">
+              <IconSymbol name="plus" color={"gray"} />
+            </Button>
+          </View>
+        </View>
+        <TextInput
+          label="Notes"
+          placeholder="Potatoes are good"
+          textAlignVertical="top"
+          value={notes}
+          multiline={true}
+          numberOfLines={4}
+          inputStyle={{
+            height: 100,
+          }}
+          onChangeText={setNotes}
+        />
+        {Platform.OS !== "ios" && (
+          <Button onPress={handleCreateProduct} disabled={!name}>
+            Add product
+          </Button>
+        )}
       </BodyScrollView>
     </>
   );

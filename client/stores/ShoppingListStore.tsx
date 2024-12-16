@@ -50,16 +50,16 @@ const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 export const useAddShoppingListProductCallback = (listId: string) => {
   const store = useStore(useStoreId(listId));
   return useCallback(
-    (name: string) => {
+    (name: string, quantity: number, units: string, notes: string) => {
       const id = randomUUID();
       store.setRow("products", id, {
         id,
         name,
-        quantity: 1,
-        unit: "bag",
+        quantity,
+        unit: units,
         isPurchased: false,
         category: "",
-        notes: "",
+        notes: notes,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       });

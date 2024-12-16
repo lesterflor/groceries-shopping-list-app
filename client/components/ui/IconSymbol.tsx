@@ -16,6 +16,7 @@ const MAPPING = {
   "trash.fill": "delete",
   "pencil.and.list.clipboard": "edit",
   plus: "add",
+  minus: "remove",
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],
