@@ -36,6 +36,7 @@ type ShoppingListProductCellId = keyof (typeof TABLES_SCHEMA)["products"];
 
 const {
   useCell,
+  useSetCellCallback,
   useCreateMergeableStore,
   useProvideStore,
   useSortedRowIds,
@@ -94,8 +95,20 @@ export const useShoppingListProductCell = <
   listId: string,
   productId: string,
   cellId: CellId
-): Cell<Schemas[0], "products", CellId> =>
-  useCell("products", productId, cellId, useStoreId(listId));
+): [
+  Cell<Schemas[0], "products", CellId>,
+  (cell: Cell<Schemas[0], "products", CellId>) => void
+] => [
+  useCell("products", productId, cellId, useStoreId(listId)),
+  useSetCellCallback(
+    "products",
+    productId,
+    cellId,
+    (cell: Cell<Schemas[0], "products", CellId>) => cell,
+    [],
+    useStoreId(listId)
+  ),
+];
 
 export default function ShoppingListStore({
   listId,

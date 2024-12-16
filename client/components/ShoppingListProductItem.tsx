@@ -13,7 +13,7 @@ export default function ShoppingListProductItem({
   listId: string;
   productId: string;
 }) {
-  const name = useShoppingListProductCell(listId, productId, "name");
+  const [name] = useShoppingListProductCell(listId, productId, "name");
   return (
     <Link
       href={{
