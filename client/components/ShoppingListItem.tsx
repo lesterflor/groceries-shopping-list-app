@@ -6,6 +6,7 @@ import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeabl
 import Animated, {
   configureReanimatedLogger,
   FadeIn,
+  LinearTransition,
   SharedValue,
   SlideOutLeft,
   useAnimatedStyle,
@@ -48,7 +49,11 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
 
   return (
     // TODO: Exiiting is not working not sure why
-    <Animated.View entering={FadeIn} exiting={SlideOutLeft}>
+    <Animated.View
+      layout={LinearTransition}
+      entering={FadeIn}
+      exiting={SlideOutLeft}
+    >
       <GestureHandlerRootView>
         <ReanimatedSwipeable
           friction={2}

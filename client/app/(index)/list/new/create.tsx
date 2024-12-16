@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { appleBlue } from "@/constants/Colors";
+import { appleBlue, backgroundColors } from "@/constants/Colors";
 import { useListCreation } from "@/context/ListCreationContext";
 import { useAddShoppingListCallback } from "@/stores/ShoppingListsStore";
 
@@ -33,6 +33,47 @@ export default function CreateListScreen() {
       pathname: "/list/[listId]",
       params: { listId },
     });
+  };
+
+  const handleCreateTestLists = () => {
+    const testListNames = [
+      "Grocery Shopping",
+      "Weekend BBQ",
+      "Party Supplies",
+      "Office Supplies",
+      "Camping Trip",
+      "Holiday Gifts",
+      "Home Improvement",
+      "School Supplies",
+      "Birthday Party",
+      "Household Items",
+    ];
+
+    const testEmojis = [
+      "🛒",
+      "🍖",
+      "🎉",
+      "📎",
+      "⛺️",
+      "🎁",
+      "🔨",
+      "📚",
+      "🎂",
+      "🏠",
+    ];
+    const testColors = Object.values(backgroundColors).slice(0, 10);
+
+    testListNames.forEach((name, index) => {
+      useAddShoppingList(
+        name,
+        `This is a test list for ${name}`,
+        testEmojis[index],
+        testColors[index]
+      );
+    });
+
+    // Navigate back to the main list view
+    router.replace("/");
   };
 
   return (
@@ -97,6 +138,13 @@ export default function CreateListScreen() {
           textStyle={styles.createButtonText}
         >
           Create list
+        </Button>
+        <Button
+          onPress={handleCreateTestLists}
+          variant="ghost"
+          textStyle={styles.createButtonText}
+        >
+          Create 10 test lists
         </Button>
       </BodyScrollView>
     </>

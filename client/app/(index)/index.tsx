@@ -8,6 +8,7 @@ import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { backgroundColors } from "@/constants/Colors";
 import { useShoppingListIds } from "@/stores/ShoppingListsStore";
+import { FlatList } from "react-native";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function HomeScreen() {
           ),
         }}
       />
-      <Animated.FlatList
+      <FlatList
         data={useShoppingListIds()}
         renderItem={({ item: listId }) => <ShoppingListItem listId={listId} />}
         contentContainerStyle={{
