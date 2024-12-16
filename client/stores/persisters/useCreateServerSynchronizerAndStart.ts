@@ -2,6 +2,8 @@ import { createWsSynchronizer } from "tinybase/synchronizers/synchronizer-ws-cli
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { MergeableStore, OptionalSchemas } from "tinybase/with-schemas";
 
+const SYNC_SERVER_URL = process.env.EXPO_PUBLIC_SYNC_SERVER_URL;
+
 export const useCreateServerSynchronizerAndStart = <
   Schemas extends OptionalSchemas
 >(
@@ -14,9 +16,7 @@ export const useCreateServerSynchronizerAndStart = <
       await (
         await createWsSynchronizer(
           store,
-          new WebSocket(
-            "wss://groceries-shopping-list.tinybase.cloud/" + storeId
-          )
+          new WebSocket(SYNC_SERVER_URL + storeId)
         )
       ).startSync(),
     [storeId]
