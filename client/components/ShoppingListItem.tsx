@@ -12,7 +12,10 @@ import Animated, {
 import Reanimated from "react-native-reanimated";
 import { appleRed, borderColor } from "@/constants/Colors";
 import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
-import { useShoppingListValue } from "@/stores/ShoppingListStore";
+import {
+  useShoppingListProductIds,
+  useShoppingListValue,
+} from "@/stores/ShoppingListStore";
 import { IconCircle } from "./IconCircle";
 import { ThemedText } from "./ThemedText";
 import { IconSymbol } from "./ui/IconSymbol";
@@ -25,6 +28,9 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
   const [name] = useShoppingListValue(listId, "name");
   const [emoji] = useShoppingListValue(listId, "emoji");
   const [color] = useShoppingListValue(listId, "color");
+  const [createdAt] = useShoppingListValue(listId, "createdAt");
+  const products = useShoppingListProductIds(listId);
+
   const deleteCallback = useDelShoppingListCallback(listId);
 
   const RightAction = (
@@ -69,11 +75,19 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  gap: 8,
+                  gap: 12,
                 }}
               >
                 <IconCircle emoji={emoji} backgroundColor={color} />
-                <ThemedText type="defaultSemiBold">{name}</ThemedText>
+                <View>
+                  <ThemedText type="defaultSemiBold">{name}</ThemedText>
+                  <ThemedText
+                    type="defaultSemiBold"
+                    style={{ fontSize: 12, color: "gray" }}
+                  >
+                    {products.length} products
+                  </ThemedText>
+                </View>
               </View>
               <IconSymbol name="chevron.right" size={14} color="#A1A1AA" />
             </View>
