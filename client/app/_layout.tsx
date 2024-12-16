@@ -1,3 +1,4 @@
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
@@ -58,7 +59,9 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : CustomDefaultTheme}
         >
-          <Slot />
+          <GestureHandlerRootView>
+            <Slot />
+          </GestureHandlerRootView>
           <StatusBar barStyle={"default"} />
         </ThemeProvider>
       </ClerkLoaded>

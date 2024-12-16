@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "expo-router";
-import { LayoutAnimation, Pressable, StyleSheet, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Pressable, StyleSheet, View } from "react-native";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, {
   configureReanimatedLogger,
@@ -28,7 +27,6 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
   const [name] = useShoppingListValue(listId, "name");
   const [emoji] = useShoppingListValue(listId, "emoji");
   const [color] = useShoppingListValue(listId, "color");
-  const [createdAt] = useShoppingListValue(listId, "createdAt");
   const products = useShoppingListProductIds(listId);
 
   const deleteCallback = useDelShoppingListCallback(listId);
@@ -45,7 +43,6 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
 
     const handleDelete = () => {
       deleteCallback();
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
     };
 
     return (
@@ -59,41 +56,39 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
 
   return (
     <Animated.View entering={FadeIn}>
-      <GestureHandlerRootView>
-        <ReanimatedSwipeable
-          key={listId}
-          friction={2}
-          enableTrackpadTwoFingerGesture
-          rightThreshold={40}
-          renderRightActions={RightAction}
-          overshootRight={false}
-          enableContextMenu
-        >
-          <Link href={{ pathname: "/list/[listId]", params: { listId } }}>
-            <View style={styles.swipeable}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 12,
-                }}
-              >
-                <IconCircle emoji={emoji} backgroundColor={color} />
-                <View>
-                  <ThemedText type="defaultSemiBold">{name}</ThemedText>
-                  <ThemedText
-                    type="defaultSemiBold"
-                    style={{ fontSize: 12, color: "gray" }}
-                  >
-                    {products.length} products
-                  </ThemedText>
-                </View>
+      <ReanimatedSwipeable
+        key={listId}
+        friction={2}
+        enableTrackpadTwoFingerGesture
+        rightThreshold={40}
+        renderRightActions={RightAction}
+        overshootRight={false}
+        enableContextMenu
+      >
+        <Link href={{ pathname: "/list/[listId]", params: { listId } }}>
+          <View style={styles.swipeable}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 12,
+              }}
+            >
+              <IconCircle emoji={emoji} backgroundColor={color} />
+              <View>
+                <ThemedText type="defaultSemiBold">{name}</ThemedText>
+                <ThemedText
+                  type="defaultSemiBold"
+                  style={{ fontSize: 12, color: "gray" }}
+                >
+                  {products.length} products
+                </ThemedText>
               </View>
-              <IconSymbol name="chevron.right" size={14} color="#A1A1AA" />
             </View>
-          </Link>
-        </ReanimatedSwipeable>
-      </GestureHandlerRootView>
+            <IconSymbol name="chevron.right" size={14} color="#A1A1AA" />
+          </View>
+        </Link>
+      </ReanimatedSwipeable>
     </Animated.View>
   );
 }

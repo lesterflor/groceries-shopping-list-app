@@ -9,6 +9,7 @@ import {
   useShoppingListProductIds,
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
+import { ThemedText } from "@/components/ThemedText";
 
 export default function ListScreen() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function ListScreen() {
   const [name] = useShoppingListValue(listId, "name");
   const [emoji] = useShoppingListValue(listId, "emoji");
   const [color] = useShoppingListValue(listId, "color");
-
+  const [description] = useShoppingListValue(listId, "description");
   const newProductHref = {
     pathname: "/list/[listId]/product/new",
     params: { listId },
@@ -26,9 +27,7 @@ export default function ListScreen() {
     <>
       <Stack.Screen
         options={{
-          headerLargeTitle: false,
           headerTitle: emoji + " " + name,
-          headerLargeStyle: { backgroundColor: color },
           headerRight: () => (
             <>
               <Link
@@ -37,7 +36,7 @@ export default function ListScreen() {
               >
                 <IconSymbol
                   size={24}
-                  name="pencil.and.ellipsis.rectangle"
+                  name="pencil.and.list.clipboard"
                   color={"#007AFF"}
                 />
               </Link>
@@ -54,9 +53,18 @@ export default function ListScreen() {
           <ShoppingListProductItem listId={listId} productId={productId} />
         )}
         contentContainerStyle={{
-          paddingTop: 8,
+          paddingTop: 12,
         }}
         contentInsetAdjustmentBehavior="automatic"
+        ListHeaderComponent={() =>
+          description ? (
+            <ThemedText
+              style={{ paddingHorizontal: 16, fontSize: 14, color: "gray" }}
+            >
+              {description}
+            </ThemedText>
+          ) : null
+        }
         ListEmptyComponent={() => (
           <BodyScrollView
             contentContainerStyle={{
