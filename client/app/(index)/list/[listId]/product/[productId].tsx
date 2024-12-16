@@ -15,7 +15,7 @@ export default function ProductScreen() {
   };
   const [name, setName] = useShoppingListProductCell(listId, productId, "name");
 
-  const color = useShoppingListValue(listId, "color");
+  const [color] = useShoppingListValue(listId, "color");
 
   return (
     <>

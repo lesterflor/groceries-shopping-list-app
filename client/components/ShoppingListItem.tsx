@@ -23,9 +23,9 @@ configureReanimatedLogger({ strict: false });
 export default function ShoppingListItem({ listId }: { listId: string }) {
   // Listening to just these cells means that the component won't unnecessarily
   // re-render if anything else in the row changes (such as the timestamps).
-  const name = useShoppingListValue(listId, "name");
-  const emoji = useShoppingListValue(listId, "emoji");
-  const color = useShoppingListValue(listId, "color");
+  const [name] = useShoppingListValue(listId, "name");
+  const [emoji] = useShoppingListValue(listId, "emoji");
+  const [color] = useShoppingListValue(listId, "color");
 
   const RightAction = useCallback(
     (prog: SharedValue<number>, drag: SharedValue<number>) => {

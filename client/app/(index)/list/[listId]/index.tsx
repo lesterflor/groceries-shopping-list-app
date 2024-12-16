@@ -13,9 +13,9 @@ import {
 export default function ListScreen() {
   const router = useRouter();
   const { listId } = useLocalSearchParams() as { listId: string };
-  const name = useShoppingListValue(listId, "name");
-  const emoji = useShoppingListValue(listId, "emoji");
-  const color = useShoppingListValue(listId, "color");
+  const [name] = useShoppingListValue(listId, "name");
+  const [emoji] = useShoppingListValue(listId, "emoji");
+  const [color] = useShoppingListValue(listId, "color");
 
   const newProductHref = {
     pathname: "/list/[listId]/product/new",
