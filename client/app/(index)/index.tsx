@@ -15,6 +15,7 @@ export default function HomeScreen() {
     <>
       <Stack.Screen
         options={{
+          title: "Shopping lists",
           headerRight: () => (
             <Link href={"/list/new"}>
               <IconSymbol size={24} name="plus" color={"#007AFF"} />

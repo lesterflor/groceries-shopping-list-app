@@ -36,12 +36,6 @@ export default function AppIndexLayout() {
             }}
           >
             <Stack.Screen
-              name="index"
-              options={{
-                title: "Shopping lists",
-              }}
-            />
-            <Stack.Screen
               name="list/new/index"
               options={{
                 presentation: "formSheet",
@@ -57,24 +51,6 @@ export default function AppIndexLayout() {
                 sheetAllowedDetents: [0.5, 0.75],
                 sheetGrabberVisible: true,
                 headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="list/[listId]/index"
-              options={{
-                headerLargeTitle: false,
-              }}
-            />
-            <Stack.Screen
-              name="list/[listId]/product/new/index"
-              options={{
-                headerLargeTitle: false,
-              }}
-            />
-            <Stack.Screen
-              name="list/[listId]/product/[productId]/index"
-              options={{
-                headerLargeTitle: false,
               }}
             />
             <Stack.Screen

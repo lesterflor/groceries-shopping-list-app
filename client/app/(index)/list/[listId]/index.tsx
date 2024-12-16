@@ -26,6 +26,7 @@ export default function ListScreen() {
     <>
       <Stack.Screen
         options={{
+          headerLargeTitle: false,
           headerTitle: emoji + " " + name,
           headerLargeStyle: { backgroundColor: color },
           headerRight: () => (
