@@ -2,10 +2,11 @@ import React from "react";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
-import { appleGreen, appleRed, borderColor } from "@/constants/Colors";
+import { appleRed, borderColor } from "@/constants/Colors";
 import {
   useDelShoppingListProductCallback,
   useShoppingListProductCell,
+  useShoppingListValue,
 } from "@/stores/ShoppingListStore";
 import { ThemedText } from "./ThemedText";
 import { IconSymbol } from "./ui/IconSymbol";
@@ -22,6 +23,7 @@ export default function ShoppingListProductItem({
 }) {
   const router = useRouter();
   const [name] = useShoppingListProductCell(listId, productId, "name");
+  const [color] = useShoppingListValue(listId, "color");
   const [isPurchased, setIsPurchased] = useShoppingListProductCell(
     listId,
     productId,
@@ -84,7 +86,7 @@ export default function ShoppingListProductItem({
           <IconSymbol
             name={isPurchased ? "checkmark.square.fill" : "square"}
             size={30}
-            color={borderColor}
+            color={color}
           />
         </Pressable>
         <Pressable
@@ -100,7 +102,11 @@ export default function ShoppingListProductItem({
             type="defaultSemiBold"
             numberOfLines={1}
             ellipsizeMode="tail"
-            style={{ maxWidth: "95%" }}
+            style={{
+              maxWidth: "95%",
+              opacity: isPurchased ? 0.5 : 1,
+              textDecorationLine: isPurchased ? "line-through" : "none",
+            }}
           >
             {name}
           </ThemedText>
