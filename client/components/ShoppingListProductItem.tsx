@@ -84,8 +84,8 @@ export default function ShoppingListProductItem({
           }}
         >
           <IconSymbol
-            name={isPurchased ? "checkmark.square.fill" : "square"}
-            size={30}
+            name={isPurchased ? "checkmark.circle.fill" : "circle"}
+            size={28}
             color={color}
           />
         </Pressable>

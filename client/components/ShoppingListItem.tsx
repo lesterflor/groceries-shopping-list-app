@@ -1,4 +1,5 @@
 import React from "react";
+import * as Haptics from "expo-haptics";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
@@ -42,7 +43,12 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
     });
 
     return (
-      <Pressable onPress={deleteCallback}>
+      <Pressable
+        onPress={() => {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+          deleteCallback();
+        }}
+      >
         <Reanimated.View style={[styleAnimation, styles.rightAction]}>
           <IconSymbol name="trash.fill" size={24} color="white" />
         </Reanimated.View>
