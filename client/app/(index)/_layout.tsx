@@ -45,7 +45,7 @@ export default function AppIndexLayout() {
               }}
             />
             <Stack.Screen
-              name="list/[listId]/product/new/index"
+              name="list/[listId]/product/new"
               options={{
                 presentation: "formSheet",
                 sheetAllowedDetents: [0.5, 0.75],
@@ -54,7 +54,7 @@ export default function AppIndexLayout() {
               }}
             />
             <Stack.Screen
-              name="profile/index"
+              name="profile"
               options={{
                 presentation: "formSheet",
                 sheetAllowedDetents: [0.5, 0.75],
