@@ -36,14 +36,11 @@ export default function ListScreen() {
           ),
         }}
       />
-
       <Animated.FlatList
         data={useShoppingListProductIds(listId)}
-        renderItem={({ item: productId }) => {
-          return (
-            <ShoppingListProductItem listId={listId} productId={productId} />
-          );
-        }}
+        renderItem={({ item: productId }) => (
+          <ShoppingListProductItem listId={listId} productId={productId} />
+        )}
         contentContainerStyle={{
           paddingTop: 8,
         }}
