@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { randomUUID } from "expo-crypto";
 import { Link, Stack, useRouter } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { appleBlue, backgroundColors } from "@/constants/Colors";
-import { useAddShoppingListCallback } from "@/stores/ShoppingListsStore";
+import { appleBlue } from "@/constants/Colors";
 import { useListCreation } from "@/context/ListCreationContext";
-import { StyleSheet, Text, View } from "react-native";
+import { useAddShoppingListCallback } from "@/stores/ShoppingListsStore";
 
 export default function CreateListScreen() {
   const [listName, setListName] = useState("");
@@ -23,9 +22,7 @@ export default function CreateListScreen() {
       return;
     }
 
-    const listId = randomUUID();
-    useAddShoppingList(
-      listId,
+    const listId = useAddShoppingList(
       listName,
       listDescription,
       selectedEmoji,
@@ -33,10 +30,8 @@ export default function CreateListScreen() {
     );
 
     router.replace({
-      pathname: "/(index)/list",
-      params: {
-        listId: listId,
-      },
+      pathname: "/list/[listId]",
+      params: { listId },
     });
   };
 
@@ -63,9 +58,7 @@ export default function CreateListScreen() {
             containerStyle={styles.titleInputContainer}
           />
           <Link
-            href={{
-              pathname: "/(index)/emoji-picker",
-            }}
+            href={{ pathname: "/emoji-picker" }}
             style={[styles.emojiButton, { borderColor: selectedColor }]}
           >
             <View style={styles.emojiContainer}>
@@ -73,9 +66,7 @@ export default function CreateListScreen() {
             </View>
           </Link>
           <Link
-            href={{
-              pathname: "/(index)/color-picker",
-            }}
+            href={{ pathname: "/color-picker" }}
             style={[styles.colorButton, { borderColor: selectedColor }]}
           >
             <View style={styles.colorContainer}>

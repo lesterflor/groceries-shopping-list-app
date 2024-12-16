@@ -1,6 +1,8 @@
 import { useCallback } from "react";
+import { randomUUID } from "expo-crypto";
+import { useSetValueCallback } from "tinybase/ui-react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
-import { createMergeableStore } from "tinybase/with-schemas";
+import { Cell, createMergeableStore, Value } from "tinybase/with-schemas";
 import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
 import { useCreateServerSynchronizerAndStart } from "./persisters/useCreateServerSynchronizerAndStart";
 
@@ -17,7 +19,7 @@ const VALUES_SCHEMA = {
 } as const;
 const TABLES_SCHEMA = {
   products: {
-    productId: { type: "string" },
+    id: { type: "string" },
     name: { type: "string" },
     quantity: { type: "number" },
     unit: { type: "string" },
@@ -29,27 +31,29 @@ const TABLES_SCHEMA = {
   },
 } as const;
 
-type Schema = [typeof TABLES_SCHEMA, typeof VALUES_SCHEMA];
+type Schemas = [typeof TABLES_SCHEMA, typeof VALUES_SCHEMA];
 type ShoppingListValueId = keyof typeof VALUES_SCHEMA;
 type ShoppingListProductCellId = keyof (typeof TABLES_SCHEMA)["products"];
 
 const {
   useCell,
+  useSetCellCallback,
   useCreateMergeableStore,
   useProvideStore,
   useSortedRowIds,
   useStore,
   useValue,
-} = UiReact as UiReact.WithSchemas<Schema>;
+} = UiReact as UiReact.WithSchemas<Schemas>;
 
 const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 
 export const useAddShoppingListProductCallback = (listId: string) => {
   const store = useStore(useStoreId(listId));
   return useCallback(
-    (productId: string, name: string) =>
-      store.setRow("products", productId, {
-        productId,
+    (name: string) => {
+      const id = randomUUID();
+      store.setRow("products", id, {
+        id,
         name,
         quantity: 1,
         unit: "bag",
@@ -58,15 +62,28 @@ export const useAddShoppingListProductCallback = (listId: string) => {
         notes: "",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-      }),
+      });
+      return id;
+    },
     [store, listId]
   );
 };
 
-export const useShoppingListValue = (
+export const useShoppingListValue = <ValueId extends ShoppingListValueId>(
   listId: string,
-  valueId: ShoppingListValueId
-) => useValue(valueId, useStoreId(listId));
+  valueId: ValueId
+): [
+  Value<Schemas[1], ValueId>,
+  (value: Value<Schemas[1], ValueId>) => void
+] => [
+  useValue(valueId, useStoreId(listId)),
+  useSetValueCallback(
+    valueId,
+    (value: Value<Schemas[1], ValueId>) => value,
+    [],
+    useStoreId(listId)
+  ),
+];
 
 export const useShoppingListProductIds = (
   listId: string,
@@ -84,11 +101,26 @@ export const useShoppingListProductIds = (
     useStoreId(listId)
   );
 
-export const useShoppingListProductCell = (
+export const useShoppingListProductCell = <
+  CellId extends ShoppingListProductCellId
+>(
   listId: string,
   productId: string,
-  cellId: ShoppingListProductCellId
-) => useCell("products", productId, cellId, useStoreId(listId));
+  cellId: CellId
+): [
+  Cell<Schemas[0], "products", CellId>,
+  (cell: Cell<Schemas[0], "products", CellId>) => void
+] => [
+  useCell("products", productId, cellId, useStoreId(listId)),
+  useSetCellCallback(
+    "products",
+    productId,
+    cellId,
+    (cell: Cell<Schemas[0], "products", CellId>) => cell,
+    [],
+    useStoreId(listId)
+  ),
+];
 
 export default function ShoppingListStore({
   listId,

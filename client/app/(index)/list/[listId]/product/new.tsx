@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { randomUUID } from "expo-crypto";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
 import { useAddShoppingListProductCallback } from "@/stores/ShoppingListStore";
 
-export default function CreateItemScreen() {
+export default function NewItemScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
   const [name, setName] = useState("");
 
@@ -18,8 +17,7 @@ export default function CreateItemScreen() {
       return;
     }
 
-    const id = randomUUID();
-    addShoppingListProduct(id, name);
+    addShoppingListProduct(name);
 
     router.back();
   };

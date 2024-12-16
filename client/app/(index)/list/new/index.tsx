@@ -35,7 +35,7 @@ export default function NewListScreen() {
         Create a new list
       </ThemedText>
 
-      <Button onPress={() => handleDismissTo("/(index)/new-list/create-list")}>
+      <Button onPress={() => handleDismissTo("/list/new/create")}>
         Create new list
       </Button>
 
@@ -50,10 +50,7 @@ export default function NewListScreen() {
         label="Enter a list code"
         textContentType="creditCardNumber"
       />
-      <Button
-        variant="ghost"
-        onPress={() => handleDismissTo("/(index)/new-list/join-list")}
-      >
+      <Button variant="ghost" onPress={() => handleDismissTo("/list/new/join")}>
         Join list
       </Button>
     </BodyScrollView>

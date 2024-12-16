@@ -13,30 +13,46 @@ import {
 export default function ListScreen() {
   const router = useRouter();
   const { listId } = useLocalSearchParams() as { listId: string };
-  const name = useShoppingListValue(listId, "name");
-  const emoji = useShoppingListValue(listId, "emoji");
-  const color = useShoppingListValue(listId, "color");
+  const [name] = useShoppingListValue(listId, "name");
+  const [emoji] = useShoppingListValue(listId, "emoji");
+  const [color] = useShoppingListValue(listId, "color");
+
+  const newProductHref = {
+    pathname: "/list/[listId]/product/new",
+    params: { listId },
+  } as const;
+
   return (
     <>
       <Stack.Screen
         options={{
+          headerLargeTitle: false,
           headerTitle: emoji + " " + name,
           headerLargeStyle: { backgroundColor: color },
           headerRight: () => (
-            <Link href={`/list/new-product?listId=${listId}`}>
-              <IconSymbol size={24} name="plus" color={"#007AFF"} />
-            </Link>
+            <>
+              <Link
+                href={{ pathname: "/list/[listId]/edit", params: { listId } }}
+                style={{ marginRight: 8 }}
+              >
+                <IconSymbol
+                  size={24}
+                  name="pencil.and.ellipsis.rectangle"
+                  color={"#007AFF"}
+                />
+              </Link>
+              <Link href={newProductHref}>
+                <IconSymbol size={24} name="plus" color={"#007AFF"} />
+              </Link>
+            </>
           ),
         }}
       />
-
       <Animated.FlatList
         data={useShoppingListProductIds(listId)}
-        renderItem={({ item: productId }) => {
-          return (
-            <ShoppingListProductItem listId={listId} productId={productId} />
-          );
-        }}
+        renderItem={({ item: productId }) => (
+          <ShoppingListProductItem listId={listId} productId={productId} />
+        )}
         contentContainerStyle={{
           paddingTop: 8,
         }}
@@ -49,10 +65,7 @@ export default function ListScreen() {
               paddingTop: 100,
             }}
           >
-            <Button
-              onPress={() => router.push(`/list/new-product?listId=${listId}`)}
-              variant="ghost"
-            >
+            <Button onPress={() => router.push(newProductHref)} variant="ghost">
               Add the first product to this list
             </Button>
           </BodyScrollView>

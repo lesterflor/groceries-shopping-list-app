@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { randomUUID } from "expo-crypto";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { createMergeableStore, NoValuesSchema } from "tinybase/with-schemas";
 import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
@@ -29,13 +30,8 @@ const useStoreId = () => STORE_ID_PREFIX + useUser().user.id;
 export const useAddShoppingListCallback = () => {
   const store = useStore(useStoreId());
   return useCallback(
-    (
-      id: string,
-      name: string,
-      description: string,
-      emoji: string,
-      color: string
-    ) =>
+    (name: string, description: string, emoji: string, color: string) => {
+      const id = randomUUID();
       store.setRow("lists", id, {
         id,
         initialContentJson: JSON.stringify([
@@ -50,7 +46,9 @@ export const useAddShoppingListCallback = () => {
             updatedAt: new Date().toISOString(),
           },
         ]),
-      }),
+      });
+      return id;
+    },
     [store]
   );
 };

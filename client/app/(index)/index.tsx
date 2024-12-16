@@ -15,8 +15,9 @@ export default function HomeScreen() {
     <>
       <Stack.Screen
         options={{
+          title: "Shopping lists",
           headerRight: () => (
-            <Link href="/new-list">
+            <Link href={"/list/new"}>
               <IconSymbol size={24} name="plus" color={"#007AFF"} />
             </Link>
           ),
@@ -50,7 +51,7 @@ export default function HomeScreen() {
                 ]
               }
             />
-            <Button onPress={() => router.push("/new-list")} variant="ghost">
+            <Button onPress={() => router.push("/list/new")} variant="ghost">
               Create your first list
             </Button>
           </BodyScrollView>
