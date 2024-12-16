@@ -35,13 +35,12 @@ export default function ListScreen() {
                 style={{ marginRight: 8 }}
               >
                 <IconSymbol
-                  size={24}
                   name="pencil.and.list.clipboard"
                   color={"#007AFF"}
                 />
               </Link>
               <Link href={newProductHref}>
-                <IconSymbol size={24} name="plus" color={"#007AFF"} />
+                <IconSymbol name="plus" color={"#007AFF"} />
               </Link>
             </>
           ),
