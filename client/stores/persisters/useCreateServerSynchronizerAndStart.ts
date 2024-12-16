@@ -4,6 +4,12 @@ import { MergeableStore, OptionalSchemas } from "tinybase/with-schemas";
 
 const SYNC_SERVER_URL = process.env.EXPO_PUBLIC_SYNC_SERVER_URL;
 
+if (!SYNC_SERVER_URL) {
+  throw new Error(
+    "Please set EXPO_PUBLIC_SYNC_SERVER_URL in .env to the URL of the sync server"
+  );
+}
+
 export const useCreateServerSynchronizerAndStart = <
   Schemas extends OptionalSchemas
 >(
