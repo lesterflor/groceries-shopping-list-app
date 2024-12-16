@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { randomUUID } from "expo-crypto";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
@@ -18,8 +17,7 @@ export default function CreateItemScreen() {
       return;
     }
 
-    const id = randomUUID();
-    addShoppingListProduct(id, name);
+    addShoppingListProduct(name);
 
     router.back();
   };
