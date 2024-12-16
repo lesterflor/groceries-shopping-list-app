@@ -42,14 +42,14 @@ export const TextInput: React.FC<TextInputProps> = ({
     { height: number; fontSize: number; padding: number }
   > = {
     sm: { height: 36, fontSize: 14, padding: 8 },
-    md: { height: 44, fontSize: 16, padding: 12 },
+    md: { height: 50, fontSize: 16, padding: 14 },
     lg: { height: 55, fontSize: 32, padding: 16 },
   };
 
   const getVariantStyle = () => {
     const baseStyle: ViewStyle = {
-      borderRadius: 13,
-      backgroundColor: isDark ? zincColors[800] : zincColors[200],
+      borderRadius: 12,
+      backgroundColor: isDark ? zincColors[900] : "#F2F2F7",
     };
 
     switch (variant) {
