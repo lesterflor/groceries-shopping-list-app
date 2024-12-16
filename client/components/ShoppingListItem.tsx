@@ -41,12 +41,8 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
       };
     });
 
-    const handleDelete = () => {
-      deleteCallback();
-    };
-
     return (
-      <Pressable onPress={handleDelete}>
+      <Pressable onPress={deleteCallback}>
         <Reanimated.View style={[styleAnimation, styles.rightAction]}>
           <IconSymbol name="trash.fill" size={24} color="white" />
         </Reanimated.View>

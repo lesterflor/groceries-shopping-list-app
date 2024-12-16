@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { randomUUID } from "expo-crypto";
-import { useSetValueCallback } from "tinybase/ui-react";
+import { useDelRowCallback, useSetValueCallback } from "tinybase/ui-react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { Cell, createMergeableStore, Value } from "tinybase/with-schemas";
 import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
@@ -68,6 +68,11 @@ export const useAddShoppingListProductCallback = (listId: string) => {
     [store, listId]
   );
 };
+
+export const useDelShoppingListProductCallback = (
+  listId: string,
+  productId: string
+) => useDelRowCallback("products", productId, useStoreId(listId));
 
 export const useShoppingListValue = <ValueId extends ShoppingListValueId>(
   listId: string,

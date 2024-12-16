@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { appleRed, borderColor } from "@/constants/Colors";
-import { useShoppingListProductCell } from "@/stores/ShoppingListStore";
+import {
+  useDelShoppingListProductCallback,
+  useShoppingListProductCell,
+} from "@/stores/ShoppingListStore";
 import { ThemedText } from "./ThemedText";
 import { IconSymbol } from "./ui/IconSymbol";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
@@ -18,6 +21,8 @@ export default function ShoppingListProductItem({
 }) {
   const [name] = useShoppingListProductCell(listId, productId, "name");
 
+  const deleteCallback = useDelShoppingListProductCallback(listId, productId);
+
   const RightAction = (
     prog: SharedValue<number>,
     drag: SharedValue<number>
@@ -28,10 +33,8 @@ export default function ShoppingListProductItem({
       };
     });
 
-    const handleDelete = () => {};
-
     return (
-      <Pressable onPress={handleDelete}>
+      <Pressable onPress={deleteCallback}>
         <Reanimated.View style={[styleAnimation, styles.rightAction]}>
           <IconSymbol name="trash.fill" size={24} color="white" />
         </Reanimated.View>
@@ -41,7 +44,7 @@ export default function ShoppingListProductItem({
 
   return (
     <ReanimatedSwipeable
-      key={listId}
+      key={productId}
       friction={2}
       enableTrackpadTwoFingerGesture
       rightThreshold={40}
