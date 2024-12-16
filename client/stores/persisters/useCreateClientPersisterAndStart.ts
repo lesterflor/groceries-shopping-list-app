@@ -4,9 +4,9 @@ import {
   MergeableStore,
   OptionalSchemas,
 } from "tinybase/with-schemas";
-import { createLocalPersister } from "./createLocalPersister";
+import { createClientPersister } from "./createClientPersister";
 
-export const useCreateLocalPersisterAndStart = <
+export const useCreateClientPersisterAndStart = <
   Schemas extends OptionalSchemas
 >(
   storeId: string,
@@ -15,7 +15,7 @@ export const useCreateLocalPersisterAndStart = <
 ) =>
   (UiReact as UiReact.WithSchemas<Schemas>).useCreatePersister(
     store,
-    (store: MergeableStore<Schemas>) => createLocalPersister(storeId, store),
+    (store: MergeableStore<Schemas>) => createClientPersister(storeId, store),
     [storeId],
     async (persister) => {
       let initialContent: Content<Schemas> | undefined = undefined;
