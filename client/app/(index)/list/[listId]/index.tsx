@@ -30,9 +30,21 @@ export default function ListScreen() {
           headerTitle: emoji + " " + name,
           headerLargeStyle: { backgroundColor: color },
           headerRight: () => (
-            <Link href={newProductHref}>
-              <IconSymbol size={24} name="plus" color={"#007AFF"} />
-            </Link>
+            <>
+              <Link
+                href={{ pathname: "/list/[listId]/edit", params: { listId } }}
+                style={{ marginRight: 8 }}
+              >
+                <IconSymbol
+                  size={24}
+                  name="pencil.and.ellipsis.rectangle"
+                  color={"#007AFF"}
+                />
+              </Link>
+              <Link href={newProductHref}>
+                <IconSymbol size={24} name="plus" color={"#007AFF"} />
+              </Link>
+            </>
           ),
         }}
       />

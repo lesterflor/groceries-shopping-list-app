@@ -1,6 +1,5 @@
 import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { Text } from "react-native";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import TextInput from "@/components/ui/text-input";
 import {
@@ -31,9 +30,6 @@ export default function ProductScreen() {
           padding: 16,
         }}
       >
-        <Text>
-          product {productId} in list {listId}
-        </Text>
         <TextInput label="Product name" value={name} onChangeText={setName} />
       </BodyScrollView>
     </>
