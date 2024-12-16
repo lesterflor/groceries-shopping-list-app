@@ -3,13 +3,14 @@ import { Link } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import Animated, { FadeOut, SlideOutLeft } from "react-native-reanimated";
-import Reanimated, {
+import Animated, {
+  configureReanimatedLogger,
   FadeIn,
   SharedValue,
+  SlideOutLeft,
   useAnimatedStyle,
-  configureReanimatedLogger,
 } from "react-native-reanimated";
+import Reanimated from "react-native-reanimated";
 import { appleRed, borderColor } from "@/constants/Colors";
 import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
 import { useShoppingListValue } from "@/stores/ShoppingListStore";
@@ -57,7 +58,7 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
           overshootRight={false}
           enableContextMenu
         >
-          <Link href={`/(index)/list?listId=${listId}`}>
+          <Link href={{ pathname: "/list/[listId]", params: { listId } }}>
             <View style={styles.swipeable}>
               <View
                 style={{

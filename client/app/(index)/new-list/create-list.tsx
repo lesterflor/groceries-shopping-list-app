@@ -30,7 +30,7 @@ export default function CreateListScreen() {
     );
 
     router.replace({
-      pathname: "/(index)/list",
+      pathname: "/(index)/list/[listId]",
       params: { listId },
     });
   };

@@ -60,7 +60,7 @@ export default function AppIndexLayout() {
               }}
             />
             <Stack.Screen
-              name="list/index"
+              name="list/[listId]/index"
               options={{
                 headerLargeTitle: false,
               }}
