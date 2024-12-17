@@ -53,6 +53,19 @@ export const useAddShoppingListCallback = () => {
   );
 };
 
+export const useJoinShoppingListCallback = () => {
+  const store = useStore(useStoreId());
+  return useCallback(
+    (listId: string) => {
+      store.setRow("lists", listId, {
+        id: listId,
+        initialContentJson: JSON.stringify([{}, {}]),
+      });
+    },
+    [store]
+  );
+};
+
 export const useDelShoppingListCallback = (id: string) =>
   useDelRowCallback("lists", id, useStoreId());
 

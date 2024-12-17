@@ -31,6 +31,11 @@ export default function ListScreen() {
           headerRight: () => (
             <View style={{ flexDirection: "row", gap: 8 }}>
               <Link
+                href={{ pathname: "/list/[listId]/share", params: { listId } }}
+              >
+                <IconSymbol name="square.and.arrow.up" color={"#007AFF"} />
+              </Link>
+              <Link
                 href={{ pathname: "/list/[listId]/edit", params: { listId } }}
                 style={{ marginRight: 8 }}
               >
