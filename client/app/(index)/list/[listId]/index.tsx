@@ -10,6 +10,7 @@ import {
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
 import { ThemedText } from "@/components/ThemedText";
+import { View } from "react-native";
 
 export default function ListScreen() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function ListScreen() {
         options={{
           headerTitle: emoji + " " + name,
           headerRight: () => (
-            <>
+            <View style={{ flexDirection: "row", gap: 8 }}>
               <Link
                 href={{ pathname: "/list/[listId]/edit", params: { listId } }}
                 style={{ marginRight: 8 }}
@@ -42,7 +43,7 @@ export default function ListScreen() {
               <Link href={newProductHref}>
                 <IconSymbol name="plus" color={"#007AFF"} />
               </Link>
-            </>
+            </View>
           ),
         }}
       />
