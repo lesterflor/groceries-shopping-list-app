@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import { Provider as TinyBaseProvider } from "tinybase/ui-react";
 import { Inspector } from "tinybase/ui-react-inspector";
 import { ListCreationProvider } from "@/context/ListCreationContext";
@@ -12,6 +12,10 @@ export const unstable_settings = {
 
 export default function AppIndexLayout() {
   const { user } = useUser();
+
+  if (!user) {
+    return <Redirect href="/(auth)" />;
+  }
 
   return (
     <SignedIn>

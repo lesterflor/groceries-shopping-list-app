@@ -17,7 +17,6 @@ export default function ListScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
   const [name] = useShoppingListValue(listId, "name");
   const [emoji] = useShoppingListValue(listId, "emoji");
-  const [color] = useShoppingListValue(listId, "color");
   const [description] = useShoppingListValue(listId, "description");
   const newProductHref = {
     pathname: "/list/[listId]/product/new",
