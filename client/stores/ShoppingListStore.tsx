@@ -26,6 +26,7 @@ const TABLES_SCHEMA = {
     isPurchased: { type: "boolean" },
     category: { type: "string" },
     notes: { type: "string" },
+    createdBy: { type: "string" },
     createdAt: { type: "string" },
     updatedAt: { type: "string" },
   },
@@ -50,7 +51,13 @@ const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 export const useAddShoppingListProductCallback = (listId: string) => {
   const store = useStore(useStoreId(listId));
   return useCallback(
-    (name: string, quantity: number, units: string, notes: string) => {
+    (
+      name: string,
+      quantity: number,
+      units: string,
+      notes: string,
+      createdBy: string
+    ) => {
       const id = randomUUID();
       store.setRow("products", id, {
         id,
@@ -60,6 +67,7 @@ export const useAddShoppingListProductCallback = (listId: string) => {
         isPurchased: false,
         category: "",
         notes: notes,
+        createdBy: createdBy,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       });

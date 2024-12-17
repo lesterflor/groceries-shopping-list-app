@@ -7,7 +7,7 @@ import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
 
 export const unstable_settings = {
-  initialRouteName: "/(index)",
+  initialRouteName: "index",
 };
 
 export default function AppIndexLayout() {
@@ -61,6 +61,16 @@ export default function AppIndexLayout() {
                 sheetGrabberVisible: true,
                 headerLargeTitle: false,
                 headerTitle: "Add product",
+              }}
+            />
+            <Stack.Screen
+              name="list/[listId]/product/[productId]"
+              options={{
+                presentation: "formSheet",
+                sheetAllowedDetents: [0.5, 0.75],
+                sheetGrabberVisible: true,
+                headerLargeTitle: false,
+                headerTitle: "Details",
               }}
             />
             <Stack.Screen
