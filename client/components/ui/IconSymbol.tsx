@@ -22,6 +22,7 @@ const MAPPING = {
   "checkmark.square.fill": "check-box",
   "checkmark.circle.fill": "check-circle",
   "square.and.arrow.up": "share",
+  "qrcode.viewfinder": "qr-code",
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],

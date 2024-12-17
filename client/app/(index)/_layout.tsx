@@ -43,7 +43,7 @@ export default function AppIndexLayout() {
               name="list/new/index"
               options={{
                 presentation: "formSheet",
-                sheetAllowedDetents: [0.5, 0.75],
+                sheetAllowedDetents: [0.75, 1],
                 sheetGrabberVisible: true,
                 headerShown: false,
               }}
