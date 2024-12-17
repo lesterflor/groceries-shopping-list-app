@@ -29,7 +29,13 @@ export default function ListScreen() {
         options={{
           headerTitle: emoji + " " + name,
           headerRight: () => (
-            <View style={{ flexDirection: "row", gap: 8 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 16,
+              }}
+            >
               <Link
                 href={{ pathname: "/list/[listId]/share", params: { listId } }}
               >
@@ -37,7 +43,6 @@ export default function ListScreen() {
               </Link>
               <Link
                 href={{ pathname: "/list/[listId]/edit", params: { listId } }}
-                style={{ marginRight: 8 }}
               >
                 <IconSymbol
                   name="pencil.and.list.clipboard"

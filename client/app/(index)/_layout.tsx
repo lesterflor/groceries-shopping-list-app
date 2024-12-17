@@ -81,9 +81,10 @@ export default function AppIndexLayout() {
               name="list/[listId]/share"
               options={{
                 presentation: "formSheet",
-                sheetAllowedDetents: [0.5, 0.75],
+                sheetAllowedDetents: [0.75, 1],
                 sheetGrabberVisible: true,
-                headerShown: false,
+                headerLargeTitle: false,
+                headerTitle: "Invite",
               }}
             />
             <Stack.Screen
