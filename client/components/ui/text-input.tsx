@@ -39,9 +39,9 @@ export const TextInput: React.FC<TextInputProps> = ({
 
   const sizeStyles: Record<
     InputSize,
-    { height: number; fontSize: number; padding: number }
+    { height?: number; fontSize: number; padding: number }
   > = {
-    sm: { height: 36, fontSize: 14, padding: 8 },
+    sm: { fontSize: 16, padding: 8 },
     md: { height: 50, fontSize: 16, padding: 14 },
     lg: { height: 55, fontSize: 32, padding: 16 },
   };

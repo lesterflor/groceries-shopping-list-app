@@ -110,7 +110,7 @@ export default function ShoppingListProductItem({
           >
             {name}
           </ThemedText>
-          <IconSymbol name="chevron.right" size={14} color="#A1A1AA" />
+          {/* <IconSymbol name="chevron.right" size={14} color="#A1A1AA" /> */}
         </Pressable>
       </View>
     </ReanimatedSwipeable>
