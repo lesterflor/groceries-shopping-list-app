@@ -9,12 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.betoatexpo.groceries-shopping-list",
       "icon": {
         "light": "./assets/images/icon.png",
         "dark": "./assets/images/icon-dark.png",
         "tinted": "./assets/images/icon-tinted.png"
+      },
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
