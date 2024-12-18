@@ -6,6 +6,7 @@ import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
 import { isClerkAPIResponseError, useSignUp } from "@clerk/clerk-expo";
 import { ClerkAPIError } from "@clerk/types";
+import * as Haptics from "expo-haptics";
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -16,13 +17,16 @@ export default function SignUpScreen() {
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
   const [errors, setErrors] = React.useState<ClerkAPIError[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const onSignUpPress = async () => {
     if (!isLoaded) return;
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setIsLoading(true);
     setErrors([]);
 
-    // Start sign-up process using email and password provided
     try {
+      // Start sign-up process using email and password provided
       await signUp.create({
         emailAddress,
         password,
@@ -37,12 +41,16 @@ export default function SignUpScreen() {
     } catch (err) {
       if (isClerkAPIResponseError(err)) setErrors(err.errors);
       console.error(JSON.stringify(err, null, 2));
+    } finally {
+      setIsLoading(false);
     }
   };
 
   // Handle submission of verification form
   const onVerifyPress = async () => {
     if (!isLoaded) return;
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setIsLoading(true);
 
     try {
       // Use the code the user provided to attempt verification
@@ -64,6 +72,9 @@ export default function SignUpScreen() {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
+      setErrors(err.errors);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,14 +87,18 @@ export default function SignUpScreen() {
           placeholder="Enter your verification code"
           onChangeText={(code) => setCode(code)}
         />
+        <Button
+          onPress={onVerifyPress}
+          disabled={!code || isLoading}
+          loading={isLoading}
+        >
+          Verify
+        </Button>
         {errors.map((error) => (
           <ThemedText key={error.longMessage} style={{ color: "red" }}>
             {error.longMessage}
           </ThemedText>
         ))}
-        <Button onPress={onVerifyPress} disabled={!code}>
-          Verify
-        </Button>
       </BodyScrollView>
     );
   }
@@ -102,7 +117,11 @@ export default function SignUpScreen() {
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button onPress={onSignUpPress} disabled={!emailAddress || !password}>
+      <Button
+        onPress={onSignUpPress}
+        disabled={!emailAddress || !password || isLoading}
+        loading={isLoading}
+      >
         Continue
       </Button>
       {errors.map((error) => (
