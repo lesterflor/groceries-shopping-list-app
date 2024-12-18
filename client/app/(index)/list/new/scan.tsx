@@ -1,19 +1,20 @@
-import { ThemedText } from "@/components/ThemedText";
-import Button from "@/components/ui/button";
-import { useJoinShoppingListCallback } from "@/stores/ShoppingListsStore";
+import { useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import {
   CameraView,
   useCameraPermissions,
   BarcodeScanningResult,
 } from "expo-camera";
 import { useRouter } from "expo-router";
-import { useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ThemedText } from "@/components/ThemedText";
+import Button from "@/components/ui/button";
+import { useJoinShoppingListCallback } from "@/stores/ShoppingListsStore";
 
 export default function ScanQRCode() {
   const [permission, requestPermission] = useCameraPermissions();
   const joinShoppingListCallback = useJoinShoppingListCallback();
   const router = useRouter();
+
   const [qrCodeDetected, setQrCodeDetected] = useState<string>("");
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -34,7 +35,7 @@ export default function ScanQRCode() {
     );
   }
 
-  function handleConfirmJoinList() {
+  const handleConfirmJoinList = () => {
     joinShoppingListCallback(qrCodeDetected);
     if (router.canDismiss()) {
       router.dismiss();
@@ -43,9 +44,11 @@ export default function ScanQRCode() {
       pathname: "/list/[listId]",
       params: { listId: qrCodeDetected },
     });
-  }
+  };
 
-  function handleBarcodeScanned(barcodeScanningResult: BarcodeScanningResult) {
+  const handleBarcodeScanned = (
+    barcodeScanningResult: BarcodeScanningResult
+  ) => {
     const qrCodeUrl = barcodeScanningResult.data;
 
     if (qrCodeUrl.startsWith("https://shopping-list.expo.app/list/")) {
@@ -60,7 +63,7 @@ export default function ScanQRCode() {
         setQrCodeDetected("");
       }, 1000);
     }
-  }
+  };
 
   return (
     <CameraView
@@ -97,10 +100,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 16,
   },
-  message: {
-    textAlign: "center",
-    paddingBottom: 10,
-  },
   camera: {
     flex: 1,
   },
@@ -109,10 +108,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   detectedContainer: {
     backgroundColor: "black",
     borderRadius: 10,
     padding: 30,
+  },
+
+  message: {
+    textAlign: "center",
+    paddingBottom: 10,
   },
   detectedText: {
     color: "white",
