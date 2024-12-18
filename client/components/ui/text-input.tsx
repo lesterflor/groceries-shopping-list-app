@@ -49,7 +49,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   const getVariantStyle = () => {
     const baseStyle: ViewStyle = {
       borderRadius: 12,
-      backgroundColor: isDark ? zincColors[900] : "#F2F2F7",
+      backgroundColor: isDark ? zincColors[900] : "rgb(229, 229, 234)",
     };
 
     switch (variant) {
