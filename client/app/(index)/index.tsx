@@ -1,11 +1,16 @@
 import React from "react";
-import { Link, Stack, useRouter } from "expo-router";
-import { FlatList, StyleSheet } from "react-native";
+import { Stack, useRouter } from "expo-router";
+import { FlatList, Pressable, StyleSheet } from "react-native";
+import * as Haptics from "expo-haptics";
+
+// Components
 import { IconCircle } from "@/components/IconCircle";
 import ShoppingListItem from "@/components/ShoppingListItem";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+
+// Constants & Hooks
 import { backgroundColors } from "@/constants/Colors";
 import { useShoppingListIds } from "@/stores/ShoppingListsStore";
 
@@ -15,6 +20,16 @@ export default function HomeScreen() {
   const router = useRouter();
   const shoppingListIds = useShoppingListIds();
 
+  const handleNewListPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    router.push("/list/new");
+  };
+
+  const handleProfilePress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    router.push("/profile");
+  };
+
   const renderEmptyList = () => (
     <BodyScrollView contentContainerStyle={styles.emptyStateContainer}>
       <IconCircle
@@ -23,10 +38,25 @@ export default function HomeScreen() {
           backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
         }
       />
-      <Button onPress={() => router.push("/list/new")} variant="ghost">
+      <Button onPress={handleNewListPress} variant="ghost">
         Create your first list
       </Button>
     </BodyScrollView>
+  );
+
+  const renderHeaderRight = () => (
+    <Pressable onPress={handleNewListPress} style={styles.headerButton}>
+      <IconSymbol name="plus" color={ICON_COLOR} />
+    </Pressable>
+  );
+
+  const renderHeaderLeft = () => (
+    <Pressable
+      onPress={handleProfilePress}
+      style={[styles.headerButton, styles.headerButtonLeft]}
+    >
+      <IconSymbol name="gear" color={ICON_COLOR} />
+    </Pressable>
   );
 
   return (
@@ -34,16 +64,8 @@ export default function HomeScreen() {
       <Stack.Screen
         options={{
           title: "Shopping lists",
-          headerRight: () => (
-            <Link href="/list/new">
-              <IconSymbol size={24} name="plus" color={ICON_COLOR} />
-            </Link>
-          ),
-          headerLeft: () => (
-            <Link href="/profile">
-              <IconSymbol size={22} name="person" color={ICON_COLOR} />
-            </Link>
-          ),
+          headerRight: renderHeaderRight,
+          headerLeft: renderHeaderLeft,
         }}
       />
       <FlatList
@@ -65,5 +87,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
     paddingTop: 100,
+  },
+  headerButton: {
+    padding: 8,
+    paddingRight: 0,
+  },
+  headerButtonLeft: {
+    paddingLeft: 0,
   },
 });

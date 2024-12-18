@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import Animated from "react-native-reanimated";
 import ShoppingListProductItem from "@/components/ShoppingListProductItem";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
@@ -10,7 +10,8 @@ import {
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
 import { ThemedText } from "@/components/ThemedText";
-import { View } from "react-native";
+import { View, Pressable } from "react-native";
+import * as Haptics from "expo-haptics";
 
 export default function ListScreen() {
   const router = useRouter();
@@ -33,25 +34,44 @@ export default function ListScreen() {
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                gap: 16,
               }}
             >
-              <Link
-                href={{ pathname: "/list/[listId]/share", params: { listId } }}
+              <Pressable
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  router.push({
+                    pathname: "/list/[listId]/share",
+                    params: { listId },
+                  });
+                }}
+                style={{ padding: 8 }}
               >
                 <IconSymbol name="square.and.arrow.up" color={"#007AFF"} />
-              </Link>
-              <Link
-                href={{ pathname: "/list/[listId]/edit", params: { listId } }}
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  router.push({
+                    pathname: "/list/[listId]/edit",
+                    params: { listId },
+                  });
+                }}
+                style={{ padding: 8 }}
               >
                 <IconSymbol
                   name="pencil.and.list.clipboard"
                   color={"#007AFF"}
                 />
-              </Link>
-              <Link href={newProductHref}>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  router.push(newProductHref);
+                }}
+                style={{ paddingLeft: 8 }}
+              >
                 <IconSymbol name="plus" color={"#007AFF"} />
-              </Link>
+              </Pressable>
             </View>
           ),
         }}
@@ -82,7 +102,13 @@ export default function ListScreen() {
               paddingTop: 100,
             }}
           >
-            <Button onPress={() => router.push(newProductHref)} variant="ghost">
+            <Button
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                router.push(newProductHref);
+              }}
+              variant="ghost"
+            >
               Add the first product to this list
             </Button>
           </BodyScrollView>

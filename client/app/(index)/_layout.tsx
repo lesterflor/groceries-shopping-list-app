@@ -68,7 +68,7 @@ export default function AppIndexLayout() {
               name="list/[listId]/edit"
               options={{
                 presentation: "formSheet",
-                sheetAllowedDetents: [0.5, 0.75],
+                sheetAllowedDetents: [0.5, 0.75, 1],
                 sheetGrabberVisible: true,
                 headerLargeTitle: false,
                 headerTitle: "Edit list",
@@ -132,7 +132,7 @@ export default function AppIndexLayout() {
                 presentation: "formSheet",
                 headerLargeTitle: false,
                 headerTitle: "Choose an emoji",
-                sheetAllowedDetents: [0.5, 0.75],
+                sheetAllowedDetents: [0.5, 0.75, 1],
                 sheetGrabberVisible: true,
               }}
             />
@@ -142,7 +142,7 @@ export default function AppIndexLayout() {
                 presentation: "formSheet",
                 headerLargeTitle: false,
                 headerTitle: "Choose a color",
-                sheetAllowedDetents: [0.5, 0.75],
+                sheetAllowedDetents: [0.5, 0.75, 1],
                 sheetGrabberVisible: true,
               }}
             />
