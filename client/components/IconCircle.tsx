@@ -29,7 +29,7 @@ export function IconCircle({
         style,
       ]}
     >
-      <ThemedText style={{ fontSize: 24 }}>{emoji}</ThemedText>
+      <ThemedText style={{ fontSize: 22 }}>{emoji}</ThemedText>
     </View>
   );
 }
