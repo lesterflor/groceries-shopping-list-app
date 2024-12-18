@@ -3,7 +3,7 @@ import { FlatList, Pressable, View } from "react-native";
 import { backgroundColors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { useListCreation } from "@/context/ListCreationContext";
-
+import * as Haptics from "expo-haptics";
 export default function ColorPickerScreen() {
   const router = useRouter();
   const { setSelectedColor } = useListCreation();
@@ -18,7 +18,10 @@ export default function ColorPickerScreen() {
       data={backgroundColors}
       renderItem={({ item }) => (
         <Pressable
-          onPress={() => handleColorSelect(item)}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            handleColorSelect(item);
+          }}
           style={{
             flex: 1,
             alignItems: "center",
@@ -39,11 +42,12 @@ export default function ColorPickerScreen() {
       keyExtractor={(item) => item}
       automaticallyAdjustContentInsets
       contentInsetAdjustmentBehavior="automatic"
-      contentInset={{ bottom: 30 }}
+      contentInset={{ bottom: 0 }}
       scrollIndicatorInsets={{ bottom: 0 }}
       contentContainerStyle={{
         padding: 16,
         gap: 16,
+        paddingBottom: 100,
       }}
     />
   );

@@ -70,7 +70,8 @@ export default function AppIndexLayout() {
                 presentation: "formSheet",
                 sheetAllowedDetents: [0.5, 0.75],
                 sheetGrabberVisible: true,
-                headerShown: false,
+                headerLargeTitle: false,
+                headerTitle: "Edit list",
               }}
             />
             <Stack.Screen
@@ -131,7 +132,7 @@ export default function AppIndexLayout() {
                 presentation: "formSheet",
                 headerLargeTitle: false,
                 headerTitle: "Choose an emoji",
-                sheetAllowedDetents: [0.4],
+                sheetAllowedDetents: [0.5, 0.75],
                 sheetGrabberVisible: true,
               }}
             />
@@ -141,7 +142,7 @@ export default function AppIndexLayout() {
                 presentation: "formSheet",
                 headerLargeTitle: false,
                 headerTitle: "Choose a color",
-                sheetAllowedDetents: [0.4],
+                sheetAllowedDetents: [0.5, 0.75],
                 sheetGrabberVisible: true,
               }}
             />

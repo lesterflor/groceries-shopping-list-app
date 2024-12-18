@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Stack, useRouter } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { appleBlue, backgroundColors } from "@/constants/Colors";
+import { appleBlue, backgroundColors, emojies } from "@/constants/Colors";
 import { useListCreation } from "@/context/ListCreationContext";
 import { useAddShoppingListCallback } from "@/stores/ShoppingListsStore";
 
@@ -16,6 +16,19 @@ export default function CreateListScreen() {
 
   const router = useRouter();
   const useAddShoppingList = useAddShoppingListCallback();
+
+  useEffect(() => {
+    setSelectedEmoji(emojies[Math.floor(Math.random() * emojies.length)]);
+    setSelectedColor(
+      backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
+    );
+
+    // Cleanup function to reset context when unmounting
+    return () => {
+      setSelectedEmoji("");
+      setSelectedColor("");
+    };
+  }, []);
 
   const handleCreateList = () => {
     if (!listName) {
