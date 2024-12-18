@@ -1,3 +1,4 @@
+import ReconnectingWebSocket from "reconnecting-websocket";
 import { createWsSynchronizer } from "tinybase/synchronizers/synchronizer-ws-client/with-schemas";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { MergeableStore, OptionalSchemas } from "tinybase/with-schemas";
@@ -22,7 +23,10 @@ export const useCreateServerSynchronizerAndStart = <
       await (
         await createWsSynchronizer(
           store,
-          new WebSocket(SYNC_SERVER_URL + storeId)
+          new ReconnectingWebSocket(SYNC_SERVER_URL + storeId, [], {
+            maxReconnectionDelay: 1000,
+            connectionTimeout: 1000,
+          })
         )
       ).startSync(),
     [storeId]

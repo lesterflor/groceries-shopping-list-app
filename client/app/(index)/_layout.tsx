@@ -6,6 +6,8 @@ import { ListCreationProvider } from "@/context/ListCreationContext";
 import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
 import { Button } from "@/components/ui/button";
+import { useNetworkState } from "expo-network";
+import { Alert } from "react-native";
 
 export const unstable_settings = {
   initialRouteName: "index",
@@ -13,6 +15,19 @@ export const unstable_settings = {
 
 export default function AppIndexLayout() {
   const { user } = useUser();
+  const networkState = useNetworkState();
+
+  React.useEffect(() => {
+    if (
+      !networkState.isConnected &&
+      networkState.isInternetReachable === false
+    ) {
+      Alert.alert(
+        "🔌 You are offline",
+        "You can keep using the app! Your changes will be saved locally and synced when you are back online."
+      );
+    }
+  }, [networkState.isConnected, networkState.isInternetReachable]);
 
   if (!user) {
     return <Redirect href="/(auth)" />;
