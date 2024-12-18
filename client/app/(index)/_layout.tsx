@@ -1,10 +1,11 @@
 import React from "react";
-import { Redirect, Stack } from "expo-router";
+import { Redirect, router, Stack } from "expo-router";
 import { Provider as TinyBaseProvider } from "tinybase/ui-react";
 import { Inspector } from "tinybase/ui-react-inspector";
 import { ListCreationProvider } from "@/context/ListCreationContext";
 import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
+import { Button } from "@/components/ui/button";
 
 export const unstable_settings = {
   initialRouteName: "index",
@@ -65,6 +66,19 @@ export default function AppIndexLayout() {
                 sheetGrabberVisible: true,
                 headerLargeTitle: false,
                 headerTitle: "Add product",
+              }}
+            />
+            <Stack.Screen
+              name="list/new/scan"
+              options={{
+                presentation: "fullScreenModal",
+                headerLargeTitle: false,
+                headerTitle: "Scan QR code",
+                headerLeft: () => (
+                  <Button variant="ghost" onPress={() => router.back()}>
+                    Cancel
+                  </Button>
+                ),
               }}
             />
             <Stack.Screen
