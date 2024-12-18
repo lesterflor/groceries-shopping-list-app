@@ -67,6 +67,12 @@ export default function SignIn() {
           Sign up
         </Button>
       </View>
+      <View style={{ marginTop: 16, alignItems: "center" }}>
+        <ThemedText>Forgot password?</ThemedText>
+        <Button onPress={() => router.push("/reset-password")} variant="ghost">
+          Reset password
+        </Button>
+      </View>
     </BodyScrollView>
   );
 }
