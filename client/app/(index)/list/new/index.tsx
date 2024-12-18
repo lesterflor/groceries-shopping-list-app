@@ -1,17 +1,21 @@
 import React, { useState, useMemo } from "react";
+import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Href, useRouter } from "expo-router";
+
+// Components
 import { IconCircle } from "@/components/IconCircle";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+
+// Constants & Utils
 import { appleBlue, backgroundColors, emojies } from "@/constants/Colors";
 import { useJoinShoppingListCallback } from "@/stores/ShoppingListsStore";
-import { randomUUID } from "expo-crypto";
-import { IconSymbol } from "@/components/ui/IconSymbol";
-import { TouchableOpacity, View } from "react-native";
 
-const isValidUUID = (id) => {
+const isValidUUID = (id: string | null) => {
+  if (!id) return false;
   const uuidRegex =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   return uuidRegex.test(id);
@@ -23,15 +27,15 @@ export default function NewListScreen() {
   const [listId, setListId] = useState<string | null>(null);
   const isValidListId = useMemo(() => isValidUUID(listId), [listId]);
 
-  const randomEmoji = useMemo(() => {
-    return emojies[Math.floor(Math.random() * emojies.length)];
-  }, []);
+  const randomEmoji = useMemo(
+    () => emojies[Math.floor(Math.random() * emojies.length)],
+    []
+  );
 
-  const randomBackgroundColor = useMemo(() => {
-    return backgroundColors[
-      Math.floor(Math.random() * backgroundColors.length)
-    ];
-  }, []);
+  const randomBackgroundColor = useMemo(
+    () => backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
+    []
+  );
 
   const handleDismissTo = (screen: Href) => {
     if (router.canDismiss()) {
@@ -58,21 +62,18 @@ export default function NewListScreen() {
   };
 
   return (
-    <BodyScrollView contentContainerStyle={{ padding: 16, marginBottom: 100 }}>
-      <View style={{ gap: 16 }}>
+    <BodyScrollView contentContainerStyle={styles.scrollViewContent}>
+      <View style={styles.container}>
         <IconCircle
-          style={{ alignSelf: "center", marginTop: 16 }}
+          style={styles.iconCircle}
           size={64}
           emoji={randomEmoji}
           backgroundColor={randomBackgroundColor}
         />
-        <ThemedText type="subtitle" style={{ textAlign: "center" }}>
+        <ThemedText type="subtitle" style={styles.title}>
           Collaborate and Sync in Real Time!
         </ThemedText>
-        <ThemedText
-          type="defaultSemiBold"
-          style={{ textAlign: "center", color: "gray" }}
-        >
+        <ThemedText type="defaultSemiBold" style={styles.subtitle}>
           Create a new list or join an existing one by scanning the QR code or
           entering a list ID.
         </ThemedText>
@@ -81,32 +82,22 @@ export default function NewListScreen() {
           Create new list
         </Button>
 
-        <ThemedText type="default" style={{ textAlign: "center" }}>
+        <ThemedText type="default" style={styles.orText}>
           Or
         </ThemedText>
 
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 16,
-          }}
-        >
+        <View style={styles.inputContainer}>
           <TextInput
             placeholder="Enter a list code"
             onChangeText={setListId}
             onSubmitEditing={(e) => {
               joinShoppingListCallback(e.nativeEvent.text);
             }}
-            containerStyle={{
-              flex: 1,
-            }}
+            containerStyle={styles.textInput}
           />
           <TouchableOpacity
             onPress={() => handleDismissTo("/list/new/scan")}
-            style={{
-              marginBottom: 16,
-            }}
+            style={styles.qrButton}
           >
             <IconSymbol name="qrcode.viewfinder" color={appleBlue} size={32} />
           </TouchableOpacity>
@@ -122,3 +113,38 @@ export default function NewListScreen() {
     </BodyScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollViewContent: {
+    padding: 16,
+    marginBottom: 100,
+  },
+  container: {
+    gap: 16,
+  },
+  iconCircle: {
+    alignSelf: "center",
+    marginTop: 16,
+  },
+  title: {
+    textAlign: "center",
+  },
+  subtitle: {
+    textAlign: "center",
+    color: "gray",
+  },
+  orText: {
+    textAlign: "center",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+  },
+  textInput: {
+    flex: 1,
+  },
+  qrButton: {
+    marginBottom: 16,
+  },
+});
