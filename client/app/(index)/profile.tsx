@@ -3,6 +3,8 @@ import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { useClerk, useUser } from "@clerk/clerk-expo";
+import { appleRed } from "@/constants/Colors";
+import { Image } from "react-native";
 
 export default function ProfileScreen() {
   const { user } = useUser();
@@ -21,10 +23,22 @@ export default function ProfileScreen() {
         gap: 16,
       }}
     >
-      <ThemedText type="subtitle">
+      {user?.imageUrl ? (
+        <Image
+          source={{ uri: user.imageUrl }}
+          style={{ width: 100, height: 100, borderRadius: 100 }}
+        />
+      ) : null}
+      <ThemedText type="defaultSemiBold">
         Hello {user?.emailAddresses[0].emailAddress}
       </ThemedText>
-      <Button onPress={handleSignOut} variant="outline">
+
+      <ThemedText>Joined {user?.createdAt?.toDateString()}</ThemedText>
+      <Button
+        onPress={handleSignOut}
+        variant="ghost"
+        textStyle={{ color: appleRed }}
+      >
         Sign out
       </Button>
     </BodyScrollView>
