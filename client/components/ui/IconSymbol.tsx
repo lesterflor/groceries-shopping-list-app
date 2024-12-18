@@ -15,6 +15,7 @@ const MAPPING = {
   "chevron.right": "chevron-right",
   "trash.fill": "delete",
   "pencil.and.list.clipboard": "edit",
+  person: "person",
   plus: "add",
   minus: "remove",
   square: "square",
