@@ -1,6 +1,7 @@
 import React from "react";
-import { useRouter } from "expo-router";
+import { Href, useRouter } from "expo-router";
 import { View } from "react-native";
+import * as Haptics from "expo-haptics";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
@@ -13,10 +14,14 @@ export default function SignIn() {
 
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isSigningIn, setIsSigningIn] = React.useState(false);
 
   // Handle the submission of the sign-in form
   const onSignInPress = React.useCallback(async () => {
     if (!isLoaded) return;
+
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setIsSigningIn(true);
 
     // Start the sign-in process using the email and password provided
     try {
@@ -39,8 +44,18 @@ export default function SignIn() {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
+    } finally {
+      setIsSigningIn(false);
     }
   }, [isLoaded, emailAddress, password]);
+
+  const onNavigatePress = React.useCallback(
+    async (path: Href) => {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      router.push(path);
+    },
+    [router]
+  );
 
   return (
     <BodyScrollView contentContainerStyle={{ padding: 16 }}>
@@ -58,18 +73,25 @@ export default function SignIn() {
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button onPress={onSignInPress} disabled={!emailAddress || !password}>
+      <Button
+        onPress={onSignInPress}
+        loading={isSigningIn}
+        disabled={!emailAddress || !password || isSigningIn}
+      >
         Sign in
       </Button>
       <View style={{ marginTop: 16, alignItems: "center" }}>
         <ThemedText>Don't have an account?</ThemedText>
-        <Button onPress={() => router.push("/sign-up")} variant="ghost">
+        <Button onPress={() => onNavigatePress("/sign-up")} variant="ghost">
           Sign up
         </Button>
       </View>
       <View style={{ marginTop: 16, alignItems: "center" }}>
         <ThemedText>Forgot password?</ThemedText>
-        <Button onPress={() => router.push("/reset-password")} variant="ghost">
+        <Button
+          onPress={() => onNavigatePress("/reset-password")}
+          variant="ghost"
+        >
           Reset password
         </Button>
       </View>
