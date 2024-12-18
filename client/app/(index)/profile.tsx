@@ -5,7 +5,7 @@ import Button from "@/components/ui/button";
 import { useClerk, useUser } from "@clerk/clerk-expo";
 import { appleRed } from "@/constants/Colors";
 import { Image } from "react-native";
-
+import { Alert } from "react-native";
 export default function ProfileScreen() {
   const { user } = useUser();
   const { signOut } = useClerk();
@@ -15,6 +15,33 @@ export default function ProfileScreen() {
     await signOut();
     router.replace("/(auth)");
   };
+
+  const handleDeleteAccount = async () => {
+    try {
+      Alert.alert(
+        "Delete account",
+        "Are you sure you want to delete your account? This action is irreversible.",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "Delete",
+            onPress: async () => {
+              await user?.delete();
+              router.replace("/(auth)");
+            },
+            style: "destructive",
+          },
+        ]
+      );
+    } catch (error) {
+      Alert.alert("Error", "Failed to delete account");
+      console.error(error);
+    }
+  };
+
   return (
     <BodyScrollView
       contentContainerStyle={{
@@ -40,6 +67,14 @@ export default function ProfileScreen() {
         textStyle={{ color: appleRed }}
       >
         Sign out
+      </Button>
+
+      <Button
+        onPress={handleDeleteAccount}
+        variant="ghost"
+        textStyle={{ color: "gray" }}
+      >
+        Delete account
       </Button>
     </BodyScrollView>
   );
