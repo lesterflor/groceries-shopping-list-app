@@ -20,7 +20,9 @@ export default function SignIn() {
   const onSignInPress = React.useCallback(async () => {
     if (!isLoaded) return;
 
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    if (process.env.EXPO_OS === "ios") {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
     setIsSigningIn(true);
 
     // Start the sign-in process using the email and password provided
@@ -51,7 +53,9 @@ export default function SignIn() {
 
   const onNavigatePress = React.useCallback(
     async (path: Href) => {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (process.env.EXPO_OS === "ios") {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
       router.push(path);
     },
     [router]

@@ -38,7 +38,9 @@ export default function ListScreen() {
             >
               <Pressable
                 onPress={() => {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  if (process.env.EXPO_OS === "ios") {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  }
                   router.push({
                     pathname: "/list/[listId]/share",
                     params: { listId },
@@ -50,7 +52,9 @@ export default function ListScreen() {
               </Pressable>
               <Pressable
                 onPress={() => {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  if (process.env.EXPO_OS === "ios") {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  }
                   router.push({
                     pathname: "/list/[listId]/edit",
                     params: { listId },
@@ -65,7 +69,9 @@ export default function ListScreen() {
               </Pressable>
               <Pressable
                 onPress={() => {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  if (process.env.EXPO_OS === "ios") {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  }
                   router.push(newProductHref);
                 }}
                 style={{ paddingLeft: 8 }}
@@ -104,7 +110,9 @@ export default function ListScreen() {
           >
             <Button
               onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                if (process.env.EXPO_OS === "ios") {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                }
                 router.push(newProductHref);
               }}
               variant="ghost"

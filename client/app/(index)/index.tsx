@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack, useRouter } from "expo-router";
-import { FlatList, Pressable, StyleSheet } from "react-native";
+import { FlatList, Platform, Pressable, StyleSheet } from "react-native";
 import * as Haptics from "expo-haptics";
 
 // Components
@@ -21,12 +21,16 @@ export default function HomeScreen() {
   const shoppingListIds = useShoppingListIds();
 
   const handleNewListPress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    if (process.env.EXPO_OS === "ios") {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
     router.push("/list/new");
   };
 
   const handleProfilePress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    if (process.env.EXPO_OS === "ios") {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
     router.push("/profile");
   };
 
@@ -55,7 +59,11 @@ export default function HomeScreen() {
       onPress={handleProfilePress}
       style={[styles.headerButton, styles.headerButtonLeft]}
     >
-      <IconSymbol name="gear" color={ICON_COLOR} />
+      <IconSymbol
+        name="gear"
+        color={ICON_COLOR}
+        style={{ marginRight: Platform.select({ default: 0, android: 8 }) }}
+      />
     </Pressable>
   );
 
@@ -91,6 +99,7 @@ const styles = StyleSheet.create({
   headerButton: {
     padding: 8,
     paddingRight: 0,
+    marginHorizontal: Platform.select({ web: 16, default: 0 }),
   },
   headerButtonLeft: {
     paddingLeft: 0,

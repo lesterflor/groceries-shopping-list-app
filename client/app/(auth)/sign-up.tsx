@@ -21,7 +21,9 @@ export default function SignUpScreen() {
 
   const onSignUpPress = async () => {
     if (!isLoaded) return;
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    if (process.env.EXPO_OS === "ios") {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
     setIsLoading(true);
     setErrors([]);
 
@@ -49,7 +51,9 @@ export default function SignUpScreen() {
   // Handle submission of verification form
   const onVerifyPress = async () => {
     if (!isLoaded) return;
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    if (process.env.EXPO_OS === "ios") {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
     setIsLoading(true);
 
     try {
