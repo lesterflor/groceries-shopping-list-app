@@ -2,7 +2,12 @@
 
 import React from "react";
 import { SymbolWeight } from "expo-symbols";
-import { OpaqueColorValue, StyleProp, ViewStyle } from "react-native";
+import {
+  OpaqueColorValue,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 // Add your SFSymbol to MaterialIcons mappings here.
@@ -24,6 +29,7 @@ const MAPPING = {
   "checkmark.circle.fill": "check-circle",
   "square.and.arrow.up": "share",
   "qrcode.viewfinder": "qr-code",
+  gear: "settings",
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],
@@ -55,7 +61,7 @@ export function IconSymbol({
       color={color}
       size={size}
       name={MAPPING[name]}
-      style={style}
+      style={style as StyleProp<TextStyle>}
     />
   );
 }
