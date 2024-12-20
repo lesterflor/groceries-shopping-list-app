@@ -67,6 +67,7 @@ export default function SignIn() {
         autoCapitalize="none"
         value={emailAddress}
         label="Email"
+        keyboardType="email-address"
         placeholder="Enter email"
         onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
       />

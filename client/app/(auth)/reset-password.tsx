@@ -90,6 +90,7 @@ export default function ResetPassword() {
         autoCapitalize="none"
         value={emailAddress}
         placeholder="Enter email"
+        keyboardType="email-address"
         onChangeText={setEmailAddress}
       />
       <Button onPress={onResetPasswordPress} disabled={!emailAddress}>

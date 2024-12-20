@@ -113,6 +113,7 @@ export default function SignUpScreen() {
         autoCapitalize="none"
         value={emailAddress}
         placeholder="Enter email"
+        keyboardType="email-address"
         onChangeText={(email) => setEmailAddress(email)}
       />
       <TextInput
