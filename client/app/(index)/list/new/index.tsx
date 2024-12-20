@@ -1,5 +1,10 @@
 import React, { useMemo, useState } from "react";
-import { Href, useRouter } from "expo-router";
+import {
+  Href,
+  useGlobalSearchParams,
+  usePathname,
+  useRouter,
+} from "expo-router";
 import { StyleSheet, View } from "react-native";
 // Components
 import { IconCircle } from "@/components/IconCircle";
@@ -19,9 +24,12 @@ const isValidUUID = (id: string | null) => {
 };
 
 export default function NewListScreen() {
+  const params = useGlobalSearchParams();
+  const { listId: listIdParam } = params as { listId: string | undefined };
+
   const router = useRouter();
   const joinShoppingListCallback = useJoinShoppingListCallback();
-  const [listId, setListId] = useState<string | null>(null);
+  const [listId, setListId] = useState<string | null>(listIdParam);
   const isValidListId = useMemo(() => isValidUUID(listId), [listId]);
 
   const randomEmoji = useMemo(
@@ -93,6 +101,7 @@ export default function NewListScreen() {
           <View style={styles.joinSection}>
             <TextInput
               placeholder="Enter a list code"
+              value={listId}
               onChangeText={setListId}
               onSubmitEditing={(e) => {
                 joinShoppingListCallback(e.nativeEvent.text);

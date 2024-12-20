@@ -51,8 +51,10 @@ export default function ScanQRCode() {
   ) => {
     const qrCodeUrl = barcodeScanningResult.data;
 
-    if (qrCodeUrl.startsWith("https://shopping-list.expo.app/list/")) {
-      const listId = qrCodeUrl.split("/list/")[1];
+    // Extract listId from QR code URL
+    const listIdMatch = qrCodeUrl.match(/listId=([^&]+)/);
+    if (listIdMatch) {
+      const listId = listIdMatch[1];
       setQrCodeDetected(listId);
 
       if (timeoutRef.current) {

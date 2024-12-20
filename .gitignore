@@ -9,8 +9,9 @@ dist/
 web-build/
 expo-env.d.ts
 .env
-/ios
-/android
+client/ios
+client/android
+
 
 # Native
 *.orig.*

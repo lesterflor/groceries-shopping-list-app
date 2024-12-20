@@ -36,7 +36,7 @@ export default function ShareListScreen() {
         <View style={styles.qrContainer}>
           <QRCode
             size={220}
-            value={`https://shopping-list.expo.app/list/${listId}`}
+            value={`groceries-shopping-list://list/new?listId=${listId}`}
           />
         </View>
       </View>
