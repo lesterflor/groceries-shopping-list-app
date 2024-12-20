@@ -19,15 +19,25 @@ export const useCreateServerSynchronizerAndStart = <
 ) =>
   (UiReact as UiReact.WithSchemas<Schemas>).useCreateSynchronizer(
     store,
-    async (store: MergeableStore<Schemas>) =>
-      await (
-        await createWsSynchronizer(
-          store,
-          new ReconnectingWebSocket(SYNC_SERVER_URL + storeId, [], {
-            maxReconnectionDelay: 1000,
-            connectionTimeout: 1000,
-          })
-        )
-      ).startSync(),
+    async (store: MergeableStore<Schemas>) => {
+      // Create the synchronizer.
+      const synchronizer = await createWsSynchronizer(
+        store,
+        new ReconnectingWebSocket(SYNC_SERVER_URL + storeId, [], {
+          maxReconnectionDelay: 1000,
+          connectionTimeout: 1000,
+        })
+      );
+
+      // Start the synchronizer.
+      await synchronizer.startSync();
+
+      // If the websocket reconnects in the future, do another explicit sync.
+      synchronizer.getWebSocket().addEventListener("open", () => {
+        synchronizer.load().then(() => synchronizer.save());
+      });
+
+      return synchronizer;
+    },
     [storeId]
   );
