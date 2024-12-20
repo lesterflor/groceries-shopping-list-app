@@ -11,7 +11,8 @@ export const useCreateClientPersisterAndStart = <
 >(
   storeId: string,
   store: MergeableStore<Schemas>,
-  initialContentJson?: string
+  initialContentJson?: string,
+  then?: () => void
 ) =>
   (UiReact as UiReact.WithSchemas<Schemas>).useCreatePersister(
     store,
@@ -28,6 +29,7 @@ export const useCreateClientPersisterAndStart = <
       // Start the persistence.
       await persister.load(initialContent);
       await persister.startAutoSave();
+      then?.();
     },
     [initialContentJson]
   );
