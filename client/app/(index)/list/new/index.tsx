@@ -1,15 +1,14 @@
 import React, { useMemo, useState } from "react";
 import { Href, useRouter } from "expo-router";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 // Components
 import { IconCircle } from "@/components/IconCircle";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import TextInput from "@/components/ui/text-input";
 // Constants & Utils
-import { appleBlue, backgroundColors, emojies } from "@/constants/Colors";
+import { backgroundColors, emojies } from "@/constants/Colors";
 import { useJoinShoppingListCallback } from "@/stores/ShoppingListsStore";
 
 const isValidUUID = (id: string | null) => {
@@ -100,7 +99,9 @@ export default function NewListScreen() {
               }}
               containerStyle={{ marginBottom: 0 }}
             />
-            <Button onPress={handleJoinList}>Join list</Button>
+            <Button onPress={handleJoinList} disabled={!isValidListId}>
+              Join list
+            </Button>
             <Button
               variant="ghost"
               onPress={() => handleDismissTo("/list/new/scan")}
