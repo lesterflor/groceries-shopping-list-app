@@ -13,7 +13,7 @@ import Reanimated from "react-native-reanimated";
 import { appleRed, borderColor } from "@/constants/Colors";
 import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
 import {
-  useShoppingListProductIds,
+  useShoppingListProductCount,
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
 import { IconCircle } from "./IconCircle";
@@ -28,7 +28,7 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
   const [name] = useShoppingListValue(listId, "name");
   const [emoji] = useShoppingListValue(listId, "emoji");
   const [color] = useShoppingListValue(listId, "color");
-  const products = useShoppingListProductIds(listId);
+  const productCount = useShoppingListProductCount(listId);
 
   const deleteCallback = useDelShoppingListCallback(listId);
 
@@ -85,7 +85,7 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
                   type="defaultSemiBold"
                   style={{ fontSize: 12, color: "gray" }}
                 >
-                  {products.length} products
+                  {productCount} product{productCount == 1 ? "" : "s"}
                 </ThemedText>
               </View>
             </View>

@@ -44,6 +44,7 @@ const {
   useCell,
   useCreateMergeableStore,
   useProvideStore,
+  useRowCount,
   useSetCellCallback,
   useSortedRowIds,
   useStore,
@@ -118,6 +119,10 @@ export const useShoppingListProductIds = (
     limit,
     useStoreId(listId)
   );
+
+// Returns the number of products in the shopping list.
+export const useShoppingListProductCount = (listId: string) =>
+  useRowCount("products", useStoreId(listId));
 
 // Returns a pair of 1) a property of a product in the shopping list, 2) a
 // callback that updates it, similar to the React useState pattern.
