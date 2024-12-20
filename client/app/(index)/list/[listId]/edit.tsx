@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
   },
   titleInputContainer: {
     flexGrow: 1,
+    flexShrink: 1,
   },
   emojiButton: {
     padding: 1,
