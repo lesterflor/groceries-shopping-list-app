@@ -14,6 +14,7 @@ import { appleRed, borderColor } from "@/constants/Colors";
 import { useDelShoppingListCallback } from "@/stores/ShoppingListsStore";
 import {
   useShoppingListProductCount,
+  useShoppingListUserNicknames,
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
 import { IconCircle } from "./IconCircle";
@@ -86,6 +87,9 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
                   style={{ fontSize: 12, color: "gray" }}
                 >
                   {productCount} product{productCount == 1 ? "" : "s"}
+                </ThemedText>
+                <ThemedText type="defaultSemiBold" style={{ fontSize: 10 }}>
+                  Users: {useShoppingListUserNicknames(listId)}
                 </ThemedText>
               </View>
             </View>
