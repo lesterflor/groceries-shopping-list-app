@@ -129,7 +129,7 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
   );
 }
 
-const NicknameCircle = ({
+export const NicknameCircle = ({
   nickname,
   color,
   index = 0,

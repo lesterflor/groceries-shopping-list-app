@@ -4,7 +4,10 @@ import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import TextInput from "@/components/ui/text-input";
-import { useShoppingListProductCell } from "@/stores/ShoppingListStore";
+import {
+  useShoppingListProductCell,
+  useShoppingListUserNicknames,
+} from "@/stores/ShoppingListStore";
 
 export default function ProductScreen() {
   const { listId, productId } = useLocalSearchParams() as {
@@ -37,6 +40,7 @@ export default function ProductScreen() {
     productId,
     "createdAt"
   );
+  const userNicknames = useShoppingListUserNicknames(listId);
 
   return (
     <BodyScrollView
@@ -57,11 +61,31 @@ export default function ProductScreen() {
         onChangeText={(value) => setQuantity(Number(value))}
       />
       <FieldItem label="Units" value={units} onChangeText={setUnits} />
-      <FieldItem
-        label="Notes"
-        value={notes ?? "(none)"}
-        onChangeText={setNotes}
-      />
+      <View
+        style={{
+          gap: 8,
+        }}
+      >
+        <ThemedText type="defaultSemiBold">Notes</ThemedText>
+        <TextInput
+          value={notes ?? "(none)"}
+          editable={true}
+          onChangeText={setNotes}
+          variant="ghost"
+          placeholder="Add a note..."
+          size="sm"
+          inputStyle={{ padding: 0 }}
+        />
+      </View>
+      <ThemedText type="defaultSemiBold">Shared with</ThemedText>
+      <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+        {userNicknames.map((nickname, index) => (
+          <ThemedText key={nickname} type="default">
+            {nickname}
+            {index < userNicknames.length - 1 ? ", " : ""}
+          </ThemedText>
+        ))}
+      </View>
     </BodyScrollView>
   );
 }
