@@ -45,7 +45,9 @@ export default function ShoppingListProductItem({
     return (
       <Pressable
         onPress={() => {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+          if (process.env.EXPO_OS === "ios") {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+          }
           deleteCallback();
         }}
       >
@@ -79,7 +81,11 @@ export default function ShoppingListProductItem({
       >
         <Pressable
           onPress={() => {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            if (process.env.EXPO_OS === "ios") {
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              );
+            }
             setIsPurchased(!isPurchased);
           }}
         >

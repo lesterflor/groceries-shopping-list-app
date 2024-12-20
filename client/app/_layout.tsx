@@ -72,7 +72,9 @@ export default function RootLayout() {
           <GestureHandlerRootView>
             <Slot />
           </GestureHandlerRootView>
-          <StatusBar barStyle={"default"} />
+          <StatusBar
+            barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+          />
         </ThemeProvider>
       </ClerkLoaded>
     </ClerkProvider>
