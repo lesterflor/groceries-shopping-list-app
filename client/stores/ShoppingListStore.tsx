@@ -48,6 +48,7 @@ const {
 
 const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 
+// Returns a callback that adds a new product to the shopping list.
 export const useAddShoppingListProductCallback = (listId: string) => {
   const store = useStore(useStoreId(listId));
   return useCallback(
@@ -77,11 +78,14 @@ export const useAddShoppingListProductCallback = (listId: string) => {
   );
 };
 
+// Returns a callback that deletes a product from the shopping list.
 export const useDelShoppingListProductCallback = (
   listId: string,
   productId: string
 ) => useDelRowCallback("products", productId, useStoreId(listId));
 
+// Returns a pair of 1) a property of the shopping list, 2) a callback that
+// updates it, similar to the React useState pattern.
 export const useShoppingListValue = <ValueId extends ShoppingListValueId>(
   listId: string,
   valueId: ValueId
@@ -98,6 +102,7 @@ export const useShoppingListValue = <ValueId extends ShoppingListValueId>(
   ),
 ];
 
+// Returns the product IDs of the shopping list, sorted by the specified cell.
 export const useShoppingListProductIds = (
   listId: string,
   cellId: ShoppingListProductCellId = "createdAt",
@@ -114,6 +119,8 @@ export const useShoppingListProductIds = (
     useStoreId(listId)
   );
 
+// Returns a pair of 1) a property of a product in the shopping list, 2) a
+// callback that updates it, similar to the React useState pattern.
 export const useShoppingListProductCell = <
   CellId extends ShoppingListProductCellId
 >(
@@ -135,6 +142,7 @@ export const useShoppingListProductCell = <
   ),
 ];
 
+// Create, persist, and sync a store containing the shopping list and products.
 export default function ShoppingListStore({
   listId,
   initialContentJson,

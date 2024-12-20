@@ -27,6 +27,7 @@ const {
 
 const useStoreId = () => STORE_ID_PREFIX + useUser().user.id;
 
+// Returns a callback that adds a new shopping list to the store.
 export const useAddShoppingListCallback = () => {
   const store = useStore(useStoreId());
   return useCallback(
@@ -53,6 +54,7 @@ export const useAddShoppingListCallback = () => {
   );
 };
 
+// Returns a callback that adds an existing shopping list to the store.
 export const useJoinShoppingListCallback = () => {
   const store = useStore(useStoreId());
   return useCallback(
@@ -66,11 +68,14 @@ export const useJoinShoppingListCallback = () => {
   );
 };
 
+// Returns a callback that deletes a shopping list from the store.
 export const useDelShoppingListCallback = (id: string) =>
   useDelRowCallback("lists", id, useStoreId());
 
+// Returns the IDs of all shopping lists in the store.
 export const useShoppingListIds = () => useRowIds("lists", useStoreId());
 
+// Create, persist, and sync a store containing the IDs of the shopping lists.
 export default function ShoppingListsStore() {
   const storeId = useStoreId();
   const store = useCreateMergeableStore(() =>
@@ -80,6 +85,7 @@ export default function ShoppingListsStore() {
   useCreateServerSynchronizerAndStart(storeId, store);
   useProvideStore(storeId, store);
 
+  // In turn 'render' (i.e. create) all of the shopping lists themselves.
   return Object.entries(useTable("lists", storeId)).map(
     ([listId, { initialContentJson }]) => (
       <ShoppingListStore
