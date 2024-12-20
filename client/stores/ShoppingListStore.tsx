@@ -3,8 +3,8 @@ import { randomUUID } from "expo-crypto";
 import { useDelRowCallback, useSetValueCallback } from "tinybase/ui-react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { Cell, createMergeableStore, Value } from "tinybase/with-schemas";
-import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
-import { useCreateServerSynchronizerAndStart } from "./persisters/useCreateServerSynchronizerAndStart";
+import { useCreateClientPersisterAndStart } from "@/stores/persistence/useCreateClientPersisterAndStart";
+import { useCreateServerSynchronizerAndStart } from "./synchronization/useCreateServerSynchronizerAndStart";
 
 const STORE_ID_PREFIX = "shoppingListStore-";
 

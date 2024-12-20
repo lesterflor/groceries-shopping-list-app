@@ -2,10 +2,10 @@ import React, { useCallback } from "react";
 import { randomUUID } from "expo-crypto";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { createMergeableStore, NoValuesSchema } from "tinybase/with-schemas";
-import { useCreateClientPersisterAndStart } from "@/stores/persisters/useCreateClientPersisterAndStart";
+import { useCreateClientPersisterAndStart } from "@/stores/persistence/useCreateClientPersisterAndStart";
 import { useUser } from "@clerk/clerk-expo";
-import { useCreateServerSynchronizerAndStart } from "./persisters/useCreateServerSynchronizerAndStart";
 import ShoppingListStore from "./ShoppingListStore";
+import { useCreateServerSynchronizerAndStart } from "./synchronization/useCreateServerSynchronizerAndStart";
 
 const STORE_ID_PREFIX = "shoppingListsStore-";
 
