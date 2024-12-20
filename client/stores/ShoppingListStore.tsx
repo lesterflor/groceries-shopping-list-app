@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { randomUUID } from "expo-crypto";
-import { useDelRowCallback, useSetValueCallback } from "tinybase/ui-react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { Cell, createMergeableStore, Value } from "tinybase/with-schemas";
 import { useUserIdAndNickname } from "@/hooks/useNickname";
@@ -47,6 +46,8 @@ const {
   useRowCount,
   useSetCellCallback,
   useSortedRowIds,
+  useDelRowCallback,
+  useSetValueCallback,
   useStore,
   useTable,
   useValue,
