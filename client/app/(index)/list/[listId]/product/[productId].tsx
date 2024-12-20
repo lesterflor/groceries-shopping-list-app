@@ -1,10 +1,10 @@
 import React from "react";
 import { useLocalSearchParams } from "expo-router";
+import { View } from "react-native";
+import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import TextInput from "@/components/ui/text-input";
 import { useShoppingListProductCell } from "@/stores/ShoppingListStore";
-import { ThemedText } from "@/components/ThemedText";
-import { View } from "react-native";
 
 export default function ProductScreen() {
   const { listId, productId } = useLocalSearchParams() as {
@@ -20,7 +20,7 @@ export default function ProductScreen() {
   const [units, setUnits] = useShoppingListProductCell(
     listId,
     productId,
-    "unit"
+    "units"
   );
   const [notes, setNotes] = useShoppingListProductCell(
     listId,

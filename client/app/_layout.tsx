@@ -1,10 +1,10 @@
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { tokenCache } from "@/cache";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";

@@ -2,6 +2,11 @@ import React from "react";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
+import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import Reanimated, {
+  SharedValue,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 import { appleRed, borderColor } from "@/constants/Colors";
 import {
   useDelShoppingListProductCallback,
@@ -10,9 +15,6 @@ import {
 } from "@/stores/ShoppingListStore";
 import { ThemedText } from "./ThemedText";
 import { IconSymbol } from "./ui/IconSymbol";
-import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import { useAnimatedStyle } from "react-native-reanimated";
-import Reanimated, { SharedValue } from "react-native-reanimated";
 
 export default function ShoppingListProductItem({
   listId,

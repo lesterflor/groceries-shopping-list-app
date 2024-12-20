@@ -1,7 +1,10 @@
 import React from "react";
+import * as Haptics from "expo-haptics";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 import ShoppingListProductItem from "@/components/ShoppingListProductItem";
+import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -9,9 +12,6 @@ import {
   useShoppingListProductIds,
   useShoppingListValue,
 } from "@/stores/ShoppingListStore";
-import { ThemedText } from "@/components/ThemedText";
-import { View, Pressable } from "react-native";
-import * as Haptics from "expo-haptics";
 
 export default function ListScreen() {
   const router = useRouter();

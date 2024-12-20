@@ -1,15 +1,13 @@
-import React, { useState, useMemo } from "react";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
+import React, { useMemo, useState } from "react";
 import { Href, useRouter } from "expo-router";
-
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 // Components
 import { IconCircle } from "@/components/IconCircle";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
-import TextInput from "@/components/ui/text-input";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-
+import TextInput from "@/components/ui/text-input";
 // Constants & Utils
 import { appleBlue, backgroundColors, emojies } from "@/constants/Colors";
 import { useJoinShoppingListCallback } from "@/stores/ShoppingListsStore";

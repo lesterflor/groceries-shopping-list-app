@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Platform, View } from "react-native";
+import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import TextInput from "@/components/ui/text-input";
 import { useAddShoppingListProductCallback } from "@/stores/ShoppingListStore";
-import { ThemedText } from "@/components/ThemedText";
-import { Platform, View } from "react-native";
-import { IconSymbol } from "@/components/ui/IconSymbol";
-import { useUser } from "@clerk/clerk-expo";
 
 export default function NewItemScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
@@ -15,8 +14,6 @@ export default function NewItemScreen() {
   const [units, setUnits] = useState("kg");
   const [notes, setNotes] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const { user } = useUser();
-  const { emailAddress } = user.primaryEmailAddress;
 
   const router = useRouter();
   const addShoppingListProduct = useAddShoppingListProductCallback(listId);
@@ -26,13 +23,7 @@ export default function NewItemScreen() {
       return;
     }
 
-    addShoppingListProduct(
-      name,
-      quantity,
-      units,
-      notes,
-      emailAddress.split("@")[0] // e.g. [beto, expo.io] -> beto
-    );
+    addShoppingListProduct(name, quantity, units, notes);
 
     router.back();
   };

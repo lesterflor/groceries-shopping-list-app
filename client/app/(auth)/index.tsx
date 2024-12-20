@@ -1,7 +1,7 @@
 import React from "react";
+import * as Haptics from "expo-haptics";
 import { Href, useRouter } from "expo-router";
 import { View } from "react-native";
-import * as Haptics from "expo-haptics";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";

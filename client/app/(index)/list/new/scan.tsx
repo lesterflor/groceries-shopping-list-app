@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
 import {
+  BarcodeScanningResult,
   CameraView,
   useCameraPermissions,
-  BarcodeScanningResult,
 } from "expo-camera";
 import { useRouter } from "expo-router";
+import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import Button from "@/components/ui/button";
 import { useJoinShoppingListCallback } from "@/stores/ShoppingListsStore";

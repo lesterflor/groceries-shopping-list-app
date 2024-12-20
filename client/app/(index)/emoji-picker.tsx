@@ -1,9 +1,10 @@
 import React from "react";
+import * as Haptics from "expo-haptics";
+import { useRouter } from "expo-router";
 import { FlatList, Pressable, Text } from "react-native";
 import { emojies } from "@/constants/Colors";
-import { useRouter } from "expo-router";
 import { useListCreation } from "@/context/ListCreationContext";
-import * as Haptics from "expo-haptics";
+
 export default function EmojiPickerScreen() {
   const router = useRouter();
   const { setSelectedEmoji } = useListCreation();
