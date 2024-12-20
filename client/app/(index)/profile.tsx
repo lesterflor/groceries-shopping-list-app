@@ -13,7 +13,7 @@ import {
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
-import { appleBlue, appleRed } from "@/constants/Colors";
+import { appleBlue, appleGreen, appleRed } from "@/constants/Colors";
 import { useClerk, useUser } from "@clerk/clerk-expo";
 import { useEffect } from "react";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -157,7 +157,9 @@ export default function ProfileScreen() {
 
         <View style={styles.infoRow}>
           <ThemedText type="defaultSemiBold">Update ID</ThemedText>
-          <ThemedText type="default">{Updates.updateId}</ThemedText>
+          <ThemedText type="default" style={{ fontSize: 10 }}>
+            {Updates.updateId}
+          </ThemedText>
         </View>
         {isUpdateAvailable ? (
           <View>
@@ -169,7 +171,16 @@ export default function ProfileScreen() {
             </Button>
           </View>
         ) : (
-          <Button variant="ghost" disabled>
+          <Button
+            variant="ghost"
+            onPress={() =>
+              Alert.alert(
+                "✅ All clear!",
+                "Even the bugs are taking a day off!"
+              )
+            }
+            textStyle={{ color: appleGreen }}
+          >
             No bug fixes available
           </Button>
         )}
