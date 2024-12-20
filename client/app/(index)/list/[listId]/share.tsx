@@ -1,9 +1,8 @@
-import { StyleSheet } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { Share, StyleSheet } from "react-native";
+import QRCode from "react-native-qrcode-svg";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
-import { useLocalSearchParams } from "expo-router";
-import { Share } from "react-native";
-import QRCode from "react-native-qrcode-svg";
 import Button from "@/components/ui/button";
 
 export default function ShareListScreen() {

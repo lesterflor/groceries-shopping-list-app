@@ -1,15 +1,13 @@
 import React from "react";
+import * as Haptics from "expo-haptics";
 import { Stack, useRouter } from "expo-router";
 import { FlatList, Platform, Pressable, StyleSheet } from "react-native";
-import * as Haptics from "expo-haptics";
-
 // Components
 import { IconCircle } from "@/components/IconCircle";
 import ShoppingListItem from "@/components/ShoppingListItem";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-
 // Constants & Hooks
 import { backgroundColors } from "@/constants/Colors";
 import { useShoppingListIds } from "@/stores/ShoppingListsStore";

@@ -1,11 +1,11 @@
 import { useRouter } from "expo-router";
+import { Alert, Image } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
-import { useClerk, useUser } from "@clerk/clerk-expo";
 import { appleRed } from "@/constants/Colors";
-import { Image } from "react-native";
-import { Alert } from "react-native";
+import { useClerk, useUser } from "@clerk/clerk-expo";
+
 export default function ProfileScreen() {
   const { user } = useUser();
   const { signOut } = useClerk();

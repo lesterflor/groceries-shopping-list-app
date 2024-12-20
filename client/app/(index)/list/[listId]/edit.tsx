@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { useRouter, Stack, useLocalSearchParams } from "expo-router";
-import { Pressable, Text, View, StyleSheet } from "react-native";
-import { BodyScrollView } from "@/components/ui/BodyScrollView";
-import TextInput from "@/components/ui/text-input";
-import Button from "@/components/ui/button";
-import { useShoppingListValue } from "@/stores/ShoppingListStore";
-import { useListCreation } from "@/context/ListCreationContext";
 import * as Haptics from "expo-haptics";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { BodyScrollView } from "@/components/ui/BodyScrollView";
+import Button from "@/components/ui/button";
+import TextInput from "@/components/ui/text-input";
+import { useListCreation } from "@/context/ListCreationContext";
+import { useShoppingListValue } from "@/stores/ShoppingListStore";
 
 export default function ListScreen() {
   const router = useRouter();

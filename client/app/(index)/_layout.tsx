@@ -1,13 +1,13 @@
 import React from "react";
+import { useNetworkState } from "expo-network";
 import { Redirect, router, Stack } from "expo-router";
+import { Alert } from "react-native";
 import { Provider as TinyBaseProvider } from "tinybase/ui-react";
 import { Inspector } from "tinybase/ui-react-inspector";
+import { Button } from "@/components/ui/button";
 import { ListCreationProvider } from "@/context/ListCreationContext";
 import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
-import { Button } from "@/components/ui/button";
-import { useNetworkState } from "expo-network";
-import { Alert } from "react-native";
 
 export const unstable_settings = {
   initialRouteName: "index",

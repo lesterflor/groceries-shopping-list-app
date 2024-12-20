@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Platform, View } from "react-native";
+import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
-import TextInput from "@/components/ui/text-input";
-import { useNickname } from "@/hooks/useNickname";
-import { useAddShoppingListProductCallback } from "@/stores/ShoppingListStore";
-import { ThemedText } from "@/components/ThemedText";
-import { Platform, View } from "react-native";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import TextInput from "@/components/ui/text-input";
+import { useAddShoppingListProductCallback } from "@/stores/ShoppingListStore";
 
 export default function NewItemScreen() {
   const { listId } = useLocalSearchParams() as { listId: string };
