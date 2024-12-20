@@ -58,7 +58,7 @@ const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 // Returns a callback that adds a new product to the shopping list.
 export const useAddShoppingListProductCallback = (listId: string) => {
   const store = useStore(useStoreId(listId));
-  const [userId] = useUserIdAndNickname();
+  const [userId, nickname] = useUserIdAndNickname();
   return useCallback(
     (name: string, quantity: number, units: string, notes: string) => {
       const id = randomUUID();
@@ -70,7 +70,7 @@ export const useAddShoppingListProductCallback = (listId: string) => {
         isPurchased: false,
         category: "",
         notes,
-        createdBy: userId,
+        createdBy: nickname,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       });
