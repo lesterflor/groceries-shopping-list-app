@@ -3,6 +3,7 @@ import { randomUUID } from "expo-crypto";
 import { useDelRowCallback, useSetValueCallback } from "tinybase/ui-react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import { Cell, createMergeableStore, Value } from "tinybase/with-schemas";
+import { useUserIdAndNickname } from "@/hooks/useNickname";
 import { useCreateClientPersisterAndStart } from "@/stores/persistence/useCreateClientPersisterAndStart";
 import { useCreateServerSynchronizerAndStart } from "./synchronization/useCreateServerSynchronizerAndStart";
 
@@ -51,14 +52,9 @@ const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 // Returns a callback that adds a new product to the shopping list.
 export const useAddShoppingListProductCallback = (listId: string) => {
   const store = useStore(useStoreId(listId));
+  const [userId] = useUserIdAndNickname();
   return useCallback(
-    (
-      name: string,
-      quantity: number,
-      units: string,
-      notes: string,
-      createdBy: string
-    ) => {
+    (name: string, quantity: number, units: string, notes: string) => {
       const id = randomUUID();
       store.setRow("products", id, {
         id,
@@ -68,7 +64,7 @@ export const useAddShoppingListProductCallback = (listId: string) => {
         isPurchased: false,
         category: "",
         notes,
-        createdBy,
+        createdBy: userId,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       });
