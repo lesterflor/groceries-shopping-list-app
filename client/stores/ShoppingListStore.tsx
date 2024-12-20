@@ -31,6 +31,9 @@ const TABLES_SCHEMA = {
     createdAt: { type: "string" },
     updatedAt: { type: "string" },
   },
+  collaborators: {
+    nickname: { type: "string" },
+  },
 } as const;
 
 type Schemas = [typeof TABLES_SCHEMA, typeof VALUES_SCHEMA];
@@ -39,11 +42,12 @@ type ShoppingListProductCellId = keyof (typeof TABLES_SCHEMA)["products"];
 
 const {
   useCell,
-  useSetCellCallback,
   useCreateMergeableStore,
   useProvideStore,
+  useSetCellCallback,
   useSortedRowIds,
   useStore,
+  useTable,
   useValue,
 } = UiReact as UiReact.WithSchemas<Schemas>;
 
@@ -138,6 +142,12 @@ export const useShoppingListProductCell = <
   ),
 ];
 
+// Returns the nicknames of people involved in this shopping list.
+export const useShoppingListUserNicknames = (listId: string) =>
+  Object.entries(useTable("collaborators", useStoreId(listId))).map(
+    ([, { nickname }]) => nickname
+  );
+
 // Create, persist, and sync a store containing the shopping list and products.
 export default function ShoppingListStore({
   listId,
@@ -147,10 +157,15 @@ export default function ShoppingListStore({
   initialContentJson: string;
 }) {
   const storeId = useStoreId(listId);
+  const [userId, nickname] = useUserIdAndNickname();
   const store = useCreateMergeableStore(() =>
     createMergeableStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
-  useCreateClientPersisterAndStart(storeId, store, initialContentJson);
+  // Persist store (with initial content if it hasn't been saved before), then
+  // ensure the current user is added as a collaborator.
+  useCreateClientPersisterAndStart(storeId, store, initialContentJson, () =>
+    store.setRow("collaborators", userId, { nickname })
+  );
   useCreateServerSynchronizerAndStart(storeId, store);
   useProvideStore(storeId, store);
 
