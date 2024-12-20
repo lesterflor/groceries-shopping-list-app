@@ -62,52 +62,54 @@ export default function NewListScreen() {
   return (
     <BodyScrollView contentContainerStyle={styles.scrollViewContent}>
       <View style={styles.container}>
-        <IconCircle
-          style={styles.iconCircle}
-          size={64}
-          emoji={randomEmoji}
-          backgroundColor={randomBackgroundColor}
-        />
-        <ThemedText type="subtitle" style={styles.title}>
-          Collaborate and Sync in Real Time!
-        </ThemedText>
-        <ThemedText type="defaultSemiBold" style={styles.subtitle}>
-          Create a new list or join an existing one by scanning the QR code or
-          entering a list ID.
-        </ThemedText>
-
-        <Button onPress={() => handleDismissTo("/list/new/create")}>
-          Create new list
-        </Button>
-
-        <ThemedText type="default" style={styles.orText}>
-          Or
-        </ThemedText>
-
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Enter a list code"
-            onChangeText={setListId}
-            onSubmitEditing={(e) => {
-              joinShoppingListCallback(e.nativeEvent.text);
-            }}
-            containerStyle={styles.textInput}
+        <View style={styles.heroSection}>
+          <IconCircle
+            style={styles.iconCircle}
+            size={60}
+            emoji={randomEmoji}
+            backgroundColor={randomBackgroundColor}
           />
-          <TouchableOpacity
-            onPress={() => handleDismissTo("/list/new/scan")}
-            style={styles.qrButton}
-          >
-            <IconSymbol name="qrcode.viewfinder" color={appleBlue} size={32} />
-          </TouchableOpacity>
+          <ThemedText type="subtitle" style={styles.title}>
+            Better Together
+          </ThemedText>
+          <ThemedText type="defaultSemiBold" style={styles.subtitle}>
+            Create shared shopping lists and collaborate in real-time with
+            family and friends
+          </ThemedText>
+        </View>
+
+        <View style={styles.actionSection}>
+          <Button onPress={() => handleDismissTo("/list/new/create")}>
+            Create new list
+          </Button>
+
+          <View style={styles.divider}>
+            <View style={styles.line} />
+            <ThemedText type="default" style={styles.orText}>
+              or join existing
+            </ThemedText>
+            <View style={styles.line} />
+          </View>
+
+          <View style={styles.joinSection}>
+            <TextInput
+              placeholder="Enter a list code"
+              onChangeText={setListId}
+              onSubmitEditing={(e) => {
+                joinShoppingListCallback(e.nativeEvent.text);
+              }}
+              containerStyle={{ marginBottom: 0 }}
+            />
+            <Button onPress={handleJoinList}>Join list</Button>
+            <Button
+              variant="ghost"
+              onPress={() => handleDismissTo("/list/new/scan")}
+            >
+              Scan QR code
+            </Button>
+          </View>
         </View>
       </View>
-      <Button
-        variant="ghost"
-        disabled={!isValidListId}
-        onPress={handleJoinList}
-      >
-        Join list
-      </Button>
     </BodyScrollView>
   );
 }
@@ -118,21 +120,47 @@ const styles = StyleSheet.create({
     marginBottom: 100,
   },
   container: {
+    gap: 32,
+  },
+  heroSection: {
+    alignItems: "center",
     gap: 16,
+    marginTop: 32,
   },
   iconCircle: {
-    alignSelf: "center",
-    marginTop: 16,
+    marginBottom: 8,
   },
   title: {
+    fontSize: 32,
     textAlign: "center",
   },
   subtitle: {
     textAlign: "center",
     color: "gray",
+    paddingHorizontal: 24,
+    lineHeight: 24,
+  },
+  actionSection: {
+    gap: 24,
+  },
+  buttonIcon: {
+    marginRight: 8,
+  },
+  divider: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "rgba(150, 150, 150, 0.2)",
   },
   orText: {
-    textAlign: "center",
+    color: "gray",
+  },
+  joinSection: {
+    gap: 16,
   },
   inputContainer: {
     flexDirection: "row",
@@ -144,5 +172,8 @@ const styles = StyleSheet.create({
   },
   qrButton: {
     marginBottom: 16,
+  },
+  joinButton: {
+    marginTop: 8,
   },
 });
