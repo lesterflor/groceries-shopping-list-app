@@ -6,6 +6,7 @@ import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import TextInput from "@/components/ui/text-input";
 import {
   useShoppingListProductCell,
+  useShoppingListProductCreatedByNickname,
   useShoppingListUserNicknames,
 } from "@/stores/ShoppingListStore";
 
@@ -30,11 +31,7 @@ export default function ProductScreen() {
     productId,
     "notes"
   );
-  const [createdBy] = useShoppingListProductCell(
-    listId,
-    productId,
-    "createdBy"
-  );
+  const createdBy = useShoppingListProductCreatedByNickname(listId, productId);
   const [createdAt] = useShoppingListProductCell(
     listId,
     productId,
