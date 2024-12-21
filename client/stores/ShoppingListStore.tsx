@@ -1,7 +1,13 @@
 import { useCallback } from "react";
 import { randomUUID } from "expo-crypto";
+import { useRemoteRowId } from "tinybase/ui-react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
-import { Cell, createMergeableStore, Value } from "tinybase/with-schemas";
+import {
+  Cell,
+  createMergeableStore,
+  createRelationships,
+  Value,
+} from "tinybase/with-schemas";
 import { useUserIdAndNickname } from "@/hooks/useNickname";
 import { useCreateClientPersisterAndStart } from "@/stores/persistence/useCreateClientPersisterAndStart";
 import { useCreateServerSynchronizerAndStart } from "./synchronization/useCreateServerSynchronizerAndStart";
@@ -26,7 +32,7 @@ const TABLES_SCHEMA = {
     isPurchased: { type: "boolean", default: false },
     category: { type: "string", default: "" },
     notes: { type: "string" },
-    createdBy: { type: "string" },
+    createdBy: { type: "string" }, // userId
     createdAt: { type: "string" },
     updatedAt: { type: "string" },
   },
@@ -42,13 +48,15 @@ type ShoppingListProductCellId = keyof (typeof TABLES_SCHEMA)["products"];
 const {
   useCell,
   useCreateMergeableStore,
+  useDelRowCallback,
+  useProvideRelationships,
   useProvideStore,
   useRowCount,
   useSetCellCallback,
-  useSortedRowIds,
-  useDelRowCallback,
   useSetValueCallback,
+  useSortedRowIds,
   useStore,
+  useCreateRelationships,
   useTable,
   useValue,
 } = UiReact as UiReact.WithSchemas<Schemas>;
@@ -58,7 +66,7 @@ const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
 // Returns a callback that adds a new product to the shopping list.
 export const useAddShoppingListProductCallback = (listId: string) => {
   const store = useStore(useStoreId(listId));
-  const [userId, nickname] = useUserIdAndNickname();
+  const [userId] = useUserIdAndNickname();
   return useCallback(
     (name: string, quantity: number, units: string, notes: string) => {
       const id = randomUUID();
@@ -68,7 +76,7 @@ export const useAddShoppingListProductCallback = (listId: string) => {
         quantity,
         units,
         notes,
-        createdBy: nickname,
+        createdBy: userId,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       });
@@ -146,6 +154,19 @@ export const useShoppingListProductCell = <
   ),
 ];
 
+// Returns the nickname of the person who created the product.
+export const useShoppingListProductCreatedByNickname = (
+  listId: string,
+  productId: string
+) => {
+  const userId = useRemoteRowId(
+    "createdByNickname",
+    productId,
+    useStoreId(listId)
+  );
+  return useCell("collaborators", userId, "nickname", useStoreId(listId));
+};
+
 // Returns the nicknames of people involved in this shopping list.
 export const useShoppingListUserNicknames = (listId: string) =>
   Object.entries(useTable("collaborators", useStoreId(listId))).map(
@@ -172,6 +193,17 @@ export default function ShoppingListStore({
   );
   useCreateServerSynchronizerAndStart(storeId, store);
   useProvideStore(storeId, store);
+
+  // Create relationship between products (createdBy) and collaborators tables.
+  const relationships = useCreateRelationships(store, (store) =>
+    createRelationships(store).setRelationshipDefinition(
+      "createdByNickname",
+      "products",
+      "collaborators",
+      "createdBy"
+    )
+  );
+  useProvideRelationships(storeId, relationships);
 
   return null;
 }
