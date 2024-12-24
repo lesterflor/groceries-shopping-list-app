@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { tokenCache } from "@/cache";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -14,6 +13,7 @@ import {
   Theme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { StatusBar } from "react-native";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -72,9 +72,7 @@ export default function RootLayout() {
           <GestureHandlerRootView>
             <Slot />
           </GestureHandlerRootView>
-          <StatusBar
-            barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-          />
+          <StatusBar barStyle="default" />
         </ThemeProvider>
       </ClerkLoaded>
     </ClerkProvider>
