@@ -4,6 +4,8 @@ A cross-platform shopping list application built with modern technologies that e
 
 ![App Screenshot](https://i.ytimg.com/vi/HqOiB2tDM8Q/maxresdefault.jpg)
 
+🔍 Explore more innovative projects and tutorials at [codewithbeto.dev/projects](https://codewithbeto.dev/projects)
+
 ## 🚀 Demo & Links
 
 - 📱 [iOS App Store](https://apps.apple.com/us/app/shopping-list-sync-share/id6739513017)
@@ -45,7 +47,7 @@ A cross-platform shopping list application built with modern technologies that e
    ```
    The app can be run on iOS, Android or Web using Expo Go.
 
-### Server Setup
+### Server Setup (Synchronization)
 
 1. Navigate to the server directory:
 
