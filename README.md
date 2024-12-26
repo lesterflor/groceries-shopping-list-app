@@ -9,7 +9,7 @@ A cross-platform shopping list application built with modern technologies that e
 ## 🚀 Demo & Links
 
 - 📱 [iOS App Store](https://apps.apple.com/us/app/shopping-list-sync-share/id6739513017)
-- 🌐 [Web Demo](https://shopping-list.expo.app)
+- 🌐 [Web Demo](https://quicksynclist.com/)
 - 💻 [Project Details](https://codewithbeto.dev/projects/shopping-list-app)
 - 📺 [Video Tutorial](https://youtu.be/HqOiB2tDM8Q)
 
