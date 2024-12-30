@@ -1,5 +1,5 @@
-import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
+import { router, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
