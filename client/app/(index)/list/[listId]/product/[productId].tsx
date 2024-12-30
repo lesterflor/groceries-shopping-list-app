@@ -1,14 +1,14 @@
-import { ThemedText } from '@/components/ThemedText';
-import { BodyScrollView } from '@/components/ui/BodyScrollView';
-import TextInput from '@/components/ui/text-input';
+import { ThemedText } from "@/components/ThemedText";
+import { BodyScrollView } from "@/components/ui/BodyScrollView";
+import TextInput from "@/components/ui/text-input";
 import {
   useShoppingListProductCell,
   useShoppingListProductCreatedByNickname,
   useShoppingListUserNicknames,
-} from '@/stores/ShoppingListStore';
-import { router, useLocalSearchParams } from 'expo-router';
-import React from 'react';
-import { View } from 'react-native';
+} from "@/stores/ShoppingListStore";
+import { router, useLocalSearchParams } from "expo-router";
+import React from "react";
+import { View } from "react-native";
 
 export default function ProductScreen() {
   const { listId, productId } = useLocalSearchParams() as {
@@ -17,7 +17,7 @@ export default function ProductScreen() {
   };
 
   // Check if the product exists by trying to get any of its properties
-  const [name] = useShoppingListProductCell(listId, productId, 'name');
+  const [name] = useShoppingListProductCell(listId, productId, "name");
 
   // If the product doesn't exist anymore, redirect to the list
   React.useEffect(() => {
@@ -41,27 +41,27 @@ function ProductContent({
   listId: string;
   productId: string;
 }) {
-  const [name, setName] = useShoppingListProductCell(listId, productId, 'name');
+  const [name, setName] = useShoppingListProductCell(listId, productId, "name");
   const [quantity, setQuantity] = useShoppingListProductCell(
     listId,
     productId,
-    'quantity'
+    "quantity"
   );
   const [units, setUnits] = useShoppingListProductCell(
     listId,
     productId,
-    'units'
+    "units"
   );
   const [notes, setNotes] = useShoppingListProductCell(
     listId,
     productId,
-    'notes'
+    "notes"
   );
   const createdBy = useShoppingListProductCreatedByNickname(listId, productId);
   const [createdAt] = useShoppingListProductCell(
     listId,
     productId,
-    'createdAt'
+    "createdAt"
   );
   const userNicknames = useShoppingListUserNicknames(listId);
 
@@ -73,10 +73,10 @@ function ProductContent({
       }}
     >
       <FieldItem label="Product name" value={name} onChangeText={setName} />
-      <FieldItem label="Created by" value={createdBy ?? 'unknown'} />
+      <FieldItem label="Created by" value={createdBy ?? "unknown"} />
       <FieldItem
         label="Created at"
-        value={createdAt ? new Date(createdAt).toDateString() : 'unknown'}
+        value={createdAt ? new Date(createdAt).toDateString() : "unknown"}
       />
       <FieldItem
         label="Quantity"
@@ -91,7 +91,7 @@ function ProductContent({
       >
         <ThemedText type="defaultSemiBold">Notes</ThemedText>
         <TextInput
-          value={notes ?? '(none)'}
+          value={notes ?? "(none)"}
           editable={true}
           onChangeText={setNotes}
           variant="ghost"
@@ -101,11 +101,11 @@ function ProductContent({
         />
       </View>
       <ThemedText type="defaultSemiBold">Shared with</ThemedText>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
         {userNicknames.map((nickname, index) => (
           <ThemedText key={nickname} type="default">
             {nickname}
-            {index < userNicknames.length - 1 ? ', ' : ''}
+            {index < userNicknames.length - 1 ? ", " : ""}
           </ThemedText>
         ))}
       </View>
@@ -125,9 +125,9 @@ function FieldItem({
   return (
     <View
       style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'baseline',
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "baseline",
         gap: 8,
       }}
     >
@@ -139,8 +139,8 @@ function FieldItem({
         variant="ghost"
         placeholder="..."
         size="sm"
-        containerStyle={{ maxWidth: '60%' }}
-        inputStyle={{ padding: 0, margin: 0, textAlign: 'right' }}
+        containerStyle={{ maxWidth: "60%" }}
+        inputStyle={{ padding: 0, margin: 0, textAlign: "right" }}
       />
     </View>
   );
