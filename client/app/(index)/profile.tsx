@@ -156,10 +156,23 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.infoRow}>
-          <ThemedText type="defaultSemiBold">Update ID</ThemedText>
-          <ThemedText type="default" style={{ fontSize: 10 }}>
-            {Updates.updateId}
-          </ThemedText>
+          <View style={{ flex: 1 }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <ThemedText type="defaultSemiBold">Update ID</ThemedText>
+              <ThemedText type="default" style={{ fontSize: 12 }}>
+                {Updates.isEmbeddedLaunch ? " (Embedded)" : " (Downloaded)"}
+              </ThemedText>
+            </View>
+            <ThemedText
+              type="default"
+              style={{ fontSize: 12 }}
+              numberOfLines={2}
+            >
+              {Updates.updateId}
+            </ThemedText>
+          </View>
         </View>
         {isUpdateAvailable ? (
           <View>
