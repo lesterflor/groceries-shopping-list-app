@@ -13,7 +13,7 @@ import {
   Theme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { StatusBar } from "react-native";
+import { SystemBars } from "react-native-edge-to-edge";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -71,8 +71,8 @@ export default function RootLayout() {
         >
           <GestureHandlerRootView>
             <Slot />
+            <SystemBars style={"auto"} />
           </GestureHandlerRootView>
-          <StatusBar barStyle="default" />
         </ThemeProvider>
       </ClerkLoaded>
     </ClerkProvider>
