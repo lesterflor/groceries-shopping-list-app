@@ -46,7 +46,7 @@ export default function ShoppingListProductItem({
 
     return (
       <Pressable
-        onPress={() => {
+        onPressIn={() => {
           if (process.env.EXPO_OS === "ios") {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
           }
@@ -82,7 +82,7 @@ export default function ShoppingListProductItem({
         }}
       >
         <Pressable
-          onPress={() => {
+          onPressIn={() => {
             if (process.env.EXPO_OS === "ios") {
               Haptics.notificationAsync(
                 Haptics.NotificationFeedbackType.Success
@@ -98,7 +98,7 @@ export default function ShoppingListProductItem({
           />
         </Pressable>
         <Pressable
-          onPress={() => {
+          onPressIn={() => {
             router.push({
               pathname: "/list/[listId]/product/[productId]",
               params: { listId, productId },

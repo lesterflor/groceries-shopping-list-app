@@ -19,7 +19,7 @@ export default function ColorPickerScreen() {
       data={backgroundColors}
       renderItem={({ item }) => (
         <Pressable
-          onPress={() => {
+          onPressIn={() => {
             if (process.env.EXPO_OS === "ios") {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             }

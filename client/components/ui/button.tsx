@@ -91,7 +91,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <Pressable
-      onPress={onPress}
+      onPressIn={onPress}
       disabled={disabled || loading}
       style={[
         getVariantStyle(),

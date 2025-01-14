@@ -6,7 +6,8 @@ import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { useSignIn } from "@clerk/clerk-expo";
+import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
+import { ClerkAPIError } from "@clerk/types";
 
 export default function SignIn() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -15,7 +16,7 @@ export default function SignIn() {
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isSigningIn, setIsSigningIn] = React.useState(false);
-
+  const [errors, setErrors] = React.useState<ClerkAPIError[]>([]);
   // Handle the submission of the sign-in form
   const onSignInPress = React.useCallback(async () => {
     if (!isLoaded) return;
@@ -45,6 +46,7 @@ export default function SignIn() {
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
+      if (isClerkAPIResponseError(err)) setErrors(err.errors);
       console.error(JSON.stringify(err, null, 2));
     } finally {
       setIsSigningIn(false);
@@ -78,6 +80,11 @@ export default function SignIn() {
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
+      {errors.map((error) => (
+        <ThemedText key={error.longMessage} style={{ color: "red" }}>
+          {error.longMessage}
+        </ThemedText>
+      ))}
       <Button
         onPress={onSignInPress}
         loading={isSigningIn}

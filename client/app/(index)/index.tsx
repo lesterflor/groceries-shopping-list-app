@@ -19,16 +19,12 @@ export default function HomeScreen() {
   const shoppingListIds = useShoppingListIds();
 
   const handleNewListPress = () => {
-    if (process.env.EXPO_OS === "ios") {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    }
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push("/list/new");
   };
 
   const handleProfilePress = () => {
-    if (process.env.EXPO_OS === "ios") {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    }
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push("/profile");
   };
 
@@ -47,14 +43,21 @@ export default function HomeScreen() {
   );
 
   const renderHeaderRight = () => (
-    <Pressable onPress={handleNewListPress} style={styles.headerButton}>
+    <Pressable
+      // work around for https://github.com/software-mansion/react-native-screens/issues/2219
+      // onPressIn={handleNewListPress}
+      onPressIn={handleNewListPress}
+      style={styles.headerButton}
+    >
       <IconSymbol name="plus" color={ICON_COLOR} />
     </Pressable>
   );
 
   const renderHeaderLeft = () => (
     <Pressable
-      onPress={handleProfilePress}
+      // work around for https://github.com/software-mansion/react-native-screens/issues/2219
+      // onPressIn={handleProfilePress}
+      onPressIn={handleProfilePress}
       style={[styles.headerButton, styles.headerButtonLeft]}
     >
       <IconSymbol

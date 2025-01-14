@@ -119,13 +119,13 @@ export default function ProfileScreen() {
           </View>
         </View>
         <View style={styles.actionButtons}>
-          <Pressable onPress={handleShare} style={styles.actionButton}>
+          <Pressable onPressIn={handleShare} style={styles.actionButton}>
             <IconSymbol name="square.and.arrow.up" color={appleBlue} />
             <ThemedText type="defaultSemiBold" style={{ color: appleBlue }}>
               Share app
             </ThemedText>
           </Pressable>
-          <Pressable onPress={handleRate} style={styles.actionButton}>
+          <Pressable onPressIn={handleRate} style={styles.actionButton}>
             <IconSymbol name="star" color={appleBlue} />
             <ThemedText type="defaultSemiBold" style={{ color: appleBlue }}>
               Rate app

@@ -44,7 +44,7 @@ export default function ShoppingListItem({ listId }: { listId: string }) {
 
     return (
       <Pressable
-        onPress={() => {
+        onPressIn={() => {
           if (process.env.EXPO_OS === "ios") {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
           }
