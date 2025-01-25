@@ -35,17 +35,30 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct widgetEntryView : View {
-    var entry: Provider.Entry
-  
+  var entry: Provider.Entry
+   let defaults = UserDefaults(suiteName:
+      // Use the App Group from earlier.
+      "group.bacon.data"
+    ) 
+    // Use a computed property to fetch the value dynamically
+     var index: String? {
+         let defaults = UserDefaults(suiteName:  "group.com.betoatexpo.groceries-shopping-list")
+         return defaults?.string(forKey: "myKey")
+     }
     var body: some View {
         VStack {
             Text("Recently Added:")
-            Text("🚀 Hello World!")
+             if let index = index {
+                 Text(index)
+             } else {
+                 Text("No data")
+             }
         }
     }
 }
 
 struct widget: Widget {
+  
     let kind: String = "widget"
 
     var body: some WidgetConfiguration {

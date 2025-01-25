@@ -14,6 +14,15 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { SystemBars } from "react-native-edge-to-edge";
+import { ExtensionStorage } from "@bacons/apple-targets";
+
+const storage = new ExtensionStorage(
+  "group.com.betoatexpo.groceries-shopping-list"
+);
+
+storage.set("myKey", Math.random().toString().slice(2, 10));
+
+ExtensionStorage.reloadWidget();
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
