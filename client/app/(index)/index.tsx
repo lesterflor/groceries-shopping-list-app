@@ -45,8 +45,8 @@ export default function HomeScreen() {
   const renderHeaderRight = () => (
     <Pressable
       // work around for https://github.com/software-mansion/react-native-screens/issues/2219
-      // onPressIn={handleNewListPress}
-      onPressIn={handleNewListPress}
+      // onPress={handleNewListPress}
+      onPress={handleNewListPress}
       style={styles.headerButton}
     >
       <IconSymbol name="plus" color={ICON_COLOR} />
@@ -56,8 +56,8 @@ export default function HomeScreen() {
   const renderHeaderLeft = () => (
     <Pressable
       // work around for https://github.com/software-mansion/react-native-screens/issues/2219
-      // onPressIn={handleProfilePress}
-      onPressIn={handleProfilePress}
+      // onPress={handleProfilePress}
+      onPress={handleProfilePress}
       style={[styles.headerButton, styles.headerButtonLeft]}
     >
       <IconSymbol

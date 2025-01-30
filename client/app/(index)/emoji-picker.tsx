@@ -19,7 +19,7 @@ export default function EmojiPickerScreen() {
       data={emojies}
       renderItem={({ item }) => (
         <Pressable
-          onPressIn={() => {
+          onPress={() => {
             if (process.env.EXPO_OS === "ios") {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             }

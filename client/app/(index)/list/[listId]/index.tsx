@@ -37,7 +37,7 @@ export default function ListScreen() {
               }}
             >
               <Pressable
-                onPressIn={() => {
+                onPress={() => {
                   if (process.env.EXPO_OS === "ios") {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                   }
@@ -51,7 +51,7 @@ export default function ListScreen() {
                 <IconSymbol name="square.and.arrow.up" color={"#007AFF"} />
               </Pressable>
               <Pressable
-                onPressIn={() => {
+                onPress={() => {
                   if (process.env.EXPO_OS === "ios") {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                   }
@@ -68,7 +68,7 @@ export default function ListScreen() {
                 />
               </Pressable>
               <Pressable
-                onPressIn={() => {
+                onPress={() => {
                   if (process.env.EXPO_OS === "ios") {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
                   }

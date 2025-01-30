@@ -77,7 +77,7 @@ export default function ListScreen() {
             containerStyle={styles.titleInputContainer}
           />
           <Pressable
-            onPressIn={handleEmojiPress}
+            onPress={handleEmojiPress}
             style={[styles.emojiButton, { borderColor: color }]}
           >
             <View style={styles.emojiContainer}>
@@ -85,7 +85,7 @@ export default function ListScreen() {
             </View>
           </Pressable>
           <Pressable
-            onPressIn={handleColorPress}
+            onPress={handleColorPress}
             style={[styles.colorButton, { borderColor: color }]}
           >
             <View style={styles.colorContainer}>
