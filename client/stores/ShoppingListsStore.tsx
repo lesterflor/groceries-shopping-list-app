@@ -75,6 +75,29 @@ export const useDelShoppingListCallback = (id: string) =>
 // Returns the IDs of all shopping lists in the store.
 export const useShoppingListIds = () => useRowIds("lists", useStoreId());
 
+export const useRecentShoppingLists = () => {
+  const storeId = useStoreId();
+  const store = useStore(storeId);
+  const listIds = useRowIds("lists", storeId);
+
+  // Get up to 10 most recent lists
+  const recentListIds = listIds.slice(0, 10);
+
+  return recentListIds.map((listId) => {
+    const initialContentJson = store.getRow(
+      "lists",
+      listId
+    )?.initialContentJson;
+    const [, metadata] = JSON.parse(initialContentJson || "[{},{}]");
+
+    return {
+      listId,
+      name: metadata?.name || "",
+      emoji: metadata?.emoji || "",
+    };
+  });
+};
+
 // Create, persist, and sync a store containing the IDs of the shopping lists.
 export default function ShoppingListsStore() {
   const storeId = useStoreId();

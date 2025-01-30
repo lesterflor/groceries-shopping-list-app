@@ -2,7 +2,7 @@
   "expo": {
     "name": "Shopping List",
     "slug": "groceries-shopping-list",
-    "version": "1.1.2",
+    "version": "1.2.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "groceries-shopping-list",
@@ -11,6 +11,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.betoatexpo.groceries-shopping-list",
+      "appleTeamId": "T2A8YY9YDW",
       "icon": {
         "light": "./assets/images/icon.png",
         "dark": "./assets/images/icon-dark.png",
@@ -18,6 +19,11 @@
       },
       "config": {
         "usesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.betoatexpo.groceries-shopping-list"
+        ]
       }
     },
     "android": {
@@ -64,7 +70,8 @@
       ],
       "expo-sqlite",
       "expo-secure-store",
-      "expo-font"
+      "expo-font",
+      "@bacons/apple-targets"
     ],
     "experiments": {
       "typedRoutes": true
