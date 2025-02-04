@@ -13,6 +13,9 @@ client/ios
 client/android
 client/PlayStoreServiceAccount.json
 
+/ios
+/android
+
 
 # Native
 *.orig.*

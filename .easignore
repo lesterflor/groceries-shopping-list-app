@@ -12,6 +12,9 @@ expo-env.d.ts
 client/ios
 client/android
 
+/ios
+/android
+
 
 # Native
 *.orig.*
