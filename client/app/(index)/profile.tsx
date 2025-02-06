@@ -1,22 +1,22 @@
-import * as Updates from "expo-updates";
+import { useEffect } from "react";
 import * as Application from "expo-application";
 import { useRouter } from "expo-router";
+import * as Updates from "expo-updates";
 import {
   Alert,
   Image,
-  View,
-  StyleSheet,
-  Share,
-  Pressable,
   Linking,
+  Pressable,
+  Share,
+  StyleSheet,
+  View,
 } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import { appleBlue, appleGreen, appleRed } from "@/constants/Colors";
 import { useClerk, useUser } from "@clerk/clerk-expo";
-import { useEffect } from "react";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 
 export default function ProfileScreen() {
   const { user } = useUser();

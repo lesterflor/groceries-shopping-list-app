@@ -1,12 +1,10 @@
 import * as React from "react";
-import { createContext, useContext, useCallback } from "react";
-import { ExtensionStorage } from "@bacons/apple-targets";
-import { useStore } from "tinybase/ui-react";
+import { createContext, useCallback, useContext } from "react";
 import {
   useRecentShoppingLists,
   useShoppingListIds,
 } from "@/stores/ShoppingListsStore";
-import { useShoppingListValue } from "@/stores/ShoppingListStore";
+import { ExtensionStorage } from "@bacons/apple-targets";
 
 // Initialize storage with your group ID
 const storage = new ExtensionStorage(

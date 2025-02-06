@@ -1,7 +1,7 @@
 import React from "react";
 import * as Haptics from "expo-haptics";
 import { Link } from "expo-router";
-import { Pressable, StyleSheet, View, useColorScheme } from "react-native";
+import { Pressable, StyleSheet, useColorScheme, View } from "react-native";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, {
   configureReanimatedLogger,

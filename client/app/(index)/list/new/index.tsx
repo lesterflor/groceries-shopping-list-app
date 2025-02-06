@@ -1,10 +1,5 @@
 import React, { useMemo, useState } from "react";
-import {
-  Href,
-  useGlobalSearchParams,
-  usePathname,
-  useRouter,
-} from "expo-router";
+import { Href, useGlobalSearchParams, useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 // Components
 import { IconCircle } from "@/components/IconCircle";

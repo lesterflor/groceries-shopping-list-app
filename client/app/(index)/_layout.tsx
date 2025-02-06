@@ -6,9 +6,9 @@ import { Provider as TinyBaseProvider } from "tinybase/ui-react";
 import { Inspector } from "tinybase/ui-react-inspector";
 import { Button } from "@/components/ui/button";
 import { ListCreationProvider } from "@/context/ListCreationContext";
+import { WidgetProvider } from "@/contexts/WidgetContext";
 import ShoppingListsStore from "@/stores/ShoppingListsStore";
 import { SignedIn, useUser } from "@clerk/clerk-expo";
-import { WidgetProvider } from "@/contexts/WidgetContext";
 
 export const unstable_settings = {
   initialRouteName: "index",
