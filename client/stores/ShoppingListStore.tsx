@@ -59,6 +59,7 @@ const {
   useCreateRelationships,
   useTable,
   useValue,
+  useValuesListener,
 } = UiReact as UiReact.WithSchemas<Schemas>;
 
 const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
@@ -176,19 +177,30 @@ export const useShoppingListUserNicknames = (listId: string) =>
 // Create, persist, and sync a store containing the shopping list and products.
 export default function ShoppingListStore({
   listId,
-  initialContentJson,
+  useValuesCopy,
 }: {
   listId: string;
-  initialContentJson: string;
+  useValuesCopy: (id: string) => [string, (valuesCopy: string) => void];
 }) {
   const storeId = useStoreId(listId);
   const [userId, nickname] = useUserIdAndNickname();
+  const [valuesCopy, setValuesCopy] = useValuesCopy(listId);
+
   const store = useCreateMergeableStore(() =>
     createMergeableStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
+
+  // Add listener to values for updating the parent 'lists store' copy.
+  useValuesListener(
+    () => setValuesCopy(JSON.stringify(store.getValues())),
+    [setValuesCopy],
+    false,
+    store
+  );
+
   // Persist store (with initial content if it hasn't been saved before), then
   // ensure the current user is added as a collaborator.
-  useCreateClientPersisterAndStart(storeId, store, initialContentJson, () =>
+  useCreateClientPersisterAndStart(storeId, store, valuesCopy, () =>
     store.setRow("collaborators", userId, { nickname })
   );
   useCreateServerSynchronizerAndStart(storeId, store);

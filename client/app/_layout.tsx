@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { SystemBars } from "react-native-edge-to-edge";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { tokenCache } from "@/cache";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -13,7 +14,6 @@ import {
   Theme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { SystemBars } from "react-native-edge-to-edge";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 

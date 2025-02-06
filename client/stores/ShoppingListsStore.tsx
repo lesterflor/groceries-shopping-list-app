@@ -12,15 +12,18 @@ const STORE_ID_PREFIX = "shoppingListsStore-";
 const TABLES_SCHEMA = {
   lists: {
     id: { type: "string" },
-    initialContentJson: { type: "string" },
+    valuesCopy: { type: "string" },
   },
 } as const;
 
 const {
+  useCell,
   useCreateMergeableStore,
   useDelRowCallback,
   useProvideStore,
   useRowIds,
+  useSetCellCallback,
+  useSortedRowIds,
   useStore,
   useTable,
 } = UiReact as UiReact.WithSchemas<[typeof TABLES_SCHEMA, NoValuesSchema]>;
@@ -35,18 +38,15 @@ export const useAddShoppingListCallback = () => {
       const id = randomUUID();
       store.setRow("lists", id, {
         id,
-        initialContentJson: JSON.stringify([
-          {},
-          {
-            id,
-            name,
-            description,
-            emoji,
-            color,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-        ]),
+        valuesCopy: JSON.stringify({
+          id,
+          name,
+          description,
+          emoji,
+          color,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        }),
       });
       return id;
     },
@@ -61,12 +61,26 @@ export const useJoinShoppingListCallback = () => {
     (listId: string) => {
       store.setRow("lists", listId, {
         id: listId,
-        initialContentJson: JSON.stringify([{}, {}]),
+        valuesCopy: "{}",
       });
     },
     [store]
   );
 };
+
+export const useValuesCopy = (
+  id: string
+): [string, (valuesCopy: string) => void] => [
+  useCell("lists", id, "valuesCopy", useStoreId()),
+  useSetCellCallback(
+    "lists",
+    id,
+    "valuesCopy",
+    (valuesCopy: string) => valuesCopy,
+    [],
+    useStoreId()
+  ),
+];
 
 // Returns a callback that deletes a shopping list from the store.
 export const useDelShoppingListCallback = (id: string) =>
@@ -75,28 +89,15 @@ export const useDelShoppingListCallback = (id: string) =>
 // Returns the IDs of all shopping lists in the store.
 export const useShoppingListIds = () => useRowIds("lists", useStoreId());
 
-export const useRecentShoppingLists = () => {
-  const storeId = useStoreId();
-  const store = useStore(storeId);
-  const listIds = useRowIds("lists", storeId);
-
-  // Get up to 10 most recent lists
-  const recentListIds = listIds.slice(0, 10);
-
-  return recentListIds.map((listId) => {
-    const initialContentJson = store.getRow(
-      "lists",
-      listId
-    )?.initialContentJson;
-    const [, metadata] = JSON.parse(initialContentJson || "[{},{}]");
-
-    return {
-      listId,
-      name: metadata?.name || "",
-      emoji: metadata?.emoji || "",
-    };
+// Returns the (copy of) values of all shopping lists in the store.
+export const useShoppingListsValues = () =>
+  Object.values(useTable("lists", useStoreId())).map(({ valuesCopy }) => {
+    try {
+      return JSON.parse(valuesCopy);
+    } catch {
+      return {};
+    }
   });
-};
 
 // Create, persist, and sync a store containing the IDs of the shopping lists.
 export default function ShoppingListsStore() {
@@ -109,13 +110,11 @@ export default function ShoppingListsStore() {
   useProvideStore(storeId, store);
 
   // In turn 'render' (i.e. create) all of the shopping lists themselves.
-  return Object.entries(useTable("lists", storeId)).map(
-    ([listId, { initialContentJson }]) => (
-      <ShoppingListStore
-        listId={listId}
-        initialContentJson={initialContentJson}
-        key={listId}
-      />
-    )
-  );
+  return Object.entries(useTable("lists", storeId)).map(([listId]) => (
+    <ShoppingListStore
+      listId={listId}
+      key={listId}
+      useValuesCopy={useValuesCopy}
+    />
+  ));
 }
