@@ -12,7 +12,6 @@ const STORE_ID_PREFIX = "shoppingListsStore-";
 const TABLES_SCHEMA = {
   lists: {
     id: { type: "string" },
-    initialContentJson: { type: "string" },
     valuesCopy: { type: "string" },
   },
 } as const;
@@ -38,18 +37,15 @@ export const useAddShoppingListCallback = () => {
       const id = randomUUID();
       store.setRow("lists", id, {
         id,
-        initialContentJson: JSON.stringify([
-          {},
-          {
-            id,
-            name,
-            description,
-            emoji,
-            color,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-        ]),
+        valuesCopy: JSON.stringify({
+          id,
+          name,
+          description,
+          emoji,
+          color,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        }),
       });
       return id;
     },
@@ -64,7 +60,7 @@ export const useJoinShoppingListCallback = () => {
     (listId: string) => {
       store.setRow("lists", listId, {
         id: listId,
-        initialContentJson: JSON.stringify([{}, {}]),
+        valuesCopy: "{}",
       });
     },
     [store]
@@ -101,17 +97,7 @@ export const useRecentShoppingLists = () => {
   const recentListIds = listIds.slice(0, 10);
 
   return recentListIds.map((listId) => {
-    const initialContentJson = store.getRow(
-      "lists",
-      listId
-    )?.initialContentJson;
-    const [, metadata] = JSON.parse(initialContentJson || "[{},{}]");
-
-    return {
-      listId,
-      name: metadata?.name || "",
-      emoji: metadata?.emoji || "",
-    };
+    return store.getRow("lists", listId)?.valuesCopy;
   });
 };
 
@@ -126,13 +112,7 @@ export default function ShoppingListsStore() {
   useProvideStore(storeId, store);
 
   // In turn 'render' (i.e. create) all of the shopping lists themselves.
-  return Object.entries(useTable("lists", storeId)).map(
-    ([listId, { initialContentJson }]) => (
-      <ShoppingListStore
-        listId={listId}
-        initialContentJson={initialContentJson}
-        key={listId}
-      />
-    )
-  );
+  return Object.entries(useTable("lists", storeId)).map(([listId]) => (
+    <ShoppingListStore listId={listId} key={listId} />
+  ));
 }

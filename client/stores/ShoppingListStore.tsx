@@ -176,16 +176,10 @@ export const useShoppingListUserNicknames = (listId: string) =>
   );
 
 // Create, persist, and sync a store containing the shopping list and products.
-export default function ShoppingListStore({
-  listId,
-  initialContentJson,
-}: {
-  listId: string;
-  initialContentJson: string;
-}) {
+export default function ShoppingListStore({ listId }: { listId: string }) {
   const storeId = useStoreId(listId);
   const [userId, nickname] = useUserIdAndNickname();
-  const [, setValuesCopy] = useValuesCopy(listId);
+  const [valuesCopy, setValuesCopy] = useValuesCopy(listId);
 
   const store = useCreateMergeableStore(() =>
     createMergeableStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
@@ -201,7 +195,7 @@ export default function ShoppingListStore({
 
   // Persist store (with initial content if it hasn't been saved before), then
   // ensure the current user is added as a collaborator.
-  useCreateClientPersisterAndStart(storeId, store, initialContentJson, () =>
+  useCreateClientPersisterAndStart(storeId, store, valuesCopy, () =>
     store.setRow("collaborators", userId, { nickname })
   );
   useCreateServerSynchronizerAndStart(storeId, store);
