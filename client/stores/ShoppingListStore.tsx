@@ -10,6 +10,7 @@ import {
 } from "tinybase/with-schemas";
 import { useUserIdAndNickname } from "@/hooks/useNickname";
 import { useCreateClientPersisterAndStart } from "@/stores/persistence/useCreateClientPersisterAndStart";
+import { useValuesCopy } from "./ShoppingListsStore";
 import { useCreateServerSynchronizerAndStart } from "./synchronization/useCreateServerSynchronizerAndStart";
 
 const STORE_ID_PREFIX = "shoppingListStore-";
@@ -59,6 +60,7 @@ const {
   useCreateRelationships,
   useTable,
   useValue,
+  useValuesListener,
 } = UiReact as UiReact.WithSchemas<Schemas>;
 
 const useStoreId = (listId: string) => STORE_ID_PREFIX + listId;
@@ -183,9 +185,20 @@ export default function ShoppingListStore({
 }) {
   const storeId = useStoreId(listId);
   const [userId, nickname] = useUserIdAndNickname();
+  const [, setValuesCopy] = useValuesCopy(listId);
+
   const store = useCreateMergeableStore(() =>
     createMergeableStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
+
+  // Add listener to values for updating the parent 'lists store' copy.
+  useValuesListener(
+    () => setValuesCopy(JSON.stringify(store.getValues())),
+    [setValuesCopy],
+    false,
+    store
+  );
+
   // Persist store (with initial content if it hasn't been saved before), then
   // ensure the current user is added as a collaborator.
   useCreateClientPersisterAndStart(storeId, store, initialContentJson, () =>

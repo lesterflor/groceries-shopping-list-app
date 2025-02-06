@@ -13,14 +13,17 @@ const TABLES_SCHEMA = {
   lists: {
     id: { type: "string" },
     initialContentJson: { type: "string" },
+    valuesCopy: { type: "string" },
   },
 } as const;
 
 const {
+  useCell,
   useCreateMergeableStore,
   useDelRowCallback,
   useProvideStore,
   useRowIds,
+  useSetCellCallback,
   useStore,
   useTable,
 } = UiReact as UiReact.WithSchemas<[typeof TABLES_SCHEMA, NoValuesSchema]>;
@@ -67,6 +70,20 @@ export const useJoinShoppingListCallback = () => {
     [store]
   );
 };
+
+export const useValuesCopy = (
+  id: string
+): [string, (valuesCopy: string) => void] => [
+  useCell("lists", id, "valuesCopy", useStoreId()),
+  useSetCellCallback(
+    "lists",
+    id,
+    "valuesCopy",
+    (valuesCopy: string) => valuesCopy,
+    [],
+    useStoreId()
+  ),
+];
 
 // Returns a callback that deletes a shopping list from the store.
 export const useDelShoppingListCallback = (id: string) =>
