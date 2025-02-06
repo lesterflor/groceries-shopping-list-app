@@ -1,8 +1,8 @@
 import * as React from "react";
 import { createContext, useCallback, useContext } from "react";
 import {
-  useRecentShoppingLists,
   useShoppingListIds,
+  useShoppingListsValues,
 } from "@/stores/ShoppingListsStore";
 import { ExtensionStorage } from "@bacons/apple-targets";
 
@@ -18,7 +18,7 @@ type WidgetContextType = {
 const WidgetContext = createContext<WidgetContextType | null>(null);
 
 export function WidgetProvider({ children }: { children: React.ReactNode }) {
-  const recentLists = useRecentShoppingLists();
+  const recentLists = useShoppingListsValues();
   const shoppingListIds = useShoppingListIds();
   // console.log("recentLists", recentLists.length);
   console.log("recentLists", recentLists);
