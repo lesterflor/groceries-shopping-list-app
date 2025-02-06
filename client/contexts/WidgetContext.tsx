@@ -19,14 +19,12 @@ const WidgetContext = createContext<WidgetContextType | null>(null);
 
 export function WidgetProvider({ children }: { children: React.ReactNode }) {
   const recentLists = useShoppingListsValues();
-  const shoppingListIds = useShoppingListIds();
-  // console.log("recentLists", recentLists.length);
-  console.log("recentLists", recentLists);
+  const totalLists = useShoppingListIds().length;
 
   // Update widget state whenever recentLists changes
   React.useEffect(() => {
     // Store total count
-    storage.set("widget_total_lists", shoppingListIds.length);
+    storage.set("widget_total_lists", totalLists);
 
     // Store recent lists data
     storage.set(
@@ -41,9 +39,6 @@ export function WidgetProvider({ children }: { children: React.ReactNode }) {
     // Refresh widget
     ExtensionStorage.reloadWidget();
   }, [recentLists]);
-
-  // storage.set("numberOfLists", shoppingListIds.length);
-  // storage.set("recentLists", recentLists);
 
   const refreshWidget = useCallback(() => {
     ExtensionStorage.reloadWidget();

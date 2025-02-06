@@ -89,15 +89,17 @@ export const useDelShoppingListCallback = (id: string) =>
 // Returns the IDs of all shopping lists in the store.
 export const useShoppingListIds = () => useRowIds("lists", useStoreId());
 
-// Returns the (copy of) values of all shopping lists in the store.
+// Returns the (copy of) values of up to 10 shopping lists in the store.
 export const useShoppingListsValues = () =>
-  Object.values(useTable("lists", useStoreId())).map(({ valuesCopy }) => {
-    try {
-      return JSON.parse(valuesCopy);
-    } catch {
-      return {};
-    }
-  });
+  Object.values(useTable("lists", useStoreId()))
+    .slice(0, 10)
+    .map(({ valuesCopy }) => {
+      try {
+        return JSON.parse(valuesCopy);
+      } catch {
+        return {};
+      }
+    });
 
 // Create, persist, and sync a store containing the IDs of the shopping lists.
 export default function ShoppingListsStore() {

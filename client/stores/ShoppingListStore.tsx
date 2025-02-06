@@ -192,7 +192,7 @@ export default function ShoppingListStore({
 
   // Add listener to values for updating the parent 'lists store' copy.
   useValuesListener(
-    () => setValuesCopy(JSON.stringify(store.getValues())),
+    () => setValuesCopy(JSON.stringify({ ...store.getValues(), listId })),
     [setValuesCopy],
     false,
     store
