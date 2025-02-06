@@ -111,6 +111,10 @@ export default function ShoppingListsStore() {
 
   // In turn 'render' (i.e. create) all of the shopping lists themselves.
   return Object.entries(useTable("lists", storeId)).map(([listId]) => (
-    <ShoppingListStore listId={listId} key={listId} />
+    <ShoppingListStore
+      listId={listId}
+      key={listId}
+      useValuesCopy={useValuesCopy}
+    />
   ));
 }

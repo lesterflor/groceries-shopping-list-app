@@ -10,7 +10,6 @@ import {
 } from "tinybase/with-schemas";
 import { useUserIdAndNickname } from "@/hooks/useNickname";
 import { useCreateClientPersisterAndStart } from "@/stores/persistence/useCreateClientPersisterAndStart";
-import { useValuesCopy } from "./ShoppingListsStore";
 import { useCreateServerSynchronizerAndStart } from "./synchronization/useCreateServerSynchronizerAndStart";
 
 const STORE_ID_PREFIX = "shoppingListStore-";
@@ -176,7 +175,13 @@ export const useShoppingListUserNicknames = (listId: string) =>
   );
 
 // Create, persist, and sync a store containing the shopping list and products.
-export default function ShoppingListStore({ listId }: { listId: string }) {
+export default function ShoppingListStore({
+  listId,
+  useValuesCopy,
+}: {
+  listId: string;
+  useValuesCopy: (id: string) => [string, (valuesCopy: string) => void];
+}) {
   const storeId = useStoreId(listId);
   const [userId, nickname] = useUserIdAndNickname();
   const [valuesCopy, setValuesCopy] = useValuesCopy(listId);
