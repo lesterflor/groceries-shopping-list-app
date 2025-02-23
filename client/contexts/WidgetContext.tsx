@@ -23,18 +23,24 @@ export function WidgetProvider({ children }: { children: React.ReactNode }) {
 
   // Update widget state whenever recentLists changes
   React.useEffect(() => {
-    // Store total count
-    storage.set("widget_total_lists", totalLists);
+    if (totalLists === 0) {
+      // Set values to null if no lists exist
+      storage.set("widget_total_lists", null);
+      storage.set("widget_recent_lists", null);
+    } else {
+      // Store total count
+      storage.set("widget_total_lists", totalLists);
 
-    // Store recent lists data
-    storage.set(
-      "widget_recent_lists",
-      recentLists.map((list) => ({
-        listId: list.listId,
-        name: list.name,
-        emoji: list.emoji,
-      }))
-    );
+      // Store recent lists data
+      storage.set(
+        "widget_recent_lists",
+        recentLists.map((list) => ({
+          listId: list.listId,
+          name: list.name,
+          emoji: list.emoji,
+        }))
+      );
+    }
 
     // Refresh widget
     ExtensionStorage.reloadWidget();

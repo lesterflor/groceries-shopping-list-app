@@ -10,10 +10,11 @@ struct widgetControl: ControlWidget {
             kind: Self.kind,
             provider: Provider()
         ) { value in
-            ControlWidgetToggle(
-                "Start Timer",
-                isOn: value.isRunning,
-                action: StartTimerIntent(value.name)
+          ControlWidgetButton(
+            action: LaunchAppIntent(),
+                label: {
+                  Text("Start Shopping Timer")
+                }
             ) { isRunning in
                 Label(isRunning ? "On" : "Off", systemImage: "timer")
             }
@@ -67,4 +68,22 @@ struct StartTimerIntent: SetValueIntent {
         // Start the timer…
         return .result()
     }
+}
+
+struct LaunchAppIntent: OpenIntent {
+  static var title: LocalizedStringResource = "Launch App"
+  @Parameter(title: "Target")
+  var target: LaunchAppEnum
+}
+
+enum LaunchAppEnum: String, AppEnum {
+    case timer
+    case history
+
+
+    static var typeDisplayRepresentation = TypeDisplayRepresentation("Productivity Timer's app screens")
+    static var caseDisplayRepresentations = [
+        LaunchAppEnum.timer : DisplayRepresentation("Timer"),
+        LaunchAppEnum.history : DisplayRepresentation("History")
+    ]
 }

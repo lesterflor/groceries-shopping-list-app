@@ -49,7 +49,7 @@ struct widgetEntryView : View {
       return defaults?.string(forKey: "widget_total_lists")
     }
   }
-  
+
   struct RecentList: Codable {
     let listId: String
     let name: String
@@ -84,7 +84,7 @@ struct widgetEntryView : View {
       if widgetFamily == .systemSmall || widgetFamily == .systemMedium {
         return Array(lists.prefix(3))
       }
-      return lists
+      return lists.isEmpty ? nil : lists
     }
   }
   
