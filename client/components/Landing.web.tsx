@@ -1,8 +1,6 @@
+"use dom";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { ThemedText } from "./ThemedText";
-import { BodyScrollView } from "./ui/BodyScrollView";
-import Button from "./ui/button";
+import styles from "./Landing.module.css";
 
 type LandingProps = {
   onGoogleSignIn: () => void;
@@ -16,145 +14,86 @@ export default function Landing({
   onPrivacyPolicy,
 }: LandingProps) {
   return (
-    <BodyScrollView contentContainerStyle={styles.container}>
-      <View style={styles.heroSection}>
-        <Image
-          source={require("../assets/images/icon.png")}
-          style={styles.appIcon}
-          resizeMode="contain"
-        />
-        <ThemedText type="title" style={styles.welcomeText}>
-          Shopping List: Sync & Share
-        </ThemedText>
-        <ThemedText type="defaultSemiBold" style={styles.subtitleText}>
-          Streamline your shopping experience with our collaborative, real-time
-          shopping list app
-        </ThemedText>
-      </View>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <div className={styles.actionSection}>
+          <button
+            onClick={onGoogleSignIn}
+            className={`${styles.button} ${styles.googleButton}`}
+          >
+            <img
+              src={`${process.env.EXPO_BASE_URL}/google-icon.png`}
+              alt="Google Icon"
+              width={20}
+              height={20}
+              className={styles.googleLogo}
+            />
+            Sign in with Google
+          </button>
 
-      <View style={styles.featuresSection}>
-        <ThemedText type="subtitle" style={styles.featuresTitle}>
-          App Features
-        </ThemedText>
+          <button onClick={onEmailSignIn} className={styles.button}>
+            Sign in with Email
+          </button>
+        </div>
+      </header>
 
-        <View style={styles.featureItem}>
-          <ThemedText type="defaultSemiBold">📱 Cross-Platform</ThemedText>
-          <ThemedText>Available on iOS, Android, and Web</ThemedText>
-        </View>
+      <section className={styles.heroSection}>
+        <div className={styles.heroContent}>
+          <img
+            src={`${process.env.EXPO_BASE_URL}${
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "/icon-dark.png"
+                : "/icon.png"
+            }`}
+            alt="App Icon"
+            width={120}
+            height={120}
+            className={styles.appIcon}
+          />
+          <div className={styles.heroText}>
+            <h1 className={styles.welcomeText}>Shopping List: Sync & Share</h1>
+            <p className={styles.subtitleText}>
+              Streamline your shopping experience with our collaborative,
+              real-time shopping list app
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <View style={styles.featureItem}>
-          <ThemedText type="defaultSemiBold">
-            👨‍👩‍👧‍👦 Real-time Collaboration
-          </ThemedText>
-          <ThemedText>Share lists with family and friends</ThemedText>
-        </View>
+      <section className={styles.featuresSection}>
+        <h2 className={styles.featuresTitle}>Why Choose Us?</h2>
 
-        <View style={styles.featureItem}>
-          <ThemedText type="defaultSemiBold">🔄 Offline Support</ThemedText>
-          <ThemedText>Works even without an internet connection</ThemedText>
-        </View>
+        <div className={styles.featuresGrid}>
+          <div className={styles.featureItem}>
+            <h3>📱 Cross-Platform</h3>
+            <p>Available on iOS, Android, and Web</p>
+          </div>
 
-        <View style={styles.featureItem}>
-          <ThemedText type="defaultSemiBold">🔒 Secure</ThemedText>
-          <ThemedText>Your data is protected with modern security</ThemedText>
-        </View>
-      </View>
+          <div className={styles.featureItem}>
+            <h3>👨‍👩‍👧‍👦 Real-time Collaboration</h3>
+            <p>Share lists with family and friends</p>
+          </div>
 
-      <View style={styles.actionSection}>
-        <ThemedText type="subtitle" style={styles.signInTitle}>
-          Get Started Now
-        </ThemedText>
-        <Button
-          onPress={onGoogleSignIn}
-          variant="outline"
-          style={styles.button}
-        >
-          Sign in with Google
-        </Button>
+          <div className={styles.featureItem}>
+            <h3>🔄 Offline Support</h3>
+            <p>Works even without an internet connection</p>
+          </div>
 
-        <Button onPress={onEmailSignIn} variant="outline" style={styles.button}>
-          Sign in with Email
-        </Button>
-      </View>
+          <div className={styles.featureItem}>
+            <h3>🔒 Secure</h3>
+            <p>Your data is protected with modern security</p>
+          </div>
+        </div>
+      </section>
 
-      <View style={styles.footer}>
-        <Button
-          onPress={onPrivacyPolicy}
-          variant="ghost"
-          textStyle={styles.privacyPolicyText}
-        >
+      <footer className={styles.footer}>
+        <button onClick={onPrivacyPolicy} className={styles.privacyButton}>
           Privacy Policy
-        </Button>
-        <ThemedText style={styles.copyright}>
+        </button>
+        <p className={styles.copyright}>
           © {new Date().getFullYear()} Shopping List App. All rights reserved.
-        </ThemedText>
-      </View>
-    </BodyScrollView>
+        </p>
+      </footer>
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 32,
-    maxWidth: 800,
-    marginHorizontal: "auto",
-    gap: 48,
-  },
-  heroSection: {
-    alignItems: "center",
-    gap: 16,
-    marginTop: 48,
-    marginBottom: 24,
-  },
-  appIcon: {
-    width: 100,
-    height: 100,
-    borderRadius: 20,
-  },
-  welcomeText: {
-    fontSize: 36,
-    textAlign: "center",
-  },
-  subtitleText: {
-    textAlign: "center",
-    color: "gray",
-    paddingHorizontal: 24,
-    fontSize: 18,
-  },
-  featuresSection: {
-    gap: 16,
-  },
-  featuresTitle: {
-    textAlign: "center",
-    marginBottom: 8,
-  },
-  featureItem: {
-    padding: 16,
-    backgroundColor: "rgba(0,0,0,0.03)",
-    borderRadius: 12,
-  },
-  actionSection: {
-    gap: 16,
-    alignItems: "center",
-  },
-  signInTitle: {
-    marginBottom: 8,
-  },
-  button: {
-    marginBottom: 8,
-    width: "100%",
-    maxWidth: 320,
-  },
-  footer: {
-    alignItems: "center",
-    gap: 12,
-  },
-  privacyPolicyText: {
-    fontSize: 14,
-    color: "gray",
-  },
-  copyright: {
-    fontSize: 12,
-    color: "gray",
-  },
-});
