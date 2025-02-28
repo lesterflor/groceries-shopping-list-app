@@ -15,7 +15,7 @@ export default function Landing({
 }: LandingProps) {
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
+       <header className={styles.header}>
         <img
           src={`${process.env.EXPO_BASE_URL}${
             window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -28,7 +28,6 @@ export default function Landing({
           className={styles.headerLogo}
         />
       </header>
-
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <div className={styles.heroText}>

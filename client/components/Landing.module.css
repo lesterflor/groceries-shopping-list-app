@@ -32,18 +32,15 @@ body {
 }
 
 .container {
-  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  flex-direction: column;
-  display: flex;
-  gap: 4rem;
+  padding: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .heroSection {
-  /* margin: 2rem 0 4rem; */
+  margin: 2rem 0;
   padding: 2rem;
   background: var(--bg-primary);
   border-radius: var(--border-radius);
@@ -103,8 +100,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 1rem 0;
 }
 
 .headerLogo {
@@ -164,12 +159,12 @@ body {
 }
 
 .subtitleText {
-  margin: 0;
   color: var(--text-secondary);
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 300;
   text-wrap: pretty;
+  width: 90%;
 }
 
 .featuresSection {
@@ -255,13 +250,29 @@ body {
   font-weight: 400;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .heroText {
+    width: 100%;
+  }
+  .heroSection {
+    padding: 1rem;
+  }
+  .appStoreContainer {
+    width: 100%;
+  }
+  .appIcon {
+    width: auto;
+    height: 240px;
+  }
   .heroContent {
     flex-direction: column-reverse;
     text-align: center;
     gap: 2rem;
   }
-
+  .subtitleText {
+    width: 100%;
+    margin: 0 auto;
+  }
   .heroActions {
     margin: 2rem auto 0;
     width: 100%;
@@ -269,11 +280,6 @@ body {
 
   .welcomeText {
     font-size: 2.5rem;
-  }
-
-  .appIcon {
-    width: auto;
-    height: auto;
   }
 
   .actionSection {
