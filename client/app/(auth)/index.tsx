@@ -1,7 +1,7 @@
 import React from "react";
 import * as Haptics from "expo-haptics";
 import { Href, useRouter } from "expo-router";
-import { View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
@@ -138,8 +138,32 @@ export default function SignIn() {
           Sign up
         </Button>
       </View>
-      <View style={{ marginTop: 16, alignItems: "center" }}>
-        <ThemedText>Or continue with</ThemedText>
+      <View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 10,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              height: StyleSheet.hairlineWidth,
+              backgroundColor: "#e0e0e0",
+            }}
+          />
+          <ThemedText style={{ marginHorizontal: 10, fontSize: 14 }}>
+            or
+          </ThemedText>
+          <View
+            style={{
+              flex: 1,
+              height: StyleSheet.hairlineWidth,
+              backgroundColor: "#e0e0e0",
+            }}
+          />
+        </View>
         <Button
           onPress={handleSignInWithGoogle}
           variant="outline"
@@ -151,16 +175,18 @@ export default function SignIn() {
             paddingHorizontal: 16,
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             {/* Google icon would go here in a real implementation */}
-            <View
-              style={{
-                width: 20,
-                height: 20,
-                backgroundColor: "#4285F4",
-                borderRadius: 10,
-                marginRight: 8,
-              }}
+            <Image
+              source={require("../../assets/images/google-icon.png")}
+              style={{ width: 20, height: 20, marginRight: 8 }}
             />
             <ThemedText style={{ fontWeight: "500" }}>
               Sign in with Google
