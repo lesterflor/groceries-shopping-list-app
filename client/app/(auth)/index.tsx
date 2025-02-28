@@ -98,13 +98,6 @@ export default function SignIn() {
       </View>
 
       <View style={styles.footer}>
-        <ThemedText style={styles.footerText}>
-          Don't have an account?
-        </ThemedText>
-        <Button onPress={() => onNavigatePress("/sign-up")} variant="ghost">
-          Sign up with Email
-        </Button>
-        <View />
         <Button
           onPress={() => onNavigatePress("/privacy-policy")}
           variant="ghost"
@@ -164,9 +157,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     alignItems: "center",
-  },
-  footerText: {
-    color: "gray",
   },
   privacyPolicyText: {
     fontSize: 14,

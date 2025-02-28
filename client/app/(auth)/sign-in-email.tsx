@@ -83,10 +83,24 @@ export default function SignInEmail() {
       </View>
 
       <View style={styles.footer}>
-        <ThemedText style={styles.footerText}>Forgot password?</ThemedText>
-        <Button onPress={() => router.push("/reset-password")} variant="ghost">
-          Reset password
-        </Button>
+        <View style={styles.footerSection}>
+          <ThemedText style={styles.footerText}>
+            Don't have an account?
+          </ThemedText>
+          <Button onPress={() => router.push("/sign-up")} variant="ghost">
+            Sign up
+          </Button>
+        </View>
+
+        <View style={styles.footerSection}>
+          <ThemedText style={styles.footerText}>Forgot password?</ThemedText>
+          <Button
+            onPress={() => router.push("/reset-password")}
+            variant="ghost"
+          >
+            Reset password
+          </Button>
+        </View>
       </View>
     </BodyScrollView>
   );
@@ -108,6 +122,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   footer: {
+    gap: 24,
+  },
+  footerSection: {
     alignItems: "center",
   },
   footerText: {
