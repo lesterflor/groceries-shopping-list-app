@@ -15,7 +15,7 @@ export default function Landing({
 }: LandingProps) {
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
+       <header className={styles.header}>
         <img
           src={`${process.env.EXPO_BASE_URL}${
             window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -28,14 +28,16 @@ export default function Landing({
           className={styles.headerLogo}
         />
       </header>
-
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
-            <h1 className={styles.welcomeText}>Shopping List: Sync & Share</h1>
+            <h1 className={styles.welcomeText}>Shopping List:<br/>Sync & Share</h1>
             <p className={styles.subtitleText}>
               Streamline your shopping experience with our collaborative,
-              real-time shopping list app
+              real-time shopping list app.
+              <br/>
+              Create, share and sync lists instantly
+              with family and friends to make shopping together effortless.
             </p>
             <div className={styles.heroActions}>
               <button
@@ -56,7 +58,18 @@ export default function Landing({
                 Sign in with Email
               </button>
 
-              <a
+             
+            </div>
+          </div>
+          <div className={styles.appStoreContainer}>
+          <img
+            src={`${process.env.EXPO_BASE_URL}/iphone-landing.webp`}
+            alt="App Icon"
+            width={340}
+            height={366}
+            className={styles.appIcon}
+          />
+          <a
                 className={styles.appStoreButton}
                 href="https://apps.apple.com/us/app/shopping-list-sync-share/id6739513017"
               >
@@ -67,19 +80,8 @@ export default function Landing({
                   height={40}
                 />
               </a>
-            </div>
           </div>
-          <img
-            src={`${process.env.EXPO_BASE_URL}${
-              window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "/icon-dark.png"
-                : "/icon.png"
-            }`}
-            alt="App Icon"
-            width={240}
-            height={240}
-            className={styles.appIcon}
-          />
+        
         </div>
       </section>
 
