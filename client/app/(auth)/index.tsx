@@ -6,10 +6,21 @@ import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
+import { isClerkAPIResponseError, useSignIn, useSSO } from "@clerk/clerk-expo";
 import { ClerkAPIError } from "@clerk/types";
+import * as WebBrowser from "expo-web-browser";
+import { useWarmUpBrowser } from "@/hooks/useWarmUpBrowser";
+import * as AuthSession from "expo-auth-session";
+// Handle any pending authentication sessions
+WebBrowser.maybeCompleteAuthSession();
 
 export default function SignIn() {
+  // Preload the browser for Android devices to reduce authentication load time
+  useWarmUpBrowser();
+
+  // Use the `useSSO()` hook to access the `startSSOFlow()` method
+  const { startSSOFlow } = useSSO();
+
   const { signIn, setActive, isLoaded } = useSignIn();
   const router = useRouter();
 
@@ -52,6 +63,35 @@ export default function SignIn() {
       setIsSigningIn(false);
     }
   }, [isLoaded, emailAddress, password]);
+
+  const handleSignInWithGoogle = React.useCallback(async () => {
+    if (!isLoaded) return;
+    try {
+      // Start the authentication process by calling `startSSOFlow()`
+      const { createdSessionId, setActive, signIn, signUp } =
+        await startSSOFlow({
+          strategy: "oauth_google",
+          // Defaults to current path
+          redirectUrl: AuthSession.makeRedirectUri(),
+        });
+
+      // If sign in was successful, set the active session
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+        router.replace("/(index)");
+      } else {
+        // If there is no `createdSessionId`,
+        // there are missing requirements, such as MFA
+        // Use the `signIn` or `signUp` returned from `startSSOFlow`
+        // to handle next steps
+      }
+    } catch (err) {
+      // See https://clerk.com/docs/custom-flows/error-handling
+      // for more info on error handling
+      if (isClerkAPIResponseError(err)) setErrors(err.errors);
+      console.error(JSON.stringify(err, null, 2));
+    }
+  }, [isLoaded]);
 
   const onNavigatePress = React.useCallback(
     async (path: Href) => {
@@ -96,6 +136,36 @@ export default function SignIn() {
         <ThemedText>Don't have an account?</ThemedText>
         <Button onPress={() => onNavigatePress("/sign-up")} variant="ghost">
           Sign up
+        </Button>
+      </View>
+      <View style={{ marginTop: 16, alignItems: "center" }}>
+        <ThemedText>Or continue with</ThemedText>
+        <Button
+          onPress={handleSignInWithGoogle}
+          variant="outline"
+          style={{
+            marginTop: 8,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingHorizontal: 16,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            {/* Google icon would go here in a real implementation */}
+            <View
+              style={{
+                width: 20,
+                height: 20,
+                backgroundColor: "#4285F4",
+                borderRadius: 10,
+                marginRight: 8,
+              }}
+            />
+            <ThemedText style={{ fontWeight: "500" }}>
+              Sign in with Google
+            </ThemedText>
+          </View>
         </Button>
       </View>
       <View style={{ marginTop: 16, alignItems: "center" }}>
