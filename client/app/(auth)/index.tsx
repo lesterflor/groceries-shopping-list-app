@@ -1,14 +1,14 @@
 import React from "react";
 import * as Haptics from "expo-haptics";
 import { useRouter, Href } from "expo-router";
-import { useColorScheme } from "react-native";
+import { Platform, useColorScheme } from "react-native";
 import { isClerkAPIResponseError, useSSO } from "@clerk/clerk-expo";
 import * as WebBrowser from "expo-web-browser";
 import { useWarmUpBrowser } from "@/hooks/useWarmUpBrowser";
 import * as AuthSession from "expo-auth-session";
 import { ClerkAPIError } from "@clerk/types";
 import Landing from "@/components/Landing";
-
+import { ScrollView } from "react-native";
 // Handle any pending authentication sessions
 WebBrowser.maybeCompleteAuthSession();
 
@@ -60,7 +60,15 @@ export default function SignIn() {
     [router]
   );
 
-  return (
+  return Platform.OS === "web" ? (
+    <ScrollView>
+      <Landing
+        onGoogleSignIn={handleSignInWithGoogle}
+        onEmailSignIn={() => onNavigatePress("/sign-in-email")}
+        onPrivacyPolicy={() => onNavigatePress("/privacy-policy")}
+      />
+    </ScrollView>
+  ) : (
     <Landing
       onGoogleSignIn={handleSignInWithGoogle}
       onEmailSignIn={() => onNavigatePress("/sign-in-email")}
