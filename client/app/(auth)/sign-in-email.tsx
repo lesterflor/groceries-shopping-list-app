@@ -6,10 +6,22 @@ import { ThemedText } from "@/components/ThemedText";
 import { BodyScrollView } from "@/components/ui/BodyScrollView";
 import Button from "@/components/ui/button";
 import TextInput from "@/components/ui/text-input";
-import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
+import { isClerkAPIResponseError, useSignIn, useSSO } from "@clerk/clerk-expo";
 import { ClerkAPIError } from "@clerk/types";
+import * as WebBrowser from "expo-web-browser";
+import { useWarmUpBrowser } from "@/hooks/useWarmUpBrowser";
+import * as AuthSession from "expo-auth-session";
+
+// Handle any pending authentication sessions
+WebBrowser.maybeCompleteAuthSession();
 
 export default function SignInEmail() {
+  // Preload the browser for Android devices to reduce authentication load time
+  useWarmUpBrowser();
+
+  // Use the `useSSO()` hook to access the `startSSOFlow()` method
+  const { startSSOFlow } = useSSO();
+
   const { signIn, setActive, isLoaded } = useSignIn();
   const router = useRouter();
 
@@ -18,30 +30,38 @@ export default function SignInEmail() {
   const [isSigningIn, setIsSigningIn] = React.useState(false);
   const [errors, setErrors] = React.useState<ClerkAPIError[]>([]);
 
+  // Handle the submission of the sign-in form
   const onSignInPress = React.useCallback(async () => {
-    if (process.env.EXPO_OS === "ios") {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    }
-    if (!isLoaded) {
-      return;
-    }
+    if (!isLoaded) return;
 
+    if (process.env.EXPO_OS === "ios") {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
     setIsSigningIn(true);
     setErrors([]);
 
+    // Start the sign-in process using the email and password provided
     try {
-      const result = await signIn.create({
+      const signInAttempt = await signIn.create({
         identifier: emailAddress,
         password,
       });
 
-      // Set the user session active, which will log in the user automatically
-      await setActive({ session: result.createdSessionId });
-    } catch (err) {
-      console.error(JSON.stringify(err, null, 2));
-      if (isClerkAPIResponseError(err)) {
-        setErrors(err.errors);
+      // If sign-in process is complete, set the created session as active
+      // and redirect the user
+      if (signInAttempt.status === "complete") {
+        await setActive({ session: signInAttempt.createdSessionId });
+        router.replace("/(index)");
+      } else {
+        // If the status isn't complete, check why. User might need to
+        // complete further steps.
+        console.error(JSON.stringify(signInAttempt, null, 2));
       }
+    } catch (err) {
+      // See https://clerk.com/docs/custom-flows/error-handling
+      // for more info on error handling
+      if (isClerkAPIResponseError(err)) setErrors(err.errors);
+      console.error(JSON.stringify(err, null, 2));
     } finally {
       setIsSigningIn(false);
     }
