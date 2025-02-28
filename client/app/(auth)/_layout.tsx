@@ -26,7 +26,14 @@ export default function AuthRoutesLayout() {
             }),
       }}
     >
-      <Stack.Screen name="index" options={{ headerTitle: "Sign in" }} />
+      <Stack.Screen
+        name="index"
+        options={{ headerTitle: "Welcome back!", headerShown: false }}
+      />
+      <Stack.Screen
+        name="sign-in-email"
+        options={{ headerTitle: "Sign in with Email" }}
+      />
       <Stack.Screen name="sign-up" options={{ headerTitle: "Sign up" }} />
       <Stack.Screen
         name="reset-password"
