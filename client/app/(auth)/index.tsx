@@ -58,7 +58,7 @@ export default function SignIn() {
           Welcome back!
         </ThemedText>
         <ThemedText type="defaultSemiBold" style={styles.subtitleText}>
-          Sign in to sync your shopping lists across devices
+          Local-first shopping list app powered by Expo & TinyBase
         </ThemedText>
       </View>
 
