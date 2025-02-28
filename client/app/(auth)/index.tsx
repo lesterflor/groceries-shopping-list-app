@@ -104,6 +104,14 @@ export default function SignIn() {
         <Button onPress={() => onNavigatePress("/sign-up")} variant="ghost">
           Sign up with Email
         </Button>
+        <View />
+        <Button
+          onPress={() => onNavigatePress("/privacy-policy")}
+          variant="ghost"
+          textStyle={styles.privacyPolicyText}
+        >
+          Privacy Policy
+        </Button>
       </View>
     </BodyScrollView>
   );
@@ -158,6 +166,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footerText: {
+    color: "gray",
+  },
+  privacyPolicyText: {
+    fontSize: 14,
     color: "gray",
   },
 });

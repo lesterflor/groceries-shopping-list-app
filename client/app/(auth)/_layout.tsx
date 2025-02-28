@@ -39,6 +39,10 @@ export default function AuthRoutesLayout() {
         name="reset-password"
         options={{ headerTitle: "Reset password" }}
       />
+      <Stack.Screen
+        name="privacy-policy"
+        options={{ headerTitle: "Privacy Policy" }}
+      />
     </Stack>
   );
 }
