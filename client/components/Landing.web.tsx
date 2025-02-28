@@ -56,6 +56,15 @@ export default function Landing({
               Streamline your shopping experience with our collaborative,
               real-time shopping list app
             </p>
+            <a href="https://apps.apple.com/us/app/shopping-list-sync-share/id6739513017">
+              <img
+                src={`${process.env.EXPO_BASE_URL}/apple-badge.svg`}
+                alt="Download on the App Store"
+                width={120}
+                height={40}
+                style={{ marginTop: "1rem" }}
+              />
+            </a>
           </div>
         </div>
       </section>
