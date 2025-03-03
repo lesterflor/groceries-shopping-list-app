@@ -28,8 +28,10 @@ export default function SignIn() {
       const { createdSessionId, setActive, signIn, signUp } =
         await startSSOFlow({
           strategy: "oauth_google",
-          // Defaults to current path
-          redirectUrl: AuthSession.makeRedirectUri(),
+          // concatenate (auth) since clerk's dashboard requires it
+          // trying to use the scheme alone doesn't work, also for production
+          // add the scheme in the "Allowlist for mobile SSO redirect" section under configure > sso connections
+          redirectUrl: AuthSession.makeRedirectUri({ path: "(auth)" }),
         });
 
       // If sign in was successful, set the active session
