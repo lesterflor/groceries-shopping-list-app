@@ -1,12 +1,16 @@
+[![App Banner](https://res.cloudinary.com/dpvsklksg/image/upload/cwb/Shopping-banner_r4cq2u.png)](https://codewithbeto.dev/projects/shopping-list-app)
+
 # Local-First Shopping List App
 
 A cross-platform shopping list application built with modern technologies that enables real-time synchronization while maintaining local-first functionality.
 
-![App Screenshot](https://i.ytimg.com/vi/HqOiB2tDM8Q/maxresdefault.jpg)
-
 🔍 Explore more innovative projects and tutorials at [codewithbeto.dev/projects](https://codewithbeto.dev/projects)
 
-## 🚀 Demo & Links
+## 🚀 Video, Demo & Links
+
+  <a href="https://youtu.be/HqOiB2tDM8Q">
+    <img src="https://i.ytimg.com/vi_webp/HqOiB2tDM8Q/maxresdefault.webp" height="380" alt="YouTube Video Preview">
+  </a>
 
 - 📱 [iOS App Store](https://apps.apple.com/us/app/shopping-list-sync-share/id6739513017)
 - 🌐 [Web Demo](https://quicksynclist.com/)
