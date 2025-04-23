@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { randomUUID } from "expo-crypto";
+import { debounce } from 'lodash'
 import { useRemoteRowId } from "tinybase/ui-react";
 import * as UiReact from "tinybase/ui-react/with-schemas";
 import {
@@ -190,13 +191,37 @@ export default function ShoppingListStore({
     createMergeableStore().setSchema(TABLES_SCHEMA, VALUES_SCHEMA)
   );
 
+  // Debounce the setValuesCopy callback to prevent excessive re-renders.
+  const debouncedSetValuesCopy = useCallback(
+    debounce((values) => {
+      setValuesCopy(values)
+    }, 300),
+    [setValuesCopy],
+  )
+
   // Add listener to values for updating the parent 'lists store' copy.
   useValuesListener(
-    () => setValuesCopy(JSON.stringify({ ...store.getValues(), listId })),
-    [setValuesCopy],
+    () => {
+      // BUG FIX: The previous implementation update only the store values
+      // which would clear all existing table data when only values were updated.
+      // Now we properly parse both tables and values from initialValues
+      // to maintain table data integrity across updates.
+      const storeData = {
+        tables: {
+          products: store.getTable('products'),
+          collaborators: store.getTable('collaborators'),
+        },
+        values: {
+          ...store.getValues(),
+          listId,
+        },
+      }
+      debouncedSetValuesCopy(JSON.stringify(storeData))
+    },
+    [debouncedSetValuesCopy],
     false,
-    store
-  );
+    store,
+  )
 
   // Persist store (with initial content if it hasn't been saved before), then
   // ensure the current user is added as a collaborator.
